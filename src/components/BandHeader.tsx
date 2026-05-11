@@ -22,7 +22,7 @@ const BandHeader = () => {
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-2 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2">
+        <p className="-mt-0 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2">
           EXPLORE OUR MUSIC & UPCOMING GIGS
 
         </p>
