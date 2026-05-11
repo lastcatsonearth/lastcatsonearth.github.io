@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: 'Sceageus';
-  src: url('./assets/fonts/Sceageus.woff2') format('woff2');
+  src: url('./assets/Sceageus.woff2') format('woff2'),
+    url('./assets/Sceageus.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
