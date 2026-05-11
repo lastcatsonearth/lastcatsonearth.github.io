@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  base: "/links/", // <<< FIX - repo name exactly as deployed
+  base: "/", // <<< FIX - repo name exactly as deployed
   plugins: [react()],
   resolve: {
     alias: {
