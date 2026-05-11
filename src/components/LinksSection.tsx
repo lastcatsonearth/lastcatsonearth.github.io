@@ -1,4 +1,5 @@
 import { FaSpotify, FaApple } from "react-icons/fa";
+import { CalendarDays } from "lucide-react";
 import {
   Instagram,
   Globe,
@@ -16,7 +17,7 @@ const LinksSection = () => {
       label: "Listen to FLASHBACK!",
       external: true,
       variant: "primary" as const,
-    },
+    }
   ];
 
   const ourLinks = [
@@ -90,6 +91,23 @@ const LinksSection = () => {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Next gig */}
+      <div>
+        <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
+          Next gig
+        </p>
+
+        <div className="flex flex-col gap-2">
+          <LinkButton
+            href="https://www.instagram.com/alteutting/"
+            icon={<CalendarDays className="w-5 h-5" />}
+            label="Alte Utting • Fri 5 Jun • 19:00"
+            external={true}
+            variant="secondary"
+          />
         </div>
       </div>
 
