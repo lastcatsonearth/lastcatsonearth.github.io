@@ -5,15 +5,6 @@ import LinksSection from "@/components/LinksSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  useEffect(() => {
-    const redirect = sessionStorage.redirect;
-
-    if (redirect) {
-      sessionStorage.removeItem("redirect");
-      window.history.replaceState(null, "", redirect);
-    }
-  }, []);
-
   return (
     <div className="min-h-screen relative">
       <main className="relative max-w-md mx-auto px-6 py-12">
