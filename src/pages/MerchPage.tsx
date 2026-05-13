@@ -1,7 +1,41 @@
+import { useState } from "react";
+
 import BandHeader from "@/components/BandHeader";
-import shirtImage from "@/assets/black_cat_tshirt.png";
+
+import shirtImage1 from "@/assets/merch_images/black_tee/back.png";
+import shirtImage2 from "@/assets/merch_images/black_tee/front_full.png";
+import shirtImage3 from "@/assets/merch_images/black_tee/back_full.png";
+
+const images = [shirtImage1, shirtImage2, shirtImage3];
 
 const MerchPage = () => {
+    const [currentImage, setCurrentImage] = useState(0);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStart === null) return;
+
+        const touchEnd = e.changedTouches[0].clientX;
+        const diff = touchStart - touchEnd;
+
+        // swipe threshold
+        if (diff > 50) {
+            // swipe left
+            setCurrentImage((prev) => (prev + 1) % images.length);
+        } else if (diff < -50) {
+            // swipe right
+            setCurrentImage((prev) =>
+                prev === 0 ? images.length - 1 : prev - 1
+            );
+        }
+
+        setTouchStart(null);
+    };
+
     return (
         <div className="min-h-screen bg-black text-white px-6 py-10">
             <BandHeader />
@@ -11,12 +45,43 @@ const MerchPage = () => {
                     <div className="grid md:grid-cols-2 gap-0">
 
                         {/* Product Image */}
-                        <div className="bg-black flex items-center justify-center p-6">
+                        <div
+                            className="bg-black flex flex-col items-center justify-center p-6 select-none"
+                            onTouchStart={handleTouchStart}
+                            onTouchEnd={handleTouchEnd}
+                        >
                             <img
-                                src={shirtImage}
+                                src={images[currentImage]}
                                 alt="Last Cats on Earth T-Shirt"
-                                className="w-full max-w-md object-contain"
+                                className="
+                  w-full
+                  max-w-md
+                  object-contain
+                  transition-all
+                  duration-300
+                "
+                                draggable={false}
                             />
+
+                            {/* Dots */}
+                            <div className="flex gap-2 mt-4">
+                                {images.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setCurrentImage(index)}
+                                        className={`
+                      w-2.5 h-2.5 rounded-full transition-all
+                      ${currentImage === index
+                                                ? "bg-cat-orange"
+                                                : "bg-white/20"}
+                    `}
+                                    />
+                                ))}
+                            </div>
+
+                            <p className="text-white/30 text-xs mt-3 uppercase tracking-widest">
+                                Swipe
+                            </p>
                         </div>
 
                         {/* Product Info */}
@@ -36,7 +101,9 @@ const MerchPage = () => {
                             </p>
 
                             <div className="flex items-center gap-4 mb-6">
-                                <span className="text-3xl font-semibold">25€</span>
+                                <span className="text-3xl font-semibold">
+                                    25€
+                                </span>
 
                                 <span className="text-xs uppercase tracking-widest text-white/40">
                                     Limited Run
@@ -48,7 +115,15 @@ const MerchPage = () => {
                                 {["S", "M", "L", "XL"].map((size) => (
                                     <button
                                         key={size}
-                                        className="w-12 h-12 border border-white/20 hover:border-cat-orange transition-colors text-sm"
+                                        className="
+                      w-12
+                      h-12
+                      border
+                      border-white/20
+                      hover:border-cat-orange
+                      transition-colors
+                      text-sm
+                    "
                                     >
                                         {size}
                                     </button>
