@@ -36,7 +36,7 @@ const MerchPage = () => {
                             </p>
 
                             <div className="flex items-center gap-4 mb-6">
-                                <span className="text-3xl font-semibold">20€</span>
+                                <span className="text-3xl font-semibold">25€</span>
 
                                 <span className="text-xs uppercase tracking-widest text-white/40">
                                     Limited Run
