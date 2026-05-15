@@ -26,7 +26,7 @@ const SocialIcon = ({
 const Footer = () => {
   return (
     <footer className="mt-6 pt-8 border-t border-border">
-      <div className="bg-black py-4 -mt-2">
+      <div className="bg-black py-4 -mt-4">
         <div className="-mt-6 flex items-center justify-center gap-4">
           <SocialIcon
             href="https://www.instagram.com/lastcatsonearth/"

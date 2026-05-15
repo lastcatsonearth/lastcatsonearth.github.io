@@ -25,17 +25,45 @@ const MerchPage = () => {
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
+    const [dragOffset, setDragOffset] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
+
+    const prev = () => setCurrentImage((i) => (i === 0 ? images.length - 1 : i - 1));
+    const next = () => setCurrentImage((i) => (i + 1) % images.length);
+
+    // Touch
     const handleTouchStart = (e: React.TouchEvent) => {
         setTouchStart(e.targetTouches[0].clientX);
+        setIsDragging(true);
+        setDragOffset(0);
+    };
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (touchStart === null) return;
+        setDragOffset(e.targetTouches[0].clientX - touchStart);
+    };
+    const handleTouchEnd = () => {
+        if (dragOffset > 50) prev();
+        else if (dragOffset < -50) next();
+        setDragOffset(0);
+        setIsDragging(false);
+        setTouchStart(null);
     };
 
-    const handleTouchEnd = (e: React.TouchEvent) => {
-        if (touchStart === null) return;
-        const touchEnd = e.changedTouches[0].clientX;
-        const diff = touchStart - touchEnd;
-        if (diff > 50) setCurrentImage((prev) => (prev + 1) % images.length);
-        else if (diff < -50)
-            setCurrentImage((prev) => prev === 0 ? images.length - 1 : prev - 1);
+    // Mouse drag
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setTouchStart(e.clientX);
+        setIsDragging(true);
+        setDragOffset(0);
+    };
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging || touchStart === null) return;
+        setDragOffset(e.clientX - touchStart);
+    };
+    const handleMouseUp = () => {
+        if (dragOffset > 50) prev();
+        else if (dragOffset < -50) next();
+        setDragOffset(0);
+        setIsDragging(false);
         setTouchStart(null);
     };
 
@@ -99,26 +127,61 @@ const MerchPage = () => {
 
     return (
         <div className="min-h-screen bg-black text-white px-6 py-10">
-            <BandHeader />
+            <BandHeader linkToHome />
 
             <section className="max-w-6xl mx-auto mt-10">
                 <div className="border border-white/10 bg-white/[0.03] rounded-2xl overflow-hidden backdrop-blur-sm">
                     <div className="grid md:grid-cols-2 gap-0">
 
                         {/* Product Image */}
-                        <div
-                            className="bg-black flex flex-col items-center justify-center p-6 select-none"
-                            onTouchStart={handleTouchStart}
-                            onTouchEnd={handleTouchEnd}
-                        >
-                            <div className="w-full max-w-md aspect-square relative">
-                                <img
-                                    src={images[currentImage]}
-                                    alt="Last Cats on Earth T-Shirt"
-                                    className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
-                                    draggable={false}
-                                />
+                        <div className="bg-black flex flex-col items-center justify-center p-6 select-none">
+                            {/* Image with overlaid arrows */}
+                            <div className="w-full max-w-md aspect-square relative group">
+                                {/* Draggable image container */}
+                                <div
+                                    className="absolute inset-0 overflow-hidden cursor-grab active:cursor-grabbing"
+                                    onTouchStart={handleTouchStart}
+                                    onTouchMove={handleTouchMove}
+                                    onTouchEnd={handleTouchEnd}
+                                    onMouseDown={handleMouseDown}
+                                    onMouseMove={handleMouseMove}
+                                    onMouseUp={handleMouseUp}
+                                    onMouseLeave={handleMouseUp}
+                                >
+                                    <img
+                                        src={images[currentImage]}
+                                        alt="Last Cats on Earth T-Shirt"
+                                        className="absolute inset-0 w-full h-full object-contain"
+                                        style={{
+                                            transform: `translateX(${dragOffset}px)`,
+                                            transition: isDragging ? "none" : "transform 0.3s ease",
+                                        }}
+                                        draggable={false}
+                                    />
+                                </div>
+
+                                {/* Left arrow */}
+                                <button
+                                    onClick={prev}
+                                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                        <polyline points="15 18 9 12 15 6" />
+                                    </svg>
+                                </button>
+
+                                {/* Right arrow */}
+                                <button
+                                    onClick={next}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                        <polyline points="9 18 15 12 9 6" />
+                                    </svg>
+                                </button>
                             </div>
+
+                            {/* Dots */}
                             <div className="flex gap-2 mt-4">
                                 {images.map((_, index) => (
                                     <button
@@ -129,7 +192,6 @@ const MerchPage = () => {
                                     />
                                 ))}
                             </div>
-                            <p className="text-white/30 text-xs mt-3 uppercase tracking-widest">Swipe</p>
                         </div>
 
                         {/* Product Info */}
