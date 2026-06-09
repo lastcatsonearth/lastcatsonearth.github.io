@@ -30,18 +30,6 @@ const BandHeader = ({ linkToHome = false }: BandHeaderProps) => {
         </div>
       )}
 
-      <div className="bg-black -mb-6">
-
-        {/* Band Name */}
-        <h1 className="font-sceageus [-webkit-font-smoothing:antialiased] text-3xl -mt-10 md:text-4xl tracking-[-0.03em] leading-none text-white text-outline-black opacity-0 animate-fade-in-delay-1 lg:mt-10">
-          LAST CATS ON EARTH
-        </h1>
-
-        {/* Subtitle */}
-        <p className="-mt-0 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2">
-          EXPLORE OUR MUSIC & UPCOMING GIGS
-        </p>
-      </div>
     </header>
   );
 };

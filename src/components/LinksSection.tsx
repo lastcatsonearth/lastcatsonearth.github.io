@@ -93,6 +93,7 @@ const LinksSection = () => {
   return (
     <nav className="flex flex-col gap-6 relative">
       {/* Browser Hint Tooltip */}
+
       {showBrowserHint && (
         <div
           onClick={() => setShowBrowserHint(false)}
@@ -111,7 +112,18 @@ const LinksSection = () => {
           </div>
         </div>
       )}
+      <div className="bg-black -mt-6 -mb-3">
 
+        {/* Band Name */}
+        <h1 className="font-sceageus [-webkit-font-smoothing:antialiased] text-3xl -mt-10 md:text-4xl tracking-[-0.03em] leading-none text-white text-outline-black opacity-0 animate-fade-in-delay-1 lg:mt-10">
+          LAST CATS ON EARTH
+        </h1>
+
+        {/* Subtitle */}
+        <p className="-mt-0 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2">
+          EXPLORE OUR MUSIC & UPCOMING GIGS
+        </p>
+      </div>
       {/* What's new */}
       <div>
         <p className="mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
@@ -134,7 +146,7 @@ const LinksSection = () => {
       </div>
 
       {/* Next gig */}
-      <div>
+      {/* <div>
         <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
           Next gig
         </p>
@@ -152,7 +164,7 @@ const LinksSection = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Support us */}
       <div>
