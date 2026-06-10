@@ -5,6 +5,8 @@ interface VideoMarqueeProps {
 }
 
 const SCROLL_SPEED = 0.5; // px per frame
+
+
 const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const isDraggingRef = useRef(false);
@@ -20,7 +22,6 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
         if (!container) return;
 
         const measure = () => {
-            // width of original set (half of full doubled scroll)
             setWidthRef.current = container.scrollWidth / 2;
         };
 
@@ -30,15 +31,12 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
         const tick = () => {
             if (!isDraggingRef.current && container) {
                 container.scrollLeft += SCROLL_SPEED;
-
                 const setWidth = setWidthRef.current;
 
-                // seamless wrap without jump
                 if (setWidth && container.scrollLeft >= setWidth) {
                     container.scrollLeft -= setWidth;
                 }
             }
-
             rafRef.current = requestAnimationFrame(tick);
         };
 
@@ -49,6 +47,19 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
         };
     }, []);
+
+    // Extra fallback to guarantee video autoplay execution on mobile mounting
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const videoElements = container.querySelectorAll("video");
+        videoElements.forEach((video) => {
+            video.play().catch(() => {
+                // Safely catch browser restrictions if any exist
+            });
+        });
+    }, [videos]);
 
     const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
         const container = containerRef.current;
@@ -62,7 +73,7 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
 
     const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
         if (!isDraggingRef.current || !containerRef.current) return;
-        e.preventDefault();
+
         const pageX = "touches" in e ? e.touches[0].pageX : e.pageX;
         const walk = (pageX - startXRef.current) * 1.5;
         containerRef.current.scrollLeft = scrollLeftRef.current - walk;
@@ -78,7 +89,7 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
     return (
         <section className="text-center">
             <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">Welcome bookers & fans</p>
-            <h3 className="text-3xl md:text-2xl font-bold mb-4 tracking-wide">EXPERIENCE THE ENERGY</h3>
+            <h3 className="text-3xl md:text-2xl font-bold mb-4 tracking-wide">From the shows</h3>
             <p className="text-sm text-white/50 max-w-lg mx-auto mb-10 tracking-wide">
                 Get a glimpse of our live atmosphere, media kits, and raw stage recordings below.
             </p>
@@ -93,7 +104,8 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
                     onTouchStart={handleDragStart}
                     onTouchMove={handleDragMove}
                     onTouchEnd={handleDragEnd}
-                    className={`w-full flex gap-6 overflow-x-scroll scrollbar-none select-none ${isUserDragging ? "cursor-grabbing" : "cursor-grab"}`}
+                    className={`w-full flex gap-6 overflow-x-scroll scrollbar-none select-none touch-pan-y ${isUserDragging ? "cursor-grabbing" : "cursor-grab"
+                        }`}
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 >
                     {loopedVideos.map((videoSrc, idx) => (
@@ -108,6 +120,8 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
                                 loop
                                 muted
                                 playsInline
+                                controls={false}
+                                webkit-playsinline="true"
                                 className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-700 pointer-events-none"
                             />
                             <div className="absolute inset-0 border border-dashed border-white/5 rounded-lg m-1 pointer-events-none group-hover:border-cat-orange/20 transition-colors" />

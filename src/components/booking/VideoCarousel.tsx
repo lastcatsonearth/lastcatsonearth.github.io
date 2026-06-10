@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 
 export interface LiveVideo {
     id: string;
@@ -46,7 +47,13 @@ export const liveVideos: LiveVideo[] = [
     },
 ];
 
-const VISIBLE_COUNT = 3;
+const getVisibleCount = () => {
+    if (typeof window === "undefined") return 1;
+    if (window.innerWidth < 640) return 1;   // mobile
+    if (window.innerWidth < 1024) return 2;  // tablet
+    return 3;                                // desktop
+};
+
 
 interface VideoCarouselProps {
     onVideoSelect: (embedUrl: string) => void;
@@ -54,11 +61,20 @@ interface VideoCarouselProps {
 
 const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
     const [startIdx, setStartIdx] = useState(0);
+    const [visibleCount, setVisibleCount] = useState(getVisibleCount());
 
     const prev = () => setStartIdx((i) => (i - 1 + liveVideos.length) % liveVideos.length);
     const next = () => setStartIdx((i) => (i + 1) % liveVideos.length);
+    React.useEffect(() => {
+        const handleResize = () => {
+            setVisibleCount(getVisibleCount());
+        };
 
-    const visibleVideos = Array.from({ length: VISIBLE_COUNT }, (_, i) =>
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const visibleVideos = Array.from({ length: visibleCount }, (_, i) =>
         liveVideos[(startIdx + i) % liveVideos.length]
     );
 
@@ -75,15 +91,14 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
                 >
                     ‹
                 </button>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full px-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full px-4 sm:px-12">
                     {visibleVideos.map((video) => (
                         <div
                             key={video.id}
                             onClick={() =>
                                 onVideoSelect(`https://www.youtube.com/embed/${video.id}?autoplay=1`)
                             }
-                            className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 p-1.5 cursor-pointer group shadow-xl transition-transform duration-300 hover:scale-[1.02]"
+                            className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 p-1.5 cursor-pointer group shadow-xl transition-transform duration-300 hover:scale-[1.02]"
                         >
                             <div className="absolute inset-0 border border-dashed border-white/5 rounded-2xl m-2 group-hover:border-cat-orange/30 transition z-20" />
 

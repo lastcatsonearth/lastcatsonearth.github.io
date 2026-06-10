@@ -111,7 +111,7 @@ const Booking = () => {
 
             <footer className="relative z-10 mt-24 pt-8 border-t border-white/10 w-full max-w-6xl mx-auto">
                 <div className="bg-black py-4">
-                    <div className="flex items-center justify-center gap-4 flex-wrap">
+                    <div className="flex items-center justify-center gap-3 flex-wrap">
                         <SocialIcon href="https://www.instagram.com/lastcatsonearth/" icon={<Instagram className="w-5 h-5" />} label="Instagram" />
                         <SocialIcon href="https://www.youtube.com/@lastcatsonearth" icon={<Youtube className="w-5 h-5" />} label="YouTube" />
                         <SocialIcon href="https://lastcatsonearth.de/en/" icon={<Globe className="w-5 h-5" />} label="Website" />
