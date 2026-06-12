@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
+import { useLanguage } from "@/components/booking/LanguageContext";
 
 export interface LiveVideo {
     id: string;
@@ -43,9 +44,20 @@ export const liveVideos: LiveVideo[] = [
         id: "edZZoAsVDcA",
         title: "Smooth",
         venue: "Alte Utting, Munich",
-        thumbnail: "https://img.youtube.com/vi/f5UjnMcHz7k/maxresdefault.jpg",
+        thumbnail: "https://img.youtube.com/vi/edZZoAsVDcA/maxresdefault.jpg",
     },
 ];
+
+const translations = {
+    en: {
+        reel: "Live Video Reels",
+        headline: "WATCH US PLAY",
+    },
+    de: {
+        reel: "Live-Video-Reels",
+        headline: "UNSERE LIVE-SHOWS",
+    }
+};
 
 const getVisibleCount = () => {
     if (typeof window === "undefined") return 1;
@@ -54,18 +66,21 @@ const getVisibleCount = () => {
     return 3;                                // desktop
 };
 
-
 interface VideoCarouselProps {
     onVideoSelect: (embedUrl: string) => void;
 }
 
 const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
+    const { lang } = useLanguage();
+    const t = translations[lang];
+
     const [startIdx, setStartIdx] = useState(0);
     const [visibleCount, setVisibleCount] = useState(getVisibleCount());
 
     const prev = () => setStartIdx((i) => (i - 1 + liveVideos.length) % liveVideos.length);
     const next = () => setStartIdx((i) => (i + 1) % liveVideos.length);
-    React.useEffect(() => {
+
+    useEffect(() => {
         const handleResize = () => {
             setVisibleCount(getVisibleCount());
         };
@@ -80,8 +95,12 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
 
     return (
         <section className="border-t border-white/5 pt-16">
-            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-3 text-center">Live Video Reels</p>
-            <h3 className="text-3xl md:text-2xl font-bold text-center mb-8 tracking-wide">WATCH US PLAY</h3>
+            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-3 text-center">
+                {t.reel}
+            </p>
+            <h3 className="text-3xl md:text-2xl font-bold text-center mb-8 tracking-wide">
+                {t.headline}
+            </h3>
 
             <div className="relative max-w-5xl mx-auto flex items-center justify-center gap-6">
                 <button
@@ -91,6 +110,7 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
                 >
                     ‹
                 </button>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full px-4 sm:px-12">
                     {visibleVideos.map((video) => (
                         <div

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FaSpotify, FaPlay, FaPause } from "react-icons/fa";
+import { useLanguage } from "@/components/booking/LanguageContext";
 
 interface AudioPlayerProps {
     src: string;
@@ -8,7 +9,21 @@ interface AudioPlayerProps {
     artist: string;
 }
 
+const translations = {
+    en: {
+        category: "Our latest release",
+        altTemplate: "cover art"
+    },
+    de: {
+        category: "Unsere neueste Veröffentlichung",
+        altTemplate: "Cover-Artwork"
+    }
+};
+
 const AudioPlayer = ({ src, coverSrc, title, artist }: AudioPlayerProps) => {
+    const { lang } = useLanguage();
+    const t = translations[lang];
+
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -56,7 +71,9 @@ const AudioPlayer = ({ src, coverSrc, title, artist }: AudioPlayerProps) => {
 
     return (
         <section className="border-t border-white/5 pt-16 max-w-md mx-auto text-center">
-            <p className="text-cat-orange uppercase tracking-[0.3em] text-sm mb-2">Our latest release</p>
+            <p className="text-cat-orange uppercase tracking-[0.3em] text-sm mb-2">
+                {t.category}
+            </p>
 
             <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-6 backdrop-blur-md shadow-2xl relative group">
                 <div className="absolute inset-0 border border-dashed border-white/5 rounded-2xl m-1 pointer-events-none group-hover:border-cat-orange/20 transition-colors" />
@@ -71,7 +88,7 @@ const AudioPlayer = ({ src, coverSrc, title, artist }: AudioPlayerProps) => {
                 />
 
                 <div className="relative aspect-square w-48 h-48 mx-auto mb-6 rounded-lg overflow-hidden shadow-lg border border-white/10">
-                    <img src={coverSrc} alt={`${title} cover art`} className="w-full h-full object-cover" />
+                    <img src={coverSrc} alt={`${title} ${t.altTemplate}`} className="w-full h-full object-cover" />
                 </div>
 
                 <div className="relative z-10 mb-4">

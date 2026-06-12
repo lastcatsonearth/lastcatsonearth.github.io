@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useLanguage } from "@/components/booking/LanguageContext";
 
 interface VideoMarqueeProps {
     videos: string[];
@@ -6,8 +7,56 @@ interface VideoMarqueeProps {
 
 const SCROLL_SPEED = 0.5; // px per frame
 
+const translations = {
+    en: {
+        welcome: "Welcome bookers & fans",
+        bio1: (
+            <>
+                Based in Munich, <strong>Last Cats on Earth</strong> deliver a mix of hard rock, funk, indie, and alternative rock sounds.
+                Our main rule is originality: whether it's our original tracks or reinterpreting famous covers, we always do it our own way.
+            </>
+        ),
+        bio2: (
+            <>
+                Our DNA is heavily influenced by the Californian pop-rock of the early 2000s, reelaborating those sounds with
+                influences from funk, rap, punk, and even electronic music. Our first single, "FLASHBACK!", is already out and is getting
+                the crowd dancing and singing along at our shows.
+            </>
+        ),
+        bio3: (
+            <>
+                During our live sets, we keep everyone on their toes by constantly shifting gears: alternating hard-hitting instrumentals,
+                melodic hooks, rap verses, choreography, and direct crowd-work. We don't just play music—the stage is our home.
+            </>
+        ),
+    },
+    de: {
+        welcome: "Willkommen Bookers & Fans",
+        bio1: (
+            <>
+                Ansässig in München liefern <strong>Last Cats on Earth</strong> einen Mix aus Hard Rock, Funk, Indie und Alternative Rock.
+                Unsere wichtigste Regel ist Originalität: Egal ob wir eigene Tracks raushauen oder berühmte Cover komplett umgestalten, wir machen es immer auf unsere eigene Art.
+            </>
+        ),
+        bio2: (
+            <>
+                Unsere DNA ist stark vom kalifornischen Pop-Rock der frühen 2000er Jahre geprägt, dessen Sound wir mit Einflüssen aus Funk, Rap,
+                Punk und sogar elektronischer Musik neu interpretieren. Unsere erste Single "FLASHBACK!" ist bereits veröffentlicht und bringt das Publikum bei unseren Shows zum Tanzen und Mitsingen.
+            </>
+        ),
+        bio3: (
+            <>
+                Bei unseren Live-Sets halten wir alle auf Trab, indem wir ständig den Gang wechseln: Wir wechseln zwischen knallharten Instrumentals,
+                melodischen Hooks, Rap-Versen, Choreografien und direkter Interaktion mit dem Publikum. Wir machen nicht einfach nur Musik – die Bühne ist unser Zuhause.
+            </>
+        ),
+    }
+};
 
 const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
+    const { lang } = useLanguage();
+    const t = translations[lang];
+
     const containerRef = useRef<HTMLDivElement | null>(null);
     const isDraggingRef = useRef(false);
     const startXRef = useRef(0);
@@ -87,14 +136,17 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
     const loopedVideos = [...videos, ...videos];
 
     return (
-        <section className="text-center">
-            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">Welcome bookers & fans</p>
-            <h3 className="text-3xl md:text-2xl font-bold mb-4 tracking-wide">From the shows</h3>
-            <p className="text-sm text-white/50 max-w-lg mx-auto mb-10 tracking-wide">
-                Get a glimpse of our live atmosphere, media kits, and raw stage recordings below.
-            </p>
+        <section className="text-center w-full max-w-5xl mx-auto">
+            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">{t.welcome}</p>
 
-            <div className="relative max-w-5xl mx-auto [mask-image:_linear-gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
+            {/* Biography Container perfectly matched to width layout layout limits */}
+            <div className="text-sm text-white mx-auto mb-10 tracking-wide text-justify space-y-4 w-full">
+                <p className="text-justify">{t.bio1}</p>
+                <p className="text-justify">{t.bio2}</p>
+                <p className="text-justify">{t.bio3}</p>
+            </div>
+
+            <div className="relative w-full [mask-image:_linear-gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
                 <div
                     ref={containerRef}
                     onMouseDown={handleDragStart}
