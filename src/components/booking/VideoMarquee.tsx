@@ -7,6 +7,8 @@ interface VideoMarqueeProps {
 
 const SCROLL_SPEED = 0.5; // px per frame
 
+
+
 const translations = {
     en: {
         welcome: "Welcome bookers & fans",
@@ -19,7 +21,7 @@ const translations = {
         bio2: (
             <>
                 Our DNA is heavily influenced by the Californian pop-rock of the early 2000s, reelaborating those sounds with
-                influences from funk, rap, punk, and even electronic music. Our first single, "FLASHBACK!", is already out and is getting
+                influences from funk, rap, punk, and even electronic music. Our first single, <strong>"FLASHBACK!"</strong>, is already out and is getting
                 the crowd dancing and singing along at our shows.
             </>
         ),
@@ -41,7 +43,7 @@ const translations = {
         bio2: (
             <>
                 Unsere DNA ist stark vom kalifornischen Pop-Rock der frühen 2000er Jahre geprägt, dessen Sound wir mit Einflüssen aus Funk, Rap,
-                Punk und sogar elektronischer Musik neu interpretieren. Unsere erste Single "FLASHBACK!" ist bereits veröffentlicht und bringt das Publikum bei unseren Shows zum Tanzen und Mitsingen.
+                Punk und sogar elektronischer Musik neu interpretieren. Unsere erste Single <strong>"FLASHBACK!"</strong> ist bereits veröffentlicht und bringt das Publikum bei unseren Shows zum Tanzen und Mitsingen.
             </>
         ),
         bio3: (
@@ -65,7 +67,6 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
     const [isUserDragging, setIsUserDragging] = useState(false);
     const setWidthRef = useRef(0);
 
-    // Auto-scroll loop
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
@@ -97,16 +98,13 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
         };
     }, []);
 
-    // Extra fallback to guarantee video autoplay execution on mobile mounting
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
         const videoElements = container.querySelectorAll("video");
         videoElements.forEach((video) => {
-            video.play().catch(() => {
-                // Safely catch browser restrictions if any exist
-            });
+            video.play().catch(() => { });
         });
     }, [videos]);
 
@@ -139,11 +137,10 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
         <section className="text-center w-full max-w-5xl mx-auto">
             <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">{t.welcome}</p>
 
-            {/* Biography Container perfectly matched to width layout layout limits */}
-            <div className="text-sm text-white mx-auto mb-10 tracking-wide text-justify space-y-4 w-full">
-                <p className="text-justify">{t.bio1}</p>
-                <p className="text-justify">{t.bio2}</p>
-                <p className="text-justify">{t.bio3}</p>
+            <div className="text-sm text-white mx-auto mb-10 tracking-wide text-justify space-y-4 w-full break-words [hyphens:auto] [lang:inherit]">
+                <p>{t.bio1}</p>
+                <p>{t.bio2}</p>
+                <p>{t.bio3}</p>
             </div>
 
             <div className="relative w-full [mask-image:_linear-gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
@@ -156,8 +153,7 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
                     onTouchStart={handleDragStart}
                     onTouchMove={handleDragMove}
                     onTouchEnd={handleDragEnd}
-                    className={`w-full flex gap-6 overflow-x-scroll scrollbar-none select-none touch-pan-y ${isUserDragging ? "cursor-grabbing" : "cursor-grab"
-                        }`}
+                    className={`w-full flex gap-6 overflow-x-scroll scrollbar-none select-none touch-pan-y ${isUserDragging ? "cursor-grabbing" : "cursor-grab"}`}
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 >
                     {loopedVideos.map((videoSrc, idx) => (
