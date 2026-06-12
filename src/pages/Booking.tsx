@@ -148,7 +148,7 @@ const Booking = () => {
                         <div className="flex items-center justify-center gap-3 flex-wrap">
                             <SocialIcon href="https://www.instagram.com/lastcatsonearth/" icon={<Instagram className="w-5 h-5" />} label="Instagram" />
                             <SocialIcon href="https://www.youtube.com/@lastcatsonearth" icon={<Youtube className="w-5 h-5" />} label="YouTube" />
-                            <SocialIcon href="https://lastcatsonearth.de/en/" icon={<Globe className="w-5 h-5" />} label="Website" />
+                            <SocialIcon href="https://lastcatsonearth.github.io/booking" icon={<Globe className="w-5 h-5" />} label="Website" />
                             <SocialIcon href="https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw" icon={<FaSpotify className="w-5 h-5" />} label="Spotify" />
                             <SocialIcon href="https://music.apple.com/at/artist/last-cats-on-earth/1887321356" icon={<FaApple className="w-5 h-5" />} label="Apple Music" />
                             <SocialIcon href="mailto:contact@lastcatsonearth.de" icon={<Mail className="w-5 h-5" />} label="Contact" external={false} />
