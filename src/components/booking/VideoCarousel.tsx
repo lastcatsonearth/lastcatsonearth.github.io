@@ -44,7 +44,7 @@ export const liveVideos: LiveVideo[] = [
         id: "edZZoAsVDcA",
         title: "Smooth",
         venue: "Alte Utting, Munich",
-        thumbnail: "https://img.youtube.com/vi/edZZoAsVDcA/maxresdefault.jpg",
+        thumbnail: "https://img.youtube.com/vi/dSZrrUxvB6U/maxresdefault.jpg",
     },
 ];
 
