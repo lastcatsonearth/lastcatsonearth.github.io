@@ -134,7 +134,7 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
     const loopedVideos = [...videos, ...videos];
 
     return (
-        <section className="text-center w-full max-w-5xl mx-auto">
+        <section className="text-center w-full max-w-5xl mx-auto -mt-10 sm:-mt-0">
             <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">{t.welcome}</p>
 
             <div className="text-sm text-white mx-auto mb-10 tracking-wide text-justify space-y-4 w-full break-words [hyphens:auto] [lang:inherit]">

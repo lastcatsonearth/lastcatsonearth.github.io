@@ -53,7 +53,7 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
     return (
         <>
             {/* Language Switcher Controller - Fixed syntax error and added z-index padding */}
-            <div className="relative z-30 max-w-6xl mx-auto w-full flex justify-end gap-2 text-xs font-medium uppercase tracking-wider mb-2 px-4 sm:px-6 pr-6 sm:pr-12">
+            <div className="relative z-30 max-w-6xl mx-auto w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider -mb-6 px-4 sm:px-6 pr-6 sm:pr-12">
                 <button
                     onClick={() => setLang("en")}
                     className={`transition-colors ${lang === "en" ? "text-cat-orange" : "text-white/40 hover:text-white"}`}
