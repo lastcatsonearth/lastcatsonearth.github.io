@@ -94,6 +94,11 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
 const Booking = () => {
     const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
+    // Set document title on page mount
+    useEffect(() => {
+        document.title = "Last Cats on Earth | Booking";
+    }, []);
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") setActiveVideoUrl(null);

@@ -1,3 +1,5 @@
+// index.tsx
+
 import { useEffect } from "react";
 
 import BandHeader from "@/components/BandHeader";
