@@ -25,7 +25,6 @@ import loopVideo3 from "@/assets/booking/videos/loop_3.mp4";
 const livePhotos = [photo1, photo2, photo3, photo4, photo5];
 const liveLoops = [loopVideo1, loopVideo2, loopVideo3];
 
-
 const SocialIcon = ({
     href,
     icon,
@@ -48,15 +47,13 @@ const SocialIcon = ({
     </a>
 );
 
-// This sub-wrapper is necessary so that hook calls to useLanguage() 
-// execute safely inside the Context Provider tree lifecycle execution loop.
 const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null) => void }) => {
     const { lang, setLang } = useLanguage();
 
     return (
         <>
-            {/* Language Switcher Controller - Controlled bounding box with right padding constraint */}
-            <div className="max-w-6xl mx-auto w-full flex justify-end gap-2 text-xs font-medium uppercase tracking-wider mb-2 -px-6 sm:px-6 pr-6 sm:pr-8">
+            {/* Language Switcher Controller - Fixed syntax error and added z-index padding */}
+            <div className="relative z-30 max-w-6xl mx-auto w-full flex justify-end gap-2 text-xs font-medium uppercase tracking-wider mb-2 px-4 sm:px-6 pr-6 sm:pr-12">
                 <button
                     onClick={() => setLang("en")}
                     className={`transition-colors ${lang === "en" ? "text-cat-orange" : "text-white/40 hover:text-white"}`}
@@ -76,7 +73,6 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
 
             <main className="max-w-6xl mx-auto mt-10 space-y-0">
                 <VideoMarquee videos={liveLoops} />
-
 
                 <VideoCarousel onVideoSelect={onVideoSelect} />
 
