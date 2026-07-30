@@ -1,22 +1,38 @@
-import { Instagram, Globe, Mail, Youtube } from "lucide-react";
+import { Instagram, Briefcase, Mail, Youtube } from "lucide-react";
 import { FaSpotify, FaApple } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
+interface SocialIconProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  external?: boolean;
+}
 
 const SocialIcon = ({
   href,
   icon,
   label,
   external = true,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-  external?: boolean;
-}) => {
-  const className =
-    "p-3 text-muted-foreground transition-all duration-300 hover:text-primary hover:scale-110";
+}: SocialIconProps) => {
+  const content = (
+    <div className="relative flex flex-col items-center group">
+      {/* Orange Vignette / Tooltip */}
+      <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 z-50">
+        <div className="bg-primary text-primary-foreground text-[10px] font-semibold py-0.5 px-2 rounded shadow-md whitespace-nowrap uppercase tracking-wider flex items-center justify-center">
+          {label}
+          {/* Arrow pointing to icon */}
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rotate-45" />
+        </div>
+      </div>
 
-  // Use standard <a> for external links (Spotify, YouTube, mailto, etc.)
+      {/* Icon Wrapper */}
+      <div className="p-3 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:scale-110">
+        {icon}
+      </div>
+    </div>
+  );
+
   if (external) {
     return (
       <a
@@ -24,26 +40,31 @@ const SocialIcon = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
-        className={className}
       >
-        {icon}
+        {content}
       </a>
     );
   }
 
-  // Use React Router <Link> for internal routes (/booking, /merch, /)
   return (
-    <Link to={href} aria-label={label} className={className}>
-      {icon}
+    <Link to={href} aria-label={label}>
+      {content}
     </Link>
   );
 };
 
 const Footer = () => {
   return (
-    <footer className="mt-6 pt-8 border-t border-border">
-      <div className="bg-black py-4 -mt-4">
-        <div className="-mt-6 flex items-center justify-center gap-4">
+    <div className="mt-0">
+      {/* Label placed above the horizontal rule */}
+      <p className="mb-4 text-sm uppercase tracking-widest text-muted-foreground text-center">
+        Our links
+      </p>
+
+      {/* Horizontal border line */}
+      <footer className="border-t border-border pt-6 bg-black -mt-2 -mb-10 overflow-visible">
+        {/* Force icons on a single line with flex-nowrap and overflow-visible */}
+        <div className="flex items-center justify-center gap-2 sm:gap-4 flex-nowrap -mt-5 overflow-visible">
           <SocialIcon
             href="https://www.instagram.com/lastcatsonearth/"
             icon={<Instagram className="w-5 h-5" />}
@@ -56,11 +77,10 @@ const Footer = () => {
             label="YouTube"
           />
 
-          {/* Fixed: Internal router link to /booking on your new domain */}
           <SocialIcon
             href="/booking"
-            icon={<Globe className="w-5 h-5" />}
-            label="Website"
+            icon={<Briefcase className="w-5 h-5" />}
+            label="Portfolio"
             external={false}
           />
 
@@ -84,11 +104,11 @@ const Footer = () => {
           />
         </div>
 
-        <p className="bg-black text-center text-xs text-muted-foreground mt-2 mb-4">
-          © 2025 Last Cats on Earth. All rights reserved.
+        <p className="text-center text-xs text-muted-foreground mt-6 mb-4">
+          © 2026 Last Cats on Earth. All rights reserved.
         </p>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 };
 

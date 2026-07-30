@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import BandHeader from "@/components/BandHeader";
+import Footer from "@/components/Footer";
 
 import shirtImage1 from "@/assets/merch_images/black_tee/back.png";
 import shirtImage2 from "@/assets/merch_images/black_tee/front_full.png";
@@ -126,156 +127,163 @@ const MerchPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white px-6 py-10">
-            <BandHeader linkToHome />
+        <div className="min-h-screen bg-black text-white px-6 pt-10 pb-12 flex flex-col justify-between">
+            <div className="w-full">
+                <BandHeader linkToHome />
 
-            <section className="max-w-6xl mx-auto mt-10">
-                <div className="border border-white/10 bg-white/[0.03] rounded-2xl overflow-hidden backdrop-blur-sm">
-                    <div className="grid md:grid-cols-2 gap-0">
+                <section className="max-w-6xl mx-auto mt-10">
+                    <div className="border border-white/10 bg-white/[0.03] rounded-2xl overflow-hidden backdrop-blur-sm">
+                        <div className="grid md:grid-cols-2 gap-0">
 
-                        {/* Product Image */}
-                        <div className="bg-black flex flex-col items-center justify-center p-6 select-none">
-                            {/* Image with overlaid arrows */}
-                            <div className="w-full max-w-md aspect-square relative group">
-                                {/* Draggable image container */}
-                                <div
-                                    className="absolute inset-0 overflow-hidden cursor-grab active:cursor-grabbing"
-                                    onTouchStart={handleTouchStart}
-                                    onTouchMove={handleTouchMove}
-                                    onTouchEnd={handleTouchEnd}
-                                    onMouseDown={handleMouseDown}
-                                    onMouseMove={handleMouseMove}
-                                    onMouseUp={handleMouseUp}
-                                    onMouseLeave={handleMouseUp}
-                                >
-                                    <img
-                                        src={images[currentImage]}
-                                        alt="Last Cats on Earth T-Shirt"
-                                        className="absolute inset-0 w-full h-full object-contain"
-                                        style={{
-                                            transform: `translateX(${dragOffset}px)`,
-                                            transition: isDragging ? "none" : "transform 0.3s ease",
-                                        }}
-                                        draggable={false}
-                                    />
+                            {/* Product Image */}
+                            <div className="bg-black flex flex-col items-center justify-center p-6 select-none">
+                                {/* Image with overlaid arrows */}
+                                <div className="w-full max-w-md aspect-square relative group">
+                                    {/* Draggable image container */}
+                                    <div
+                                        className="absolute inset-0 overflow-hidden cursor-grab active:cursor-grabbing"
+                                        onTouchStart={handleTouchStart}
+                                        onTouchMove={handleTouchMove}
+                                        onTouchEnd={handleTouchEnd}
+                                        onMouseDown={handleMouseDown}
+                                        onMouseMove={handleMouseMove}
+                                        onMouseUp={handleMouseUp}
+                                        onMouseLeave={handleMouseUp}
+                                    >
+                                        <img
+                                            src={images[currentImage]}
+                                            alt="Last Cats on Earth T-Shirt"
+                                            className="absolute inset-0 w-full h-full object-contain"
+                                            style={{
+                                                transform: `translateX(${dragOffset}px)`,
+                                                transition: isDragging ? "none" : "transform 0.3s ease",
+                                            }}
+                                            draggable={false}
+                                        />
+                                    </div>
+
+                                    {/* Left arrow */}
+                                    <button
+                                        onClick={prev}
+                                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                            <polyline points="15 18 9 12 15 6" />
+                                        </svg>
+                                    </button>
+
+                                    {/* Right arrow */}
+                                    <button
+                                        onClick={next}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                            <polyline points="9 18 15 12 9 6" />
+                                        </svg>
+                                    </button>
                                 </div>
 
-                                {/* Left arrow */}
-                                <button
-                                    onClick={prev}
-                                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                        <polyline points="15 18 9 12 15 6" />
-                                    </svg>
-                                </button>
-
-                                {/* Right arrow */}
-                                <button
-                                    onClick={next}
-                                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                        <polyline points="9 18 15 12 9 6" />
-                                    </svg>
-                                </button>
+                                {/* Dots */}
+                                <div className="flex gap-2 mt-4">
+                                    {images.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setCurrentImage(index)}
+                                            className={`w-2.5 h-2.5 rounded-full transition-all ${currentImage === index ? "bg-cat-orange" : "bg-white/20"
+                                                }`}
+                                        />
+                                    ))}
+                                </div>
                             </div>
 
-                            {/* Dots */}
-                            <div className="flex gap-2 mt-4">
-                                {images.map((_, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setCurrentImage(index)}
-                                        className={`w-2.5 h-2.5 rounded-full transition-all ${currentImage === index ? "bg-cat-orange" : "bg-white/20"
-                                            }`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Product Info */}
-                        <div className="p-8 flex flex-col justify-center">
-                            <p className="text-cat-orange uppercase tracking-[0.25em] text-xs mb-3">
-                                Merchandise
-                            </p>
-                            <h2 className="font-sceageus text-4xl md:text-5xl leading-none mb-4">
-                                BLACK CAT TEE
-                            </h2>
-                            <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
-                                Heavy black cotton t-shirt featuring the official Last Cats on Earth
-                                cat logo. Screen printed locally in limited quantities.
-                            </p>
-                            <div className="flex items-center gap-4 mb-6">
-                                <span className="text-3xl font-semibold">25€</span>
-                                <span className="text-xs uppercase tracking-widest text-white/40">Limited Run</span>
-                            </div>
-
-                            {/* Size picker */}
-                            <div className="flex flex-col gap-2 mb-8">
-                                {SIZES.map((size) => (
-                                    <div key={size} className="flex items-center gap-4">
-                                        <span className={`w-10 text-sm font-medium transition-colors ${cart[size] > 0 ? "text-cat-orange" : "text-white/50"
-                                            }`}>
-                                            {size}
-                                        </span>
-                                        <div className="flex items-center gap-2">
-                                            <button
-                                                onClick={() => updateCart(size, -1)}
-                                                disabled={cart[size] === 0}
-                                                className="w-8 h-8 border border-white/20 hover:border-cat-orange disabled:opacity-20 disabled:cursor-not-allowed transition-colors text-lg leading-none flex items-center justify-center"
-                                            >−</button>
-                                            <span className="w-5 text-center text-sm tabular-nums">{cart[size]}</span>
-                                            <button
-                                                onClick={() => updateCart(size, +1)}
-                                                className="w-8 h-8 border border-white/20 hover:border-cat-orange transition-colors text-lg leading-none flex items-center justify-center"
-                                            >+</button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Size guide button */}
-                            <button
-                                onClick={() => setShowSizeGuide(true)}
-                                className="text-white/40 hover:text-white text-xs uppercase tracking-widest underline underline-offset-4 transition-colors mb-6 text-left"
-                            >
-                                Size guide
-                            </button>
-
-                            {/* Cart summary */}
-                            {totalItems > 0 && (
-                                <p className="text-white/50 text-xs uppercase tracking-widest mb-4">
-                                    Reserving: <span className="text-white">{cartSummary}</span>
-                                    {" — "}
-                                    <span className="text-cat-orange">{totalItems * 25}€</span>
+                            {/* Product Info */}
+                            <div className="p-8 flex flex-col justify-center">
+                                <p className="text-cat-orange uppercase tracking-[0.25em] text-xs mb-3">
+                                    Merchandise
                                 </p>
-                            )}
+                                <h2 className="font-sceageus text-4xl md:text-5xl leading-none mb-4">
+                                    BLACK CAT TEE
+                                </h2>
+                                <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
+                                    Heavy black cotton t-shirt featuring the official Last Cats on Earth
+                                    cat logo. Screen printed locally in limited quantities.
+                                </p>
+                                <div className="flex items-center gap-4 mb-6">
+                                    <span className="text-3xl font-semibold">25€</span>
+                                    <span className="text-xs uppercase tracking-widest text-white/40">Limited Run</span>
+                                </div>
 
-                            {/* Reserve Button */}
-                            <button
-                                onClick={() => setShowForm(true)}
-                                disabled={totalItems === 0}
-                                className="
-                                    inline-flex items-center justify-center
-                                    bg-cat-orange text-black font-semibold
-                                    px-8 py-4 rounded-xl
-                                    hover:scale-[1.02] hover:brightness-110
-                                    disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:brightness-100
-                                    transition-all duration-200
-                                    w-full md:w-fit
-                                "
-                            >
-                                RESERVE YOUR TEE
-                            </button>
+                                {/* Size picker */}
+                                <div className="flex flex-col gap-2 mb-8">
+                                    {SIZES.map((size) => (
+                                        <div key={size} className="flex items-center gap-4">
+                                            <span className={`w-10 text-sm font-medium transition-colors ${cart[size] > 0 ? "text-cat-orange" : "text-white/50"
+                                                }`}>
+                                                {size}
+                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={() => updateCart(size, -1)}
+                                                    disabled={cart[size] === 0}
+                                                    className="w-8 h-8 border border-white/20 hover:border-cat-orange disabled:opacity-20 disabled:cursor-not-allowed transition-colors text-lg leading-none flex items-center justify-center"
+                                                >−</button>
+                                                <span className="w-5 text-center text-sm tabular-nums">{cart[size]}</span>
+                                                <button
+                                                    onClick={() => updateCart(size, +1)}
+                                                    className="w-8 h-8 border border-white/20 hover:border-cat-orange transition-colors text-lg leading-none flex items-center justify-center"
+                                                >+</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
 
-                            <p className="text-white/40 text-xs mt-4">
-                                Free pickup at the show — no payment needed now.
-                            </p>
+                                {/* Size guide button */}
+                                <button
+                                    onClick={() => setShowSizeGuide(true)}
+                                    className="text-white/40 hover:text-white text-xs uppercase tracking-widest underline underline-offset-4 transition-colors mb-6 text-left"
+                                >
+                                    Size guide
+                                </button>
+
+                                {/* Cart summary */}
+                                {totalItems > 0 && (
+                                    <p className="text-white/50 text-xs uppercase tracking-widest mb-4">
+                                        Reserving: <span className="text-white">{cartSummary}</span>
+                                        {" — "}
+                                        <span className="text-cat-orange">{totalItems * 25}€</span>
+                                    </p>
+                                )}
+
+                                {/* Reserve Button */}
+                                <button
+                                    onClick={() => setShowForm(true)}
+                                    disabled={totalItems === 0}
+                                    className="
+                                        inline-flex items-center justify-center
+                                        bg-cat-orange text-black font-semibold
+                                        px-8 py-4 rounded-xl
+                                        hover:scale-[1.02] hover:brightness-110
+                                        disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:brightness-100
+                                        transition-all duration-200
+                                        w-full md:w-fit
+                                    "
+                                >
+                                    RESERVE YOUR TEE
+                                </button>
+
+                                <p className="text-white/40 text-xs mt-4">
+                                    Free pickup at the show — no payment needed now.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-24 w-full max-w-6xl mx-auto">
+                <Footer />
+            </div>
 
             {/* Reservation Modal */}
             {showForm && (
@@ -396,6 +404,7 @@ const MerchPage = () => {
                     </div>
                 </div>
             )}
+
             {/* Size Guide Modal */}
             {showSizeGuide && (
                 <div
@@ -452,7 +461,6 @@ const MerchPage = () => {
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

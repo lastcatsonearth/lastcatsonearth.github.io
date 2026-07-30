@@ -1,4 +1,4 @@
-import { Music, Calendar, Instagram, Youtube, Globe, Mail, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 interface LinkButtonProps {
   href: string;

@@ -21,14 +21,14 @@ const translations = {
         bio2: (
             <>
                 Our DNA is heavily influenced by the Californian pop-rock of the early 2000s, reelaborating those sounds with
-                influences from funk, rap, punk, and even electronic music. Our first single, <strong>"FLASHBACK!"</strong>, is already out and is getting
+                influences from funk, rap, punk, and even electronic music. Our first single, <strong>FLASHBACK!</strong>, is already out and is getting
                 the crowd dancing and singing along at our shows.
             </>
         ),
         bio3: (
             <>
                 During our live sets, we keep everyone on their toes by constantly shifting gears: alternating hard-hitting instrumentals,
-                melodic hooks, rap verses, choreography, and direct crowd-work. We don't just play music—the stage is our home.
+                melodic hooks, rap verses, choreography, and direct crowd-work. We don't just play music: the stage is our home.
             </>
         ),
     },

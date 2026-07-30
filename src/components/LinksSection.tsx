@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FaSpotify, FaApple } from "react-icons/fa";
+import { FaSpotify, FaApple, FaYoutube } from "react-icons/fa";
 import {
   Instagram,
-  Globe,
+  Briefcase,
   Mail,
   Youtube,
   ShoppingBag,
@@ -40,52 +40,59 @@ const LinksSection = () => {
       label: "Listen to FLASHBACK!",
       external: true,
       variant: "primary" as const,
+    },
+    {
+      href: "https://www.youtube.com/watch?v=2qNXd6pIi-Y&t=3448s",
+      icon: <FaYoutube className="w-5 h-5" />,
+      label: "Watch our latest show!",
+      external: true,
+      variant: "primary" as const,
     }
   ];
 
   const ourLinks = [
-    {
-      href: "https://www.instagram.com/lastcatsonearth/",
-      icon: <Instagram className="w-5 h-5" />,
-      label: "Instagram",
-      external: true,
-      variant: "secondary" as const,
-    },
-    {
-      href: "https://www.youtube.com/@lastcatsonearth",
-      icon: <Youtube className="w-5 h-5" />,
-      label: "YouTube",
-      external: true,
-      variant: "primary" as const,
-    },
-    {
-      href: "https://lastcatsonearth.de/booking",
-      icon: <Globe className="w-5 h-5" />,
-      label: "Website",
-      external: true,
-      variant: "primary" as const,
-    },
-    {
-      href: "https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw",
-      icon: <FaSpotify className="w-5 h-5" />,
-      label: "Spotify",
-      external: true,
-      variant: "secondary" as const,
-    },
-    {
-      href: "https://music.apple.com/at/artist/last-cats-on-earth/1887321356",
-      icon: <FaApple className="w-5 h-5" />,
-      label: "Apple Music",
-      external: true,
-      variant: "primary" as const,
-    },
-    {
-      href: "mailto:contact@lastcatsonearth.de",
-      icon: <Mail className="w-5 h-5" />,
-      label: "Contact",
-      external: false,
-      variant: "secondary" as const,
-    },
+    // {
+    //   href: "https://www.instagram.com/lastcatsonearth/",
+    //   icon: <Instagram className="w-5 h-5" />,
+    //   label: "Instagram",
+    //   external: true,
+    //   variant: "secondary" as const,
+    // },
+    // {
+    //   href: "https://www.youtube.com/@lastcatsonearth",
+    //   icon: <Youtube className="w-5 h-5" />,
+    //   label: "YouTube",
+    //   external: true,
+    //   variant: "primary" as const,
+    // },
+    // {
+    //   href: "https://lastcatsonearth.de/booking",
+    //   icon: <Briefcase className="w-5 h-5" />,
+    //   label: "Portfolio",
+    //   external: true,
+    //   variant: "primary" as const,
+    // },
+    // {
+    //   href: "https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw",
+    //   icon: <FaSpotify className="w-5 h-5" />,
+    //   label: "Spotify",
+    //   external: true,
+    //   variant: "secondary" as const,
+    // },
+    // {
+    //   href: "https://music.apple.com/at/artist/last-cats-on-earth/1887321356",
+    //   icon: <FaApple className="w-5 h-5" />,
+    //   label: "Apple Music",
+    //   external: true,
+    //   variant: "primary" as const,
+    // },
+    // {
+    //   href: "mailto:contact@lastcatsonearth.de",
+    //   icon: <Mail className="w-5 h-5" />,
+    //   label: "Contact",
+    //   external: false,
+    //   variant: "secondary" as const,
+    // },
   ];
 
   let animationIndex = 0;
@@ -209,9 +216,9 @@ const LinksSection = () => {
 
       {/* Our links */}
       <div>
-        <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
+        {/* <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
           Our links
-        </p>
+        </p> */}
         <div className="flex flex-col gap-2">
           {ourLinks.map((link) => {
             const delay = 0.2 + animationIndex++ * 0.05;
