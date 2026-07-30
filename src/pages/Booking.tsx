@@ -12,7 +12,7 @@ import BookingForm from "@/components/booking/BookingForm";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
 
 import flashbackAudio from "@/assets/booking/music/flashback.mp3";
-import flashbackCover from "@/assets/booking/music/flashback.jpg";
+import flashbackCover from "@/assets/booking/music/flashback.JPG";
 import photo1 from "@/assets/booking/photos/photo_1.png";
 import photo2 from "@/assets/booking/photos/photo_2.png";
 import photo3 from "@/assets/booking/photos/photo_3.png";
