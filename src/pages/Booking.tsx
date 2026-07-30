@@ -32,7 +32,6 @@ import loopVideo1 from "@/assets/booking/videos/loop_1.mp4";
 import loopVideo2 from "@/assets/booking/videos/loop_2.mp4";
 import loopVideo3 from "@/assets/booking/videos/loop_3.mp4";
 
-
 const liveLoops = [loopVideo1, loopVideo2, loopVideo3];
 
 const galleryShows = [
@@ -40,7 +39,7 @@ const galleryShows = [
         showTitle: "Woodstock Party",
         location: "Renazzo, IT",
         date: "Jul 2026",
-        photos: [renazzoPhoto1, renazzoPhoto2, renazzoPhoto3, renazzoPhoto4, renazzoPhoto5, renazzoPhoto6 /*, extra photos here */],
+        photos: [renazzoPhoto1, renazzoPhoto2, renazzoPhoto3, renazzoPhoto4, renazzoPhoto5, renazzoPhoto6],
     },
     {
         showTitle: "Alte Utting",
@@ -104,9 +103,21 @@ const Booking = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
+    // Prevent background body scrolling when the video modal is open
+    useEffect(() => {
+        if (activeVideoUrl) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [activeVideoUrl]);
+
     return (
         <LanguageProvider>
-            <div className="relative min-h-screen bg-black text-white px-6 pt-10 overflow-x-hidden flex flex-col justify-between">
+            <div className="relative min-h-screen bg-black text-white px-6 pt-10 flex flex-col justify-between touch-pan-y overflow-x-clip">
                 <StarfieldCanvas />
 
                 <div className="relative z-10 w-full flex-grow">
@@ -139,7 +150,7 @@ const Booking = () => {
                     )}
                 </div>
 
-                <div className="relative z-10 mt-24 w-full max-w-6xl mx-auto">
+                <div className="relative z-10 mt-24 mb-10 w-full max-w-6xl mx-auto">
                     <Footer />
                 </div>
             </div>
