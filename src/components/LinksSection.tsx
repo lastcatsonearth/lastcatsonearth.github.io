@@ -120,7 +120,7 @@ const LinksSection = () => {
         </h1>
 
         {/* Subtitle */}
-        <p className="-mt-0 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2">
+        <p className="-mt-0 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
           EXPLORE OUR MUSIC & UPCOMING GIGS
         </p>
       </div>
