@@ -7,6 +7,7 @@ interface SocialIconProps {
   icon: React.ReactNode;
   label: string;
   external?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 const SocialIcon = ({
@@ -14,6 +15,7 @@ const SocialIcon = ({
   icon,
   label,
   external = true,
+  onClick,
 }: SocialIconProps) => {
   const content = (
     <div className="relative flex flex-col items-center group">
@@ -40,6 +42,7 @@ const SocialIcon = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
+        onClick={onClick}
       >
         {content}
       </a>
@@ -54,6 +57,25 @@ const SocialIcon = ({
 };
 
 const Footer = () => {
+  const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Only attempt app deep linking on mobile user agents
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      e.preventDefault();
+      const appUri = "instagram://user?username=lastcatsonearth";
+      const webUri = "https://www.instagram.com/lastcatsonearth/";
+
+      // Attempt to open the Instagram native app scheme
+      window.location.href = appUri;
+
+      // Fallback to web link if app does not open within 1.5s
+      setTimeout(() => {
+        window.open(webUri, "_blank", "noopener,noreferrer");
+      }, 1500);
+    }
+  };
+
   return (
     <div className="mt-0">
       {/* Label placed above the horizontal rule */}
@@ -69,6 +91,7 @@ const Footer = () => {
             href="https://www.instagram.com/lastcatsonearth/"
             icon={<Instagram className="w-5 h-5" />}
             label="Instagram"
+            onClick={handleInstagramClick}
           />
 
           <SocialIcon
