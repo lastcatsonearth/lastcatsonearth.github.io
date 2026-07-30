@@ -58,18 +58,23 @@ const SocialIcon = ({
 
 const Footer = () => {
   const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Only attempt app deep linking on mobile user agents
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const ua = navigator.userAgent || navigator.vendor;
+    const isInstagramApp = /Instagram/i.test(ua);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
 
+    // If opened inside Instagram's in-app browser, let default web navigation handle it
+    if (isInstagramApp) {
+      return;
+    }
+
+    // Only attempt custom app deep linking on other mobile browsers (Safari/Chrome)
     if (isMobile) {
       e.preventDefault();
       const appUri = "instagram://user?username=lastcatsonearth";
       const webUri = "https://www.instagram.com/lastcatsonearth/";
 
-      // Attempt to open the Instagram native app scheme
       window.location.href = appUri;
 
-      // Fallback to web link if app does not open within 1.5s
       setTimeout(() => {
         window.open(webUri, "_blank", "noopener,noreferrer");
       }, 1500);
