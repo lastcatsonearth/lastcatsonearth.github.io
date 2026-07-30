@@ -1,5 +1,6 @@
 import { Instagram, Globe, Mail, Youtube } from "lucide-react";
 import { FaSpotify, FaApple } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SocialIcon = ({
   href,
@@ -11,17 +12,32 @@ const SocialIcon = ({
   icon: React.ReactNode;
   label: string;
   external?: boolean;
-}) => (
-  <a
-    href={href}
-    target={external ? "_blank" : undefined}
-    rel={external ? "noopener noreferrer" : undefined}
-    aria-label={label}
-    className="p-3 text-muted-foreground transition-all duration-300 hover:text-primary hover:scale-110"
-  >
-    {icon}
-  </a>
-);
+}) => {
+  const className =
+    "p-3 text-muted-foreground transition-all duration-300 hover:text-primary hover:scale-110";
+
+  // Use standard <a> for external links (Spotify, YouTube, mailto, etc.)
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        className={className}
+      >
+        {icon}
+      </a>
+    );
+  }
+
+  // Use React Router <Link> for internal routes (/booking, /merch, /)
+  return (
+    <Link to={href} aria-label={label} className={className}>
+      {icon}
+    </Link>
+  );
+};
 
 const Footer = () => {
   return (
@@ -40,10 +56,12 @@ const Footer = () => {
             label="YouTube"
           />
 
+          {/* Fixed: Internal router link to /booking on your new domain */}
           <SocialIcon
-            href="https://lastcatsonearth.github.io/booking"
+            href="/booking"
             icon={<Globe className="w-5 h-5" />}
             label="Website"
+            external={false}
           />
 
           <SocialIcon
@@ -62,7 +80,7 @@ const Footer = () => {
             href="mailto:contact@lastcatsonearth.de"
             icon={<Mail className="w-5 h-5" />}
             label="Contact"
-            external={false}
+            external={true}
           />
         </div>
 

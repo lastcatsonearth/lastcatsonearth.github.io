@@ -59,7 +59,7 @@ const LinksSection = () => {
       variant: "primary" as const,
     },
     {
-      href: "https://lastcatsonearth.github.io/booking",
+      href: "https://lastcatsonearth.de/booking",
       icon: <Globe className="w-5 h-5" />,
       label: "Website",
       external: true,
