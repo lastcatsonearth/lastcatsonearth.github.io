@@ -10,6 +10,8 @@ interface SocialIconProps {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
+const iconSize = "w-7 h-7";
+
 const SocialIcon = ({
   href,
   icon,
@@ -91,42 +93,42 @@ const Footer = () => {
       {/* Horizontal border line */}
       <footer className="bg-black -mt-2 -mb-10 overflow-visible">
         {/* Icons */}
-        <div className="flex items-center justify-center gap-2 sm:gap-4 flex-nowrap -mt-5 overflow-visible">
+        <div className="flex items-center justify-center gap-1 sm:gap-3 flex-nowrap -mt-5 overflow-visible">
           <SocialIcon
             href="https://www.instagram.com/lastcatsonearth/"
-            icon={<Instagram className="w-6 h-6" />}
+            icon={<Instagram className={iconSize} />}
             label="Instagram"
             onClick={handleInstagramClick}
           />
 
           <SocialIcon
             href="https://www.youtube.com/@lastcatsonearth"
-            icon={<Youtube className="w-6 h-6" />}
+            icon={<Youtube className="w-8 h-8" />}
             label="YouTube"
           />
 
           <SocialIcon
             href="/booking"
-            icon={<Briefcase className="w-6 h-6" />}
+            icon={<Briefcase className={iconSize} />}
             label="Portfolio"
             external={false}
           />
 
           <SocialIcon
             href="https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw"
-            icon={<FaSpotify className="w-6 h-6" />}
+            icon={<FaSpotify className={iconSize} />}
             label="Spotify"
           />
 
           <SocialIcon
             href="https://music.apple.com/at/artist/last-cats-on-earth/1887321356"
-            icon={<FaApple className="w-6 h-6" />}
+            icon={<FaApple className={iconSize} />}
             label="Apple Music"
           />
 
           <SocialIcon
             href="mailto:contact@lastcatsonearth.de"
-            icon={<Mail className="w-6 h-6" />}
+            icon={<Mail className={iconSize} />}
             label="Contact"
             external={true}
           />
