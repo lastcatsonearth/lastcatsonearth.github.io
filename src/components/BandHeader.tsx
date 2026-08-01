@@ -19,8 +19,8 @@ const BandHeader = ({ linkToHome = false }: BandHeaderProps) => {
     <header className="flex flex-col items-center text-center mb-10">
       {/* Band Logo */}
       {wrapper(
-        <div className="relative -mb-20 -mt-20 opacity-0 animate-fade-in">
-          <div className="w-[300px] h-[500px] md:w-[420px] md:h-[320px] lg:h-[500px] overflow-hidden -mt-20 md:-mt-10 lg:-mb-12">
+        <div className="relative z-10 -mb-20 -mt-20 opacity-0 animate-fade-in">
+          <div className="relative z-100 w-[280px] h-[430px] md:w-[300px] md:h-[260px] lg:h-[380px] overflow-hidden -mt-20 -mb-20 md:-mt-10 md:-mb-12">
             <img
               src={bandLogo}
               alt="LCoE Band Logo"

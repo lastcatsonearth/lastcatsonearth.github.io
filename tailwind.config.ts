@@ -60,7 +60,7 @@ export default {
           cyan: "hsl(var(--neon-cyan))",
         },
         cat: {
-          orange: "#e96500",
+          orange: "#D34303",
         }
       },
       borderRadius: {

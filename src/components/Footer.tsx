@@ -29,7 +29,7 @@ const SocialIcon = ({
       </div>
 
       {/* Icon Wrapper */}
-      <div className="p-3 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:scale-110">
+      <div className="p-3 text-cat-orange transition-all duration-300 group-hover:scale-110 group-hover:brightness-110">
         {icon}
       </div>
     </div>
@@ -62,12 +62,10 @@ const Footer = () => {
     const isInstagramApp = /Instagram/i.test(ua);
     const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
 
-    // If opened inside Instagram's in-app browser, let default web navigation handle it
     if (isInstagramApp) {
       return;
     }
 
-    // Only attempt custom app deep linking on other mobile browsers (Safari/Chrome)
     if (isMobile) {
       e.preventDefault();
       const appUri = "instagram://user?username=lastcatsonearth";
@@ -84,55 +82,60 @@ const Footer = () => {
   return (
     <div className="mt-0">
       {/* Label placed above the horizontal rule */}
-      <p className="mb-4 text-sm uppercase tracking-widest text-muted-foreground text-center">
-        Our links
-      </p>
+      <div className="flex justify-center mb-4">
+        <p className="inline-block px-3 py-1 bg-black font-bold text-sm uppercase tracking-[0.2em] text-cat-orange rounded-full">
+          LISTEN • WATCH • FOLLOW
+        </p>
+      </div>
 
       {/* Horizontal border line */}
-      <footer className="border-t border-border pt-6 bg-black -mt-2 -mb-10 overflow-visible">
-        {/* Force icons on a single line with flex-nowrap and overflow-visible */}
+      <footer className="bg-black -mt-2 -mb-10 overflow-visible">
+        {/* Icons */}
         <div className="flex items-center justify-center gap-2 sm:gap-4 flex-nowrap -mt-5 overflow-visible">
           <SocialIcon
             href="https://www.instagram.com/lastcatsonearth/"
-            icon={<Instagram className="w-5 h-5" />}
+            icon={<Instagram className="w-6 h-6" />}
             label="Instagram"
             onClick={handleInstagramClick}
           />
 
           <SocialIcon
             href="https://www.youtube.com/@lastcatsonearth"
-            icon={<Youtube className="w-5 h-5" />}
+            icon={<Youtube className="w-6 h-6" />}
             label="YouTube"
           />
 
           <SocialIcon
             href="/booking"
-            icon={<Briefcase className="w-5 h-5" />}
+            icon={<Briefcase className="w-6 h-6" />}
             label="Portfolio"
             external={false}
           />
 
           <SocialIcon
             href="https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw"
-            icon={<FaSpotify className="w-5 h-5" />}
+            icon={<FaSpotify className="w-6 h-6" />}
             label="Spotify"
           />
 
           <SocialIcon
             href="https://music.apple.com/at/artist/last-cats-on-earth/1887321356"
-            icon={<FaApple className="w-5 h-5" />}
+            icon={<FaApple className="w-6 h-6" />}
             label="Apple Music"
           />
 
           <SocialIcon
             href="mailto:contact@lastcatsonearth.de"
-            icon={<Mail className="w-5 h-5" />}
+            icon={<Mail className="w-6 h-6" />}
             label="Contact"
             external={true}
           />
         </div>
 
-        <p className="text-center text-xs text-muted-foreground mt-6 mb-4">
+        {/* Horizontal line above credits */}
+        <div className="border-t border-border mt-4 pt-4" />
+
+        <p className="text-center text-xs text-muted-foreground mt-2 mb-4">
           © 2026 Last Cats on Earth. All rights reserved.
         </p>
       </footer>

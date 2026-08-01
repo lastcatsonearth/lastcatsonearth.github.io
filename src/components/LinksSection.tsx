@@ -42,8 +42,8 @@ const LinksSection = () => {
       variant: "primary" as const,
     },
     {
-      href: "https://www.youtube.com/watch?v=2qNXd6pIi-Y&t=3448s",
       icon: <FaYoutube className="w-5 h-5" />,
+      href: "https://www.youtube.com/watch?v=dWhzsrdGyko",
       label: "Watch our latest show!",
       external: true,
       variant: "primary" as const,
@@ -119,23 +119,32 @@ const LinksSection = () => {
           </div>
         </div>
       )}
-      <div className="bg-black -mt-6 -mb-3">
+      <div className="bg-black mt-6 -mb-3 text-center">
 
         {/* Band Name */}
-        <h1 className="font-sceageus [-webkit-font-smoothing:antialiased] text-3xl -mt-10 md:text-4xl tracking-[-0.03em] leading-none text-white text-outline-black opacity-0 animate-fade-in-delay-1 lg:mt-10">
+        {/* <h1 className="font-sceageus [-webkit-font-smoothing:antialiased] text-2xl -mt-10 md:text-4xl tracking-[-0.03em] leading-none text-white text-outline-black opacity-0 animate-fade-in-delay-1 lg:mt-10">
           LAST CATS ON EARTH
-        </h1>
+        </h1> */}
 
         {/* Subtitle */}
-        <p className="-mt-0 text-sm text-cat-orange font-medium tracking-widest uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
-          EXPLORE OUR MUSIC & UPCOMING GIGS
+        <p className="text-2xl md:text-2xl text-cat-white font-bold tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
+          MUNICH FUNKY CATS
+        </p>
+        {/* Subtitle */}
+        <p className="text-s md:text-xs text-cat-white  tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
+
+        </p>
+        <p className="text-s md:text-s text-cat-white  tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
+          ORIGINAL MUSIC • LIVE SHOWS
         </p>
       </div>
       {/* What's new */}
       <div>
-        <p className="mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
-          What's new?
-        </p>
+        <div className="flex justify-center">
+          <p className="mb-3 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange bg-black px-3 py-1 rounded-md">
+            WHAT'S NEW?
+          </p>
+        </div>
         <div className="flex flex-col gap-2">
           {whatsNew.map((link) => {
             const delay = 0.2 + animationIndex++ * 0.05;
@@ -175,9 +184,11 @@ const LinksSection = () => {
 
       {/* Support us */}
       <div>
-        <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
-          Support us
-        </p>
+        <div className="flex justify-center">
+          <p className="-mt-2 mb-3 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange text-center bg-black px-3 py-1 rounded-md">
+            SUPPORT US
+          </p>
+        </div>
         <div className="flex flex-col gap-2">
           <div
             className="opacity-0"
