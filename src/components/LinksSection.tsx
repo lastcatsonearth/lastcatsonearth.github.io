@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaSpotify, FaApple, FaYoutube } from "react-icons/fa";
+import { FaSpotify, FaApple, FaYoutube, FaFacebook } from "react-icons/fa";
 import {
   Instagram,
   Briefcase,
@@ -45,6 +45,20 @@ const LinksSection = () => {
       icon: <FaYoutube className="w-5 h-5" />,
       href: "https://www.youtube.com/watch?v=dWhzsrdGyko",
       label: "Watch our latest show!",
+      external: true,
+      variant: "primary" as const,
+    },
+    {
+      icon: <FaFacebook className="w-5 h-5" />,
+      href: "https://www.facebook.com/events/1727733635230331?acontext=%7B%22event_action_history%22%3A[%7B%22surface%22%3A%22user_timeline%22%7D%2C%7B%22mechanism%22%3A%22attachment%22%2C%22surface%22%3A%22newsfeed%22%7D]%2C%22ref_notif_type%22%3Anull%7D",
+      label: "Come to our next show!",
+      external: true,
+      variant: "primary" as const,
+    },
+    {
+      icon: <Briefcase className="w-5 h-5" />,
+      href: "https://lastcatsonearth.de/booking",
+      label: "Check out our portfolio",
       external: true,
       variant: "primary" as const,
     }
@@ -183,7 +197,7 @@ const LinksSection = () => {
       </div> */}
 
       {/* Support us */}
-      <div>
+      {/* <div>
         <div className="flex justify-center">
           <p className="-mt-2 mb-3 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange text-center bg-black px-3 py-1 rounded-md">
             SUPPORT US
@@ -223,7 +237,7 @@ const LinksSection = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Our links */}
       <div>

@@ -1,5 +1,5 @@
 import { Instagram, Briefcase, Mail, Youtube } from "lucide-react";
-import { FaSpotify, FaApple } from "react-icons/fa";
+import { FaSpotify, FaApple, FaFacebook, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 interface SocialIconProps {
@@ -93,7 +93,7 @@ const Footer = () => {
       {/* Horizontal border line */}
       <footer className="bg-black -mt-2 -mb-10 overflow-visible">
         {/* Icons */}
-        <div className="flex items-center justify-center gap-1 sm:gap-3 flex-nowrap -mt-5 overflow-visible">
+        <div className="flex items-center justify-center gap-0 sm:gap-0 flex-nowrap -mt-5 overflow-visible">
           <SocialIcon
             href="https://www.instagram.com/lastcatsonearth/"
             icon={<Instagram className={iconSize} />}
@@ -108,11 +108,17 @@ const Footer = () => {
           />
 
           <SocialIcon
-            href="/booking"
-            icon={<Briefcase className={iconSize} />}
-            label="Portfolio"
-            external={false}
+            href="https://www.facebook.com/lastcatsonearth"
+            icon={<FaFacebook className={iconSize} />}
+            label="Facebook"
           />
+
+          <SocialIcon
+            href="https://www.tiktok.com/@lastcatsonearthband"
+            icon={<FaTiktok className={iconSize} />}
+            label="TikTok"
+          />
+
 
           <SocialIcon
             href="https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw"
@@ -124,6 +130,13 @@ const Footer = () => {
             href="https://music.apple.com/at/artist/last-cats-on-earth/1887321356"
             icon={<FaApple className={iconSize} />}
             label="Apple Music"
+          />
+
+          <SocialIcon
+            href="/booking"
+            icon={<Briefcase className={iconSize} />}
+            label="Portfolio"
+            external={false}
           />
 
           <SocialIcon
