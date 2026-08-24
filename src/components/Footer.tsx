@@ -133,13 +133,6 @@ const Footer = () => {
           />
 
           <SocialIcon
-            href="/booking"
-            icon={<Briefcase className={iconSize} />}
-            label="Portfolio"
-            external={false}
-          />
-
-          <SocialIcon
             href="mailto:contact@lastcatsonearth.de"
             icon={<Mail className={iconSize} />}
             label="Contact"
