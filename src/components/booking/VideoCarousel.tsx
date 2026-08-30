@@ -11,6 +11,12 @@ export interface LiveVideo {
 
 export const liveVideos: LiveVideo[] = [
     {
+        id: "dWhzsrdGyko",
+        title: "Full Show",
+        venue: "Renazzo, Italy",
+        thumbnail: "https://img.youtube.com/vi/dWhzsrdGyko/maxresdefault.jpg",
+    },
+    {
         id: "k0L_bSeLRPI",
         title: "FLASHBACK!",
         venue: "Alte Utting, Munich",
@@ -118,7 +124,7 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
                             onClick={() =>
                                 onVideoSelect(`https://www.youtube.com/embed/${video.id}?autoplay=1`)
                             }
-                            className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 p-1.5 cursor-pointer group shadow-xl transition-transform duration-300 hover:scale-[1.02]"
+                            className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white/[0.02] border border-white/10 p-1.5 cursor-pointer group shadow-xl transition-transform duration-300 hover:scale-[1.02]"
                         >
                             <div className="absolute inset-0 border border-dashed border-white/5 rounded-2xl m-2 group-hover:border-cat-orange/30 transition z-20" />
 

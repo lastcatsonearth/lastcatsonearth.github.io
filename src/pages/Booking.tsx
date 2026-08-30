@@ -10,9 +10,6 @@ import BookingForm from "@/components/booking/BookingForm";
 import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
 
-import flashbackAudio from "@/assets/booking/music/flashback.mp3";
-import flashbackCover from "@/assets/booking/music/flashback.jpg";
-
 // Alte Utting Photos
 import uttingPhoto1 from "@/assets/booking/photos/alte_utting/photo_1.png";
 import uttingPhoto2 from "@/assets/booking/photos/alte_utting/photo_2.png";
@@ -32,6 +29,7 @@ import loopVideo1 from "@/assets/booking/videos/loop_1.mp4";
 import loopVideo2 from "@/assets/booking/videos/loop_2.mp4";
 import loopVideo3 from "@/assets/booking/videos/loop_3.mp4";
 
+const NEVER_STOP_RELEASED = false;
 const liveLoops = [loopVideo1, loopVideo2, loopVideo3];
 
 const galleryShows = [
@@ -76,12 +74,7 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
                 <VideoMarquee videos={liveLoops} />
                 <VideoCarousel onVideoSelect={onVideoSelect} />
                 <PhotoGallery shows={galleryShows} />
-                <AudioPlayer
-                    src={flashbackAudio}
-                    coverSrc={flashbackCover}
-                    title="Flashback"
-                    artist="Last Cats on Earth"
-                />
+                <AudioPlayer />
                 <BookingForm />
             </main>
         </>
