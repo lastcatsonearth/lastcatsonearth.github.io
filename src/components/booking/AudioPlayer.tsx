@@ -93,7 +93,7 @@ const SinglePlayer = ({ track }: { track: Track }) => {
 
     return (
         <div className="text-center">
-            <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-7 backdrop-blur-md shadow-2xl relative group w-fit mx-auto">
+            <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-3 sm:p-5 md:p-7 backdrop-blur-md shadow-2xl relative group w-full min-w-0 mx-auto">
                 <div className="absolute inset-0 border border-dashed border-white/5 rounded-2xl m-1 pointer-events-none group-hover:border-cat-orange/20 transition-colors" />
 
                 <audio
@@ -114,7 +114,7 @@ const SinglePlayer = ({ track }: { track: Track }) => {
                 />
 
                 {/* Cover */}
-                <div className="relative aspect-square w-60 h-60 mx-auto rounded-lg overflow-hidden shadow-lg border border-white/10">
+                <div className="relative aspect-square w-full max-w-60 mx-auto rounded-lg overflow-hidden shadow-lg border border-white/10">
                     <img
                         src={track.coverSrc}
                         alt={`${track.title} ${t.altTemplate}`}
@@ -131,9 +131,9 @@ const SinglePlayer = ({ track }: { track: Track }) => {
                 </div>
 
                 {/* Song information */}
-                <div className="relative z-10 mt-6 mb-5">
-                    <div className="flex items-center justify-center gap-2">
-                        <h3 className="text-xl font-bold tracking-widest uppercase">
+                <div className="relative z-10 mt-6 mb-5 min-w-0">
+                    <div className="flex items-center justify-center gap-2 min-w-0">
+                        <h3 className="text-lg sm:text-xl font-bold tracking-widest uppercase truncate">
                             {track.title}
                         </h3>
 
@@ -142,7 +142,7 @@ const SinglePlayer = ({ track }: { track: Track }) => {
                                 href={track.spotifyUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-green-500 hover:text-green-400 transition-colors"
+                                className="text-green-500 hover:text-green-400 transition-colors flex-shrink-0"
                                 aria-label={t.spotify}
                             >
                                 <FaSpotify size={20} />
@@ -156,7 +156,7 @@ const SinglePlayer = ({ track }: { track: Track }) => {
                 </div>
 
                 {/* Fixed player area */}
-                <div className="h-10 w-60 relative z-10">
+                <div className="h-10 w-full max-w-60 mx-auto relative z-10">
                     {released ? (
                         <div className="h-full rounded-full bg-black/50 border border-white/5 px-3 backdrop-blur-sm flex items-center gap-2">
                             <button
@@ -227,7 +227,7 @@ const AudioPlayer = () => {
                 {t.category}
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 md:gap-10 max-w-5xl mx-auto px-2 sm:px-4">
                 {tracks.map((track) => (
                     <SinglePlayer key={track.title} track={track} />
                 ))}
