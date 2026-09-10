@@ -33,6 +33,8 @@ const tracks: Track[] = [
         title: "NEVER STOP",
         artist: "Last Cats on Earth",
         released: true,
+        spotifyUrl:
+            "https://open.spotify.com/intl-it/track/7AJohGsgWQTzB32uLrYuYk?si=9a7f1cfdf97940da",
         releaseDate: "11 September",
     },
 ];
