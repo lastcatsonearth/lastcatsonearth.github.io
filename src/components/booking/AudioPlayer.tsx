@@ -32,7 +32,7 @@ const tracks: Track[] = [
         coverSrc: neverStopCover,
         title: "NEVER STOP",
         artist: "Last Cats on Earth",
-        released: false,
+        released: true,
         releaseDate: "11 September",
     },
 ];

@@ -35,9 +35,9 @@ const LinksSection = () => {
 
   const whatsNew = [
     {
-      href: "https://distrokid.com/hyperfollow/lastcatsonearth/never-stop",
+      href: "https://open.spotify.com/intl-it/track/7AJohGsgWQTzB32uLrYuYk?si=f128b3f87145490d",
       icon: <FaSpotify className="w-5 h-5" />,
-      label: "Presave now NEVER STOP!",
+      label: "Listen to NEVER STOP!",
       external: true,
       variant: "primary" as const,
     },
