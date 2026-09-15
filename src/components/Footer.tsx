@@ -1,6 +1,6 @@
 import { Instagram, Briefcase, Mail, Youtube } from "lucide-react";
 import { FaSpotify, FaApple, FaFacebook, FaTiktok } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface SocialIconProps {
   href: string;
@@ -59,6 +59,12 @@ const SocialIcon = ({
 };
 
 const Footer = () => {
+  const location = useLocation();
+
+  // Pages requiring compact bottom padding
+  const isCompactPage =
+    location.pathname === "/" || location.pathname === "/booking";
+
   const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const ua = navigator.userAgent || navigator.vendor;
     const isInstagramApp = /Instagram/i.test(ua);
@@ -91,7 +97,7 @@ const Footer = () => {
       </div>
 
       {/* Horizontal border line */}
-      <footer className="bg-black -mt-2 -mb-10 overflow-visible">
+      <footer className="bg-black -mt-2 mb-0 pb-0 overflow-visible">
         {/* Icons */}
         <div className="flex items-center justify-center gap-0 sm:gap-0 flex-nowrap -mt-5 overflow-visible">
           <SocialIcon
@@ -119,7 +125,6 @@ const Footer = () => {
             label="TikTok"
           />
 
-
           <SocialIcon
             href="https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw"
             icon={<FaSpotify className={iconSize} />}
@@ -143,9 +148,27 @@ const Footer = () => {
         {/* Horizontal line above credits */}
         <div className="border-t border-border mt-4 pt-4" />
 
-        <p className="text-center text-xs text-muted-foreground mt-2 mb-4">
-          © 2026 Last Cats on Earth. All rights reserved.
-        </p>
+        <div
+          className={` -mb-6 text-center text-xs text-muted-foreground mt-0 space-y-1.5 ${isCompactPage ? "pb-1" : "pb-8"
+            }`}
+        >
+          <p>© 2026 Last Cats on Earth. All rights reserved.</p>
+          <p className="flex items-center justify-center gap-2">
+            <Link
+              to="/impressum"
+              className="hover:text-cat-orange transition-colors underline underline-offset-4"
+            >
+              Impressum
+            </Link>
+            <span>•</span>
+            <Link
+              to="/privacy"
+              className="hover:text-cat-orange transition-colors underline underline-offset-4"
+            >
+              Privacy Policy
+            </Link>
+          </p>
+        </div>
       </footer>
     </div>
   );

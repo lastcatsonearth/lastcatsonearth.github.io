@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import MerchPage from "./pages/MerchPage";
 import Booking from "./pages/Booking";
 import NotFound from "./pages/NotFound";
+import Impressum from "./pages/Impressum";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/merch" element={<MerchPage />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
