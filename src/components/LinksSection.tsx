@@ -50,7 +50,7 @@ const LinksSection = () => {
     },
     {
       icon: <FaFacebook className="w-5 h-5" />,
-      href: "https://www.facebook.com/events/1727733635230331?acontext=%7B%22event_action_history%22%3A[%7B%22surface%22%3A%22user_timeline%22%7D%2C%7B%22mechanism%22%3A%22attachment%22%2C%22surface%22%3A%22newsfeed%22%7D]%2C%22ref_notif_type%22%3Anull%7D",
+      href: "https://www.bandsintown.com/e/108894107?&came_from=210&_ga=2.232485528.661324463.1789403087-2097931406.1787566403",
       label: "Come to our next show!",
       external: true,
       variant: "primary" as const,

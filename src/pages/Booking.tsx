@@ -25,6 +25,26 @@ import renazzoPhoto4 from "@/assets/booking/photos/renazzo/4.jpg";
 import renazzoPhoto5 from "@/assets/booking/photos/renazzo/5.jpg";
 import renazzoPhoto6 from "@/assets/booking/photos/renazzo/6.jpg";
 
+// Zamanand Photos
+
+import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.jpg";
+import zamanandPhoto2 from "@/assets/booking/photos/zamanand/2.jpg";
+import zamanandPhoto3 from "@/assets/booking/photos/zamanand/3.jpg";
+import zamanandPhoto4 from "@/assets/booking/photos/zamanand/4.jpg";
+import zamanandPhoto5 from "@/assets/booking/photos/zamanand/5.jpeg";
+import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.jpeg";
+import zamanandPhoto7 from "@/assets/booking/photos/zamanand/7.jpeg";
+import zamanandPhoto8 from "@/assets/booking/photos/zamanand/8.jpeg";
+import zamanandPhoto9 from "@/assets/booking/photos/zamanand/9.jpeg";
+import zamanandPhoto10 from "@/assets/booking/photos/zamanand/10.jpeg";
+import zamanandPhoto11 from "@/assets/booking/photos/zamanand/11.jpg";
+import zamanandPhoto12 from "@/assets/booking/photos/zamanand/12.jpeg";
+import zamanandPhoto13 from "@/assets/booking/photos/zamanand/13.jpeg";
+import zamanandPhoto14 from "@/assets/booking/photos/zamanand/14.jpeg";
+import zamanandPhoto15 from "@/assets/booking/photos/zamanand/15.jpeg";
+import zamanandPhoto16 from "@/assets/booking/photos/zamanand/16.jpeg";
+import zamanandPhoto17 from "@/assets/booking/photos/zamanand/17.jpeg";
+
 import loopVideo1 from "@/assets/booking/videos/loop_1.mp4";
 import loopVideo2 from "@/assets/booking/videos/loop_2.mp4";
 import loopVideo3 from "@/assets/booking/videos/loop_3.mp4";
@@ -33,6 +53,30 @@ const NEVER_STOP_RELEASED = false;
 const liveLoops = [loopVideo1, loopVideo2, loopVideo3];
 
 const galleryShows = [
+    {
+        showTitle: "Zamanand Festival",
+        location: "Munich, DE",
+        date: "Sep 2026",
+        photos: [
+            zamanandPhoto1,
+            zamanandPhoto2,
+            zamanandPhoto3,
+            zamanandPhoto4,
+            zamanandPhoto5,
+            zamanandPhoto6,
+            zamanandPhoto7,
+            zamanandPhoto8,
+            zamanandPhoto9,
+            zamanandPhoto10,
+            zamanandPhoto11,
+            zamanandPhoto12,
+            zamanandPhoto13,
+            zamanandPhoto14,
+            zamanandPhoto15,
+            zamanandPhoto16,
+            zamanandPhoto17,
+        ],
+    },
     {
         showTitle: "Woodstock Party",
         location: "Renazzo, IT",

@@ -102,6 +102,7 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
                 {shows.map((show, showIdx) => {
                     const visiblePhotos = show.photos.slice(0, 5);
                     const remainingCount = show.photos.length - 5;
+                    const isFeatured = show.showTitle === "Zamanand Festival";
 
                     return (
                         <div key={showIdx} className="space-y-3">
@@ -133,14 +134,17 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
                                         <div
                                             key={photoIdx}
                                             onClick={() => setActiveSelection({ showIdx, photoIdx })}
-                                            className={`relative aspect-[4/3] bg-white/[0.02] border border-white/10 rounded-lg overflow-hidden group cursor-pointer ${photoIdx >= 3 ? "hidden sm:block" : ""
+                                            className={`relative ${isFeatured ? "aspect-[4/3]" : "aspect-[7/3]"
+                                                } bg-white/[0.02] border border-white/10 rounded-lg overflow-hidden group cursor-pointer ${photoIdx >= 3 ? "hidden sm:block" : ""
                                                 }`}
                                         >
                                             <img
                                                 src={photo}
                                                 alt={`${t.altTemplate} - ${show.showTitle} ${photoIdx + 1}`}
-                                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                                                className={`w-full h-full object-cover ${isFeatured ? "object-center" : "object-[center_40%]"
+                                                    } opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300`}
                                             />
+
                                             {/* Overflow Counter Badge */}
                                             {isLastItem && (
                                                 <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center group-hover:bg-black/40 transition-colors">
