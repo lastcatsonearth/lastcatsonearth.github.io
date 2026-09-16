@@ -133,7 +133,7 @@ const LinksSection = () => {
           </div>
         </div>
       )}
-      <div className="bg-black mt-6 -mb-3 text-center">
+      <div className="mt-6 -mb-3 text-center">
 
         {/* Band Name */}
         {/* <h1 className="font-sceageus [-webkit-font-smoothing:antialiased] text-2xl -mt-10 md:text-4xl tracking-[-0.03em] leading-none text-white text-outline-black opacity-0 animate-fade-in-delay-1 lg:mt-10">
@@ -155,7 +155,7 @@ const LinksSection = () => {
       {/* What's new */}
       <div>
         <div className="flex justify-center">
-          <p className="mb-3 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange bg-black px-3 py-1 rounded-md">
+          <p className="mb-1 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange px-3 py-1 rounded-md">
             WHAT'S NEW?
           </p>
         </div>

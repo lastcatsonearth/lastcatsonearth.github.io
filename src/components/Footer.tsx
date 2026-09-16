@@ -91,13 +91,13 @@ const Footer = () => {
     <div className="mt-0">
       {/* Label placed above the horizontal rule */}
       <div className="flex justify-center mb-4">
-        <p className="inline-block px-3 py-1 bg-black font-bold text-sm uppercase tracking-[0.2em] text-cat-orange rounded-full">
+        <p className="inline-block px-3 py-1 -mb-1 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange rounded-full">
           LISTEN • WATCH • FOLLOW
         </p>
       </div>
 
       {/* Horizontal border line */}
-      <footer className="bg-black -mt-2 mb-0 pb-0 overflow-visible">
+      <footer className=" -mt-2 mb-0 pb-0 overflow-visible">
         {/* Icons */}
         <div className="flex items-center justify-center gap-0 sm:gap-0 flex-nowrap -mt-5 overflow-visible">
           <SocialIcon
@@ -146,10 +146,10 @@ const Footer = () => {
         </div>
 
         {/* Horizontal line above credits */}
-        <div className="border-t border-border mt-4 pt-4" />
+        <div className="border-t border-border mt-2 pt-4" />
 
         <div
-          className={` -mb-6 text-center text-xs text-muted-foreground mt-0 space-y-1.5 ${isCompactPage ? "pb-1" : "pb-8"
+          className={` -mb-0 text-center text-xs text-muted-foreground mt-0 space-y-1.5 ${isCompactPage ? "pb-1" : "pb-8"
             }`}
         >
           <p>© 2026 Last Cats on Earth. All rights reserved.</p>

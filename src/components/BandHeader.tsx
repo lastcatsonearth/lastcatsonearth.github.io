@@ -16,7 +16,7 @@ const BandHeader = ({ linkToHome = false }: BandHeaderProps) => {
     );
 
   return (
-    <header className="flex flex-col items-center text-center mb-10">
+    <header className="flex flex-col items-center text-center mb-10 mt-10">
       {/* Band Logo */}
       {wrapper(
         <div className="relative z-10 -mb-20 -mt-20 opacity-0 animate-fade-in">
