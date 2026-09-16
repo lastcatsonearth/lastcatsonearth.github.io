@@ -14,21 +14,23 @@ const translations = {
         welcome: "Welcome bookers & fans",
         bio1: (
             <>
-                Based in Munich, <strong>Last Cats on Earth</strong> deliver a mix of hard rock, funk, indie, and alternative rock sounds.
+                Based in Munich, <strong>Last Cats on Earth</strong> deliver a mix of hard rock, funk, and alternative rock sounds.
                 Our main rule is originality: whether it's our original tracks or reinterpreting famous covers, we always do it our own way.
             </>
         ),
         bio2: (
             <>
-                Our DNA is heavily influenced by the Californian pop-rock of the early 2000s, reelaborating those sounds with
-                influences from funk, rap, punk, and even electronic music. Our first single, <strong>FLASHBACK!</strong>, is already out and is getting
-                the crowd dancing and singing along at our shows.
+                Our DNA is heavily influenced by the Californian pop-rock of the early 2000s, reworking those sounds with influences
+                from funk, rap, punk, and even electronic music. Our latest single, <strong>NEVER STOP</strong>, is out now, following
+                our debut <strong>FLASHBACK!</strong>. Our live set also features a growing collection of original material that has yet
+                to be released, giving audiences the opportunity to discover songs they won't find anywhere else.
             </>
         ),
         bio3: (
             <>
-                During our live sets, we keep everyone on their toes by constantly shifting gears: alternating hard-hitting instrumentals,
-                melodic hooks, rap verses, choreography, and direct crowd-work. We don't just play music: the stage is our home.
+                From intimate venues to bigger stages, our shows keep everyone on their toes by constantly shifting gears:
+                from hard-hitting instrumentals and melodic hooks to rap verses, choreography, and direct crowd-work. We don't just
+                play music: the stage is our home.
             </>
         ),
     },
@@ -36,20 +38,24 @@ const translations = {
         welcome: "Willkommen Bookers & Fans",
         bio1: (
             <>
-                Ansässig in München liefern <strong>Last Cats on Earth</strong> einen Mix aus Hard Rock, Funk, Indie und Alternative Rock.
-                Unsere wichtigste Regel ist Originalität: Egal ob wir eigene Tracks raushauen oder berühmte Cover komplett umgestalten, wir machen es immer auf unsere eigene Art.
+                Ansässig in München liefern <strong>Last Cats on Earth</strong> einen Mix aus Hard Rock, Funk und Alternative Rock.
+                Unsere wichtigste Regel ist Originalität: Egal ob wir eigene Tracks raushauen oder berühmte Cover komplett umgestalten,
+                wir machen es immer auf unsere eigene Art.
             </>
         ),
         bio2: (
             <>
-                Unsere DNA ist stark vom kalifornischen Pop-Rock der frühen 2000er Jahre geprägt, dessen Sound wir mit Einflüssen aus Funk, Rap,
-                Punk und sogar elektronischer Musik neu interpretieren. Unsere erste Single <strong>"FLASHBACK!"</strong> ist bereits veröffentlicht und bringt das Publikum bei unseren Shows zum Tanzen und Mitsingen.
+                Unsere DNA ist stark vom kalifornischen Pop-Rock der frühen 2000er Jahre geprägt, dessen Sound wir mit Einflüssen aus
+                Funk, Rap, Punk und sogar elektronischer Musik neu interpretieren. Unsere neueste Single <strong>NEVER STOP</strong> ist
+                jetzt draußen und folgt auf unser Debüt <strong>FLASHBACK!</strong>. Unser Live-Set umfasst außerdem eine stetig
+                wachsende Sammlung eigener Songs, die noch nicht veröffentlicht sind, und gibt dem Publikum die Möglichkeit, Musik zu
+                entdecken, die es sonst nirgendwo zu hören gibt.
             </>
         ),
         bio3: (
             <>
-                Bei unseren Live-Sets halten wir alle auf Trab, indem wir ständig den Gang wechseln: Wir wechseln zwischen knallharten Instrumentals,
-                melodischen Hooks, Rap-Versen, Choreografien und direkter Interaktion mit dem Publikum. Wir machen nicht einfach nur Musik – die Bühne ist unser Zuhause.
+                Von kleinen Clubs bis hin zu größeren Bühnen halten unsere Shows das Publikum ständig auf Trab und wechseln dabei immer wieder den Gang: von knallharten Instrumentals und melodischen Hooks bis hin zu Rap-Versen, Choreografien und direkter Interaktion mit dem Publikum. Wir machen nicht einfach nur Musik: Die Bühne ist unser Zuhause.
+
             </>
         ),
     }
