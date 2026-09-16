@@ -20,6 +20,7 @@ const translations = {
         altTemplate: "Stage action photo",
         lightboxAlt: "Expanded shot",
         counterTemplate: "of",
+        back: "Back",
     },
     de: {
         category: "Fotos",
@@ -28,6 +29,7 @@ const translations = {
         altTemplate: "Konzertfoto",
         lightboxAlt: "Vergrößerte Ansicht",
         counterTemplate: "von",
+        back: "Zurück",
     },
 };
 
@@ -41,10 +43,8 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const minSwipeDistance = 50;
-
     const currentShow = activeSelection !== null ? shows[activeSelection.showIdx] : null;
 
-    // Preload next and previous images to eliminate loading delays during navigation
     useEffect(() => {
         if (!activeSelection || !currentShow) return;
 
@@ -142,7 +142,7 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
                                 )}
                             </div>
 
-                            {/* 1 Row Desktop / 3 Column Mobile Grid */}
+                            {/* Grid */}
                             <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
                                 {visiblePhotos.map((photo, photoIdx) => {
                                     const isLastItem = photoIdx === 4 && remainingCount > 0;
@@ -185,74 +185,94 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
             {/* Lightbox Overlay */}
             {activeSelection !== null && currentShow && (
                 <div
-                    className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 animate-fadeIn backdrop-blur-sm touch-none"
+                    className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 animate-fadeIn touch-none"
                     onClick={() => setActiveSelection(null)}
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                 >
-                    <button
-                        className="absolute top-6 right-6 text-white/60 hover:text-white text-3xl font-light transition-colors z-50 p-2"
-                        onClick={() => setActiveSelection(null)}
-                        aria-label="Close overlay"
-                    >
-                        ✕
-                    </button>
-
-                    <button
-                        className="absolute left-4 md:left-8 text-white/40 hover:text-cat-orange text-4xl p-4 transition-colors z-50 select-none bg-black/20 rounded-full hover:bg-white/5 hidden md:block"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handlePrev();
-                        }}
-                        aria-label="Previous photo"
-                    >
-                        ‹
-                    </button>
-
+                    {/* Compact Card */}
                     <div
-                        className="relative max-w-4xl max-h-[80vh] flex flex-col items-center justify-center pointer-events-auto"
+                        className="relative max-w-[90vw] w-fit flex flex-col items-center pointer-events-auto bg-neutral-900 border border-white/10 rounded-xl p-3 shadow-2xl"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative flex items-center justify-center min-h-[300px]">
+                        {/* Header Controls */}
+                        <div className="w-full flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+                            <button
+                                className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/10 hover:bg-white/20 text-white/90 text-xs font-medium transition-colors border border-white/10"
+                                onClick={() => setActiveSelection(null)}
+                                aria-label="Go back to gallery"
+                            >
+                                <span>←</span>
+                                <span>{t.back}</span>
+                            </button>
+
+                            <button
+                                className="text-white/60 hover:text-white text-xl font-light transition-colors px-2 py-0.5"
+                                onClick={() => setActiveSelection(null)}
+                                aria-label="Close overlay"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Photo Display with Overlay Navigation Arrows */}
+                        <div className="relative flex items-center justify-center overflow-hidden rounded-lg group">
                             {isLoading && (
-                                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/40 rounded-lg">
-                                    <div className="w-8 h-8 border-2 border-cat-orange border-t-transparent rounded-full animate-spin" />
+                                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/50">
+                                    <div className="w-6 h-6 border-2 border-cat-orange border-t-transparent rounded-full animate-spin" />
                                 </div>
                             )}
+
+                            {/* Previous Arrow Button */}
+                            <button
+                                className="absolute left-2 z-20 text-white/80 hover:text-cat-orange text-2xl w-9 h-9 flex items-center justify-center transition-all bg-black/50 hover:bg-black/80 rounded-full border border-white/10 select-none shadow-md backdrop-blur-xs"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePrev();
+                                }}
+                                aria-label="Previous photo"
+                            >
+                                ‹
+                            </button>
+
                             <img
                                 key={`${activeSelection.showIdx}-${activeSelection.photoIdx}`}
                                 src={currentShow.photos[activeSelection.photoIdx]}
                                 alt={`${t.lightboxAlt} ${activeSelection.photoIdx + 1}`}
                                 onLoad={() => setIsLoading(false)}
-                                className={`max-w-full max-h-[75vh] object-contain rounded-lg border border-white/10 shadow-2xl select-none transition-opacity duration-200 ${isLoading ? "opacity-40" : "opacity-100"
+                                className={`max-w-full max-h-[60vh] w-auto h-auto object-contain rounded select-none transition-opacity duration-200 ${isLoading ? "opacity-30" : "opacity-100"
                                     }`}
                             />
+
+                            {/* Next Arrow Button */}
+                            <button
+                                className="absolute right-2 z-20 text-white/80 hover:text-cat-orange text-2xl w-9 h-9 flex items-center justify-center transition-all bg-black/50 hover:bg-black/80 rounded-full border border-white/10 select-none shadow-md backdrop-blur-xs"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNext();
+                                }}
+                                aria-label="Next photo"
+                            >
+                                ›
+                            </button>
                         </div>
-                        <div className="mt-4 text-center">
-                            <p className="text-sm font-semibold text-white/80">{currentShow.showTitle}</p>
-                            <p className="text-xs uppercase tracking-[0.2em] text-white/40 font-medium mt-1">
+
+                        {/* Caption & Counter */}
+                        <div className="mt-2.5 text-center w-full px-2">
+                            <p className="text-xs font-semibold text-white/90 truncate">{currentShow.showTitle}</p>
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-medium mt-0.5">
                                 {t.category.slice(0, -1)}{" "}
-                                <span className="text-cat-orange">{activeSelection.photoIdx + 1}</span> {t.counterTemplate}{" "}
+                                <span className="text-cat-orange font-semibold">{activeSelection.photoIdx + 1}</span> {t.counterTemplate}{" "}
                                 {currentShow.photos.length}
                             </p>
                         </div>
                     </div>
-
-                    <button
-                        className="absolute right-4 md:right-8 text-white/40 hover:text-cat-orange text-4xl p-4 transition-colors z-50 select-none bg-black/20 rounded-full hover:bg-white/5 hidden md:block"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleNext();
-                        }}
-                        aria-label="Next photo"
-                    >
-                        ›
-                    </button>
                 </div>
             )}
         </section>
     );
 };
+
 
 export default PhotoGallery;
