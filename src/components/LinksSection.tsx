@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaSpotify, FaApple, FaYoutube, FaFacebook } from "react-icons/fa";
+import { SiBandsintown } from "react-icons/si";
 import {
   Instagram,
   Briefcase,
@@ -49,7 +50,7 @@ const LinksSection = () => {
       variant: "primary" as const,
     },
     {
-      icon: <FaFacebook className="w-5 h-5" />,
+      icon: <SiBandsintown className="w-5 h-5" />,
       href: "https://www.bandsintown.com/e/108894107?&came_from=210&_ga=2.232485528.661324463.1789403087-2097931406.1787566403",
       label: "Come to our next show!",
       external: true,
