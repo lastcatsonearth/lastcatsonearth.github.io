@@ -35,17 +35,33 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
     const { lang } = useLanguage();
     const t = translations[lang];
 
-    // State tracks which show and which photo index within that show is active in the lightbox
     const [activeSelection, setActiveSelection] = useState<{ showIdx: number; photoIdx: number } | null>(null);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [touchEnd, setTouchEnd] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const minSwipeDistance = 50;
 
     const currentShow = activeSelection !== null ? shows[activeSelection.showIdx] : null;
 
+    // Preload next and previous images to eliminate loading delays during navigation
+    useEffect(() => {
+        if (!activeSelection || !currentShow) return;
+
+        const total = currentShow.photos.length;
+        const nextIdx = (activeSelection.photoIdx + 1) % total;
+        const prevIdx = (activeSelection.photoIdx - 1 + total) % total;
+
+        const nextImg = new Image();
+        nextImg.src = currentShow.photos[nextIdx];
+
+        const prevImg = new Image();
+        prevImg.src = currentShow.photos[prevIdx];
+    }, [activeSelection, currentShow]);
+
     const handlePrev = () => {
         if (!activeSelection || !currentShow) return;
+        setIsLoading(true);
         setActiveSelection({
             showIdx: activeSelection.showIdx,
             photoIdx: (activeSelection.photoIdx - 1 + currentShow.photos.length) % currentShow.photos.length,
@@ -54,6 +70,7 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
 
     const handleNext = () => {
         if (!activeSelection || !currentShow) return;
+        setIsLoading(true);
         setActiveSelection({
             showIdx: activeSelection.showIdx,
             photoIdx: (activeSelection.photoIdx + 1) % currentShow.photos.length,
@@ -133,7 +150,10 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
                                     return (
                                         <div
                                             key={photoIdx}
-                                            onClick={() => setActiveSelection({ showIdx, photoIdx })}
+                                            onClick={() => {
+                                                setIsLoading(true);
+                                                setActiveSelection({ showIdx, photoIdx });
+                                            }}
                                             className={`relative ${isFeatured ? "aspect-[4/3]" : "aspect-[7/3]"
                                                 } bg-white/[0.02] border border-white/10 rounded-lg overflow-hidden group cursor-pointer ${photoIdx >= 3 ? "hidden sm:block" : ""
                                                 }`}
@@ -194,11 +214,21 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
                         className="relative max-w-4xl max-h-[80vh] flex flex-col items-center justify-center pointer-events-auto"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <img
-                            src={currentShow.photos[activeSelection.photoIdx]}
-                            alt={`${t.lightboxAlt} ${activeSelection.photoIdx + 1}`}
-                            className="max-w-full max-h-[75vh] object-contain rounded-lg border border-white/10 shadow-2xl select-none"
-                        />
+                        <div className="relative flex items-center justify-center min-h-[300px]">
+                            {isLoading && (
+                                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/40 rounded-lg">
+                                    <div className="w-8 h-8 border-2 border-cat-orange border-t-transparent rounded-full animate-spin" />
+                                </div>
+                            )}
+                            <img
+                                key={`${activeSelection.showIdx}-${activeSelection.photoIdx}`}
+                                src={currentShow.photos[activeSelection.photoIdx]}
+                                alt={`${t.lightboxAlt} ${activeSelection.photoIdx + 1}`}
+                                onLoad={() => setIsLoading(false)}
+                                className={`max-w-full max-h-[75vh] object-contain rounded-lg border border-white/10 shadow-2xl select-none transition-opacity duration-200 ${isLoading ? "opacity-40" : "opacity-100"
+                                    }`}
+                            />
+                        </div>
                         <div className="mt-4 text-center">
                             <p className="text-sm font-semibold text-white/80">{currentShow.showTitle}</p>
                             <p className="text-xs uppercase tracking-[0.2em] text-white/40 font-medium mt-1">
