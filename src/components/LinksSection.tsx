@@ -28,7 +28,7 @@ const LinksSection = () => {
     }
   }, []);
 
-  const handleDonateClick = (e) => {
+  const handleDonateClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
@@ -61,11 +61,11 @@ const LinksSection = () => {
       href: "https://lastcatsonearth.de/booking",
       label: "Check out our portfolio",
       external: true,
-      variant: "primary" as const,
+      variant: "secondary" as const,
     }
   ];
 
-  const ourLinks = [
+  const ourLinks: Array<React.ComponentProps<typeof LinkButton>> = [
     // {
     //   href: "https://www.instagram.com/lastcatsonearth/",
     //   icon: <Instagram className="w-5 h-5" />,
@@ -85,7 +85,7 @@ const LinksSection = () => {
     //   icon: <Briefcase className="w-5 h-5" />,
     //   label: "Portfolio",
     //   external: true,
-    //   variant: "primary" as const,
+    //   className: "bg-cat-orange text-black font-semibold hover:brightness-110 border-none",
     // },
     // {
     //   href: "https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw",
@@ -136,23 +136,18 @@ const LinksSection = () => {
       )}
       <div className="mt-6 -mb-3 text-center">
 
-        {/* Band Name */}
-        {/* <h1 className="font-sceageus [-webkit-font-smoothing:antialiased] text-2xl -mt-10 md:text-4xl tracking-[-0.03em] leading-none text-white text-outline-black opacity-0 animate-fade-in-delay-1 lg:mt-10">
-          LAST CATS ON EARTH
-        </h1> */}
-
         {/* Subtitle */}
         <p className="text-2xl md:text-2xl text-cat-white font-bold tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
           MUNICH FUNKY CATS
         </p>
-        {/* Subtitle */}
-        <p className="text-s md:text-xs text-cat-white  tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
+        <p className="text-s md:text-xs text-cat-white tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
 
         </p>
-        <p className="text-s md:text-s text-cat-white  tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
+        <p className="text-s md:text-s text-cat-white tracking-[0.15em] uppercase opacity-0 animate-fade-in-delay-2 text-center mx-auto">
           ORIGINAL MUSIC • LIVE SHOWS
         </p>
       </div>
+
       {/* What's new */}
       <div>
         <div className="flex justify-center">
@@ -176,75 +171,8 @@ const LinksSection = () => {
         </div>
       </div>
 
-      {/* Next gig */}
-      {/* <div>
-        <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
-          Next gig
-        </p>
-        <div className="flex flex-col gap-2">
-          <div
-            className="opacity-0"
-            style={{ animation: `fade-in 0.5s ease-out ${0.2 + animationIndex++ * 0.05}s forwards` }}
-          >
-            <LinkButton
-              href="https://www.instagram.com/alteutting/"
-              icon={<CalendarDays className="w-5 h-5" />}
-              label="Alte Utting • Fri 5 Jun • 19:00"
-              external={true}
-              variant="secondary"
-            />
-          </div>
-        </div>
-      </div> */}
-
-      {/* Support us */}
-      {/* <div>
-        <div className="flex justify-center">
-          <p className="-mt-2 mb-3 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange text-center bg-black px-3 py-1 rounded-md">
-            SUPPORT US
-          </p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div
-            className="opacity-0"
-            style={{ animation: `fade-in 0.5s ease-out ${0.2 + animationIndex++ * 0.05}s forwards` }}
-          >
-            <a
-              href="/merch"
-              className="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl bg-cat-orange text-black font-semibold hover:brightness-110 hover:scale-[1.02] transition-all duration-200"
-            >
-              <ShoppingBag className="w-5 h-5" />
-              <span>Explore our Merch</span>
-            </a>
-          </div>
-
-          <div
-            className="opacity-0 relative"
-            style={{ animation: `fade-in 0.5s ease-out ${0.2 + animationIndex++ * 0.05}s forwards` }}
-          >
-            <button
-              onClick={handleDonateClick}
-              className="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl border border-cat-orange/60 text-cat-orange hover:bg-cat-orange/10 hover:border-cat-orange hover:scale-[1.02] transition-all duration-200 cursor-pointer"
-            >
-              <Heart className="w-5 h-5" />
-              <span className="font-semibold">Donate to the band</span>
-            </button>
-
-            {showToast && (
-              <div className="absolute -top-12 left-1/2 -translate-x-1/2 animate-bounce bg-cat-orange text-white text-xs py-1.5 px-3 rounded-full whitespace-nowrap shadow-lg z-10">
-                We're working on it! &lt;3
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-cat-orange rotate-45"></div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div> */}
-
       {/* Our links */}
       <div>
-        {/* <p className="-mt-2 mb-3 text-sm uppercase tracking-widest text-muted-foreground text-center">
-          Our links
-        </p> */}
         <div className="flex flex-col gap-2">
           {ourLinks.map((link) => {
             const delay = 0.2 + animationIndex++ * 0.05;

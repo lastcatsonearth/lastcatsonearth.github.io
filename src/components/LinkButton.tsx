@@ -8,8 +8,17 @@ interface LinkButtonProps {
   external?: boolean;
 }
 
-const LinkButton = ({ href, icon, label, variant = "primary", external = true }: LinkButtonProps) => {
-  const baseClasses = "link-button";
+const LinkButton = ({
+  href,
+  icon,
+  label,
+  variant = "primary",
+  external = true,
+}: LinkButtonProps) => {
+  const baseClasses =
+    variant === "secondary"
+      ? "link-button bg-orange-900/70 text-orange-100 border-none"
+      : "link-button";
 
   return (
     <a
