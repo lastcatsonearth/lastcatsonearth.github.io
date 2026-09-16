@@ -50,7 +50,7 @@ const BookingForm = () => {
                 {t.subheading}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center -mt-3">
                 <button
                     onClick={handleEmailClick}
                     className="bg-white text-black font-semibold uppercase tracking-wider text-xs px-6 py-3 rounded-lg hover:bg-cat-orange hover:text-white transition"

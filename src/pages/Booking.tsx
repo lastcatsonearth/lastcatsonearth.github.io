@@ -26,7 +26,6 @@ import renazzoPhoto5 from "@/assets/booking/photos/renazzo/5.jpg";
 import renazzoPhoto6 from "@/assets/booking/photos/renazzo/6.jpg";
 
 // Zamanand Photos
-
 import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.jpg";
 import zamanandPhoto2 from "@/assets/booking/photos/zamanand/2.jpg";
 import zamanandPhoto3 from "@/assets/booking/photos/zamanand/3.jpg";
@@ -95,8 +94,8 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
     const { lang, setLang } = useLanguage();
 
     return (
-        <>
-            <div className="relative z-30 max-w-6xl mx-auto w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider -mb-6 px-4 sm:px-6 pr-6 sm:pr-12">
+        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-3 sm:p-8">
+            <div className="relative z-30 w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider -mb-6 px-2 sm:px-6">
                 <button
                     onClick={() => setLang("en")}
                     className={`transition-colors ${lang === "en" ? "text-cat-orange" : "text-white/40 hover:text-white"}`}
@@ -114,14 +113,17 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
 
             <BandHeader linkToHome />
 
-            <main className="max-w-6xl mx-auto mt-10 space-y-0">
+            <main className="w-full mt-10 space-y-0">
                 <VideoMarquee videos={liveLoops} />
                 <VideoCarousel onVideoSelect={onVideoSelect} />
                 <PhotoGallery shows={galleryShows} />
                 <AudioPlayer />
                 <BookingForm />
+                <div className="pt-16 pb-0">
+                    <Footer />
+                </div>
             </main>
-        </>
+        </div>
     );
 };
 
@@ -154,10 +156,10 @@ const Booking = () => {
 
     return (
         <LanguageProvider>
-            <div className="relative min-h-screen bg-black text-white px-6 pt-10 flex flex-col justify-between touch-pan-y overflow-x-clip">
+            <div className="relative min-h-screen text-white px-2 sm:px-6 py-6 sm:py-10 flex flex-col justify-between touch-pan-y overflow-x-clip">
                 <StarfieldCanvas />
 
-                <div className="relative z-10 w-full flex-grow">
+                <div className="relative z-10 w-full max-w-3xl lg:max-w-4xl mx-auto flex-grow">
                     <BookingContent onVideoSelect={setActiveVideoUrl} />
 
                     {activeVideoUrl && (
@@ -185,10 +187,6 @@ const Booking = () => {
                             </div>
                         </div>
                     )}
-                </div>
-
-                <div className="relative z-10 mt-24 mb-10 w-full max-w-6xl mx-auto">
-                    <Footer />
                 </div>
             </div>
         </LanguageProvider>
