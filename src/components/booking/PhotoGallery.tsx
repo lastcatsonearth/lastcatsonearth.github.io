@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/components/booking/LanguageContext";
+<<<<<<< HEAD
 import { createPortal } from "react-dom";
 
 export interface ShowGallery {
