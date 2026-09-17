@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PhotoGalleryTranslations, PhotoSelection, ShowGallery } from "./photoGallery.types";
+import type { PhotoGalleryTranslations, PhotoSelection, ShowGallery } from "./photoGallery.types";
 
 interface PhotoLightboxProps {
     show: ShowGallery;

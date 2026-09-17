@@ -1,4 +1,4 @@
-import { ShowGallery, PhotoGalleryTranslations, PhotoSelection } from "./photoGallery.types";
+import type { ShowGallery, PhotoGalleryTranslations, PhotoSelection } from "./photoGallery.types";
 
 interface PhotoGalleryGridProps {
     shows: ShowGallery[];

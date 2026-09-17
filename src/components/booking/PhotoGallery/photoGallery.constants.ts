@@ -1,4 +1,4 @@
-import { PhotoGalleryTranslations } from "./photoGallery.types";
+import type { PhotoGalleryTranslations } from "./photoGallery.types";
 
 export const photoGalleryTranslations: Record<"en" | "de", PhotoGalleryTranslations> = {
     en: {

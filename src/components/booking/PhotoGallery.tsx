@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "@/components/booking/LanguageContext";
-import PhotoGalleryGrid from "./PhotoGalleryGrid";
-import PhotoLightbox from "./PhotoLightbox";
-import { photoGalleryTranslations } from "./photoGallery.constants";
-import { PhotoSelection, ShowGallery } from "./photoGallery.types";
+import PhotoGalleryGrid from "./PhotoGallery/PhotoGalleryGrid";
+import PhotoLightbox from "./PhotoGallery/PhotoLightbox";
+import { photoGalleryTranslations } from "./PhotoGallery/photoGallery.constants";
+import type { PhotoSelection, ShowGallery } from "./PhotoGallery/photoGallery.types";
 
 interface PhotoGalleryProps {
     shows: ShowGallery[];
