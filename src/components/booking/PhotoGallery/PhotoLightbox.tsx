@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import type { PhotoGalleryTranslations, PhotoSelection, ShowGallery } from "./photoGallery.types";
 
 interface PhotoLightboxProps {
@@ -32,9 +33,10 @@ const PhotoLightbox = ({
         else if (distance < -50) onPrevious();
     };
 
-    return (
+    return createPortal(
+        <>
         <div
-            className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 animate-fadeIn touch-none"
+            className="fixed inset-0 h-screen min-h-[100dvh] overflow-hidden overscroll-none bg-black/75 z-50 flex items-center justify-center p-2 sm:p-4 animate-fadeIn touch-none"
             onClick={onClose}
             onTouchStart={(e) => {
                 setTouchEnd(null);
@@ -44,7 +46,7 @@ const PhotoLightbox = ({
             onTouchEnd={handleTouchEnd}
         >
             <div
-                className="relative max-w-[90vw] w-fit flex flex-col items-center pointer-events-auto bg-neutral-900 border border-white/10 rounded-xl p-3 shadow-2xl"
+                className="relative max-h-[calc(100dvh-1rem)] max-w-[calc(100vw-1rem)] w-fit flex flex-col items-center pointer-events-auto bg-neutral-900 border border-white/10 rounded-xl p-3 shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="w-full flex items-center justify-between pb-2 mb-2 border-b border-white/10">
@@ -65,7 +67,7 @@ const PhotoLightbox = ({
                     </button>
                 </div>
 
-                <div className="relative flex items-center justify-center overflow-hidden rounded-lg group">
+                <div className="relative min-h-0 max-h-[calc(100dvh-8rem)] max-w-full flex items-center justify-center overflow-hidden rounded-lg group">
                     {isLoading && (
                         <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/50">
                             <div className="w-6 h-6 border-2 border-cat-orange border-t-transparent rounded-full animate-spin" />
@@ -86,7 +88,7 @@ const PhotoLightbox = ({
                         src={show.photos[selection.photoIdx]}
                         alt={`${t.lightboxAlt} ${selection.photoIdx + 1}`}
                         onLoad={onImageLoad}
-                        className={`max-w-full max-h-[60vh] w-auto h-auto object-contain rounded select-none transition-opacity duration-200 ${isLoading ? "opacity-30" : "opacity-100"
+                        className={`max-w-[calc(100vw-2rem)] max-h-[calc(100dvh-8rem)] w-auto h-auto object-contain rounded select-none transition-opacity duration-200 ${isLoading ? "opacity-30" : "opacity-100"
                             }`}
                     />
                     <button
@@ -111,6 +113,8 @@ const PhotoLightbox = ({
                 </div>
             </div>
         </div>
+        </>,
+        document.body,
     );
 };
 
