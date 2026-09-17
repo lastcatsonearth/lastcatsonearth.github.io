@@ -36,6 +36,9 @@ const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGaller
                     <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
                         {visiblePhotos.map((photo, photoIdx) => {
                             const isLastItem = photoIdx === 4 && remainingCount > 0;
+                            const objectPosition = isFeatured
+                                ? ["center", "center", "center", "center", "75% center", "55% center", "25% center", "50% center"][photoIdx]
+                                : "center 40%";
 
                             return (
                                 <div
@@ -48,6 +51,7 @@ const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGaller
                                     <img
                                         src={photo}
                                         alt={`${t.altTemplate} - ${show.showTitle} ${photoIdx + 1}`}
+                                        style={{ objectPosition }}
                                         className={`w-full h-full object-cover ${isFeatured ? "object-center" : "object-[center_40%]"
                                             } opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300`}
                                     />

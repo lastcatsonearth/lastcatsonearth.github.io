@@ -30,19 +30,23 @@ import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.jpg";
 import zamanandPhoto2 from "@/assets/booking/photos/zamanand/2.jpg";
 import zamanandPhoto3 from "@/assets/booking/photos/zamanand/3.jpg";
 import zamanandPhoto4 from "@/assets/booking/photos/zamanand/4.jpg";
-import zamanandPhoto5 from "@/assets/booking/photos/zamanand/5.jpeg";
-import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.jpeg";
-import zamanandPhoto7 from "@/assets/booking/photos/zamanand/7.jpeg";
-import zamanandPhoto8 from "@/assets/booking/photos/zamanand/8.jpeg";
+import zamanandPhoto5 from "@/assets/booking/photos/zamanand/5.jpg";
+import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.jpg";
+import zamanandPhoto7 from "@/assets/booking/photos/zamanand/7.jpg";
+import zamanandPhoto8 from "@/assets/booking/photos/zamanand/8.jpg";
 import zamanandPhoto9 from "@/assets/booking/photos/zamanand/9.jpeg";
 import zamanandPhoto10 from "@/assets/booking/photos/zamanand/10.jpeg";
-import zamanandPhoto11 from "@/assets/booking/photos/zamanand/11.jpg";
+import zamanandPhoto11 from "@/assets/booking/photos/zamanand/11.jpeg";
 import zamanandPhoto12 from "@/assets/booking/photos/zamanand/12.jpeg";
 import zamanandPhoto13 from "@/assets/booking/photos/zamanand/13.jpeg";
 import zamanandPhoto14 from "@/assets/booking/photos/zamanand/14.jpeg";
-import zamanandPhoto15 from "@/assets/booking/photos/zamanand/15.jpeg";
+import zamanandPhoto15 from "@/assets/booking/photos/zamanand/15.jpg";
 import zamanandPhoto16 from "@/assets/booking/photos/zamanand/16.jpeg";
 import zamanandPhoto17 from "@/assets/booking/photos/zamanand/17.jpeg";
+import zamanandPhoto18 from "@/assets/booking/photos/zamanand/18.jpeg";
+import zamanandPhoto19 from "@/assets/booking/photos/zamanand/19.jpeg";
+import zamanandPhoto20 from "@/assets/booking/photos/zamanand/20.jpeg";
+import zamanandPhoto21 from "@/assets/booking/photos/zamanand/21.jpeg";
 
 import loopVideo1 from "@/assets/booking/videos/loop_1.mp4";
 import loopVideo2 from "@/assets/booking/videos/loop_2.mp4";
@@ -74,6 +78,10 @@ const galleryShows = [
             zamanandPhoto15,
             zamanandPhoto16,
             zamanandPhoto17,
+            zamanandPhoto18,
+            zamanandPhoto19,
+            zamanandPhoto20,
+            zamanandPhoto21,
         ],
     },
     {
