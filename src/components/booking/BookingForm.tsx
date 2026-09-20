@@ -1,4 +1,5 @@
 import { useLanguage } from "@/components/booking/LanguageContext";
+import Listings from "@/components/booking/Listings";
 
 const translations = {
     en: {
@@ -65,6 +66,8 @@ const BookingForm = () => {
                     {t.instagramBtn}
                 </button>
             </div>
+
+            <Listings />
         </section>
     );
 };
