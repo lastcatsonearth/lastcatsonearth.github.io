@@ -15,15 +15,18 @@ const Listings = () => {
             </p>
 
             <a
-                href="https://www.gigheaven.com"
+                href="https://www.gigheaven.com/members/lastcatsonearth.html"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 aria-label="View Last Cats On Earth on Gig Heaven"
-                className="mx-auto flex w-fit items-center rounded-xl border border-white/10 bg-white/5 px-6 py-4 transition hover:border-cat-orange hover:bg-white/10"
             >
-                <span className="text-lg font-bold tracking-wide text-white">
-                    Gig <span className="text-cat-orange">Heaven</span>
-                </span>
+                <img
+                    src="https://www.gigheaven.com/badge/orange.svg?l=37462"
+                    height="80"
+                    width="80"
+                    alt="Last Cats on Earth - Gig Heaven"
+                    referrerPolicy="unsafe-url"
+                />
             </a>
         </div>
     );

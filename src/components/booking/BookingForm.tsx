@@ -67,7 +67,25 @@ const BookingForm = () => {
                 </button>
             </div>
 
+<<<<<<< Updated upstream
             <Listings />
+=======
+            <div className="mt-8 flex justify-center">
+                <a
+                    href="https://www.gigheaven.com/members/lastcatsonearth.html"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <img
+                        src="https://www.gigheaven.com/badge/orange.svg?l=37462"
+                        height="80"
+                        width="80"
+                        alt="Last Cats on Earth - Gig Heaven"
+                        referrerPolicy="unsafe-url"
+                    />
+                </a>
+            </div>
+>>>>>>> Stashed changes
         </section>
     );
 };
