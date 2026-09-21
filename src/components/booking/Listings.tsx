@@ -14,20 +14,23 @@ const Listings = () => {
                 {listingsLabel[lang]}
             </p>
 
-            <a
-                href="https://www.gigheaven.com/members/lastcatsonearth.html"
-                target="_blank"
-                rel="noopener"
-                aria-label="View Last Cats On Earth on Gig Heaven"
-            >
-                <img
-                    src="https://www.gigheaven.com/badge/orange.svg?l=37462"
-                    height="80"
-                    width="80"
-                    alt="Last Cats on Earth - Gig Heaven"
-                    referrerPolicy="unsafe-url"
-                />
-            </a>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+                <a
+                    href="https://www.gigheaven.com/members/lastcatsonearth.html"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="View Last Cats On Earth on Gig Heaven"
+                    className="flex shrink-0 justify-center"
+                >
+                    <img
+                        src="https://www.gigheaven.com/badge/orange.svg?l=37462"
+                        height="80"
+                        width="80"
+                        alt="Last Cats on Earth - Gig Heaven"
+                        referrerPolicy="unsafe-url"
+                    />
+                </a>
+            </div>
         </div>
     );
 };
