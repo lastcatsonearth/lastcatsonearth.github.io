@@ -8,7 +8,7 @@ import liveStagePhoto from "@/assets/booking/photos/zamanand/1.jpg";
 import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.png";
 import festivalPhoto from "@/assets/booking/photos/zamanand/6.jpg";
 
-type IntentKey = "munich" | "festival" | "party";
+type IntentKey = "munich" | "live" | "party" | "events" | "festivals" | "festival" ;
 
 const pageContent: Record<
   IntentKey,
@@ -81,6 +81,60 @@ const pageContent: Record<
     imageCaption: "Make it a night",
     secondImage: festivalPhoto,
     secondImageAlt: "Last Cats on Earth playing an outdoor event",
+  },
+  live: {
+    title: "Live Band Munich | Live Rock Music for Events",
+    description:
+      "Last Cats on Earth are a live band from Munich playing energetic rock, funk and alternative live music for events, clubs and concerts.",
+    eyebrow: "Live music · Munich",
+    heading: "Live music with a pulse of its own.",
+    intro:
+      "Last Cats on Earth bring a dynamic live rock show from Munich to clubs, concert series, festivals and events. Expect original songs, reworked covers and a set built to move.",
+    points: ["Live rock energy from Munich", "Flexible club and event set", "Originals with unexpected turns"],
+    sectionTitle: "A band that keeps the room moving",
+    sectionText:
+      "Our live show shifts between hard rock, funk, alternative rock and rap-influenced moments, giving audiences a performance with real contrast and momentum.",
+    image: liveStagePhoto,
+    imageAlt: "Munich live band Last Cats on Earth on stage",
+    imageCaption: "Live from Munich",
+    secondImage: festivalPhoto,
+    secondImageAlt: "Last Cats on Earth playing live outdoors",
+  },
+  events: {
+    title: "Live Music for Events in Munich | Last Cats on Earth",
+    description:
+      "Book Last Cats on Earth for events in Munich: a live rock band for company events, cultural events, celebrations and special occasions.",
+    eyebrow: "Events · Munich · live music",
+    heading: "Give your event a live soundtrack.",
+    intro:
+      "From company events and cultural programmes to private celebrations, Last Cats on Earth bring a memorable live band experience with personality, movement and a sound that stands out.",
+    points: ["Event-ready communication", "Adaptable performance format", "Rock, funk and alternative energy"],
+    sectionTitle: "Your event, our live set",
+    sectionText:
+      "Tell us the date, location and atmosphere you are planning. We will help shape a performance that fits the room, the schedule and the people in it.",
+    image: crowdPhoto,
+    imageAlt: "Live rock music for an event audience",
+    imageCaption: "Made for shared moments",
+    secondImage: liveStagePhoto,
+    secondImageAlt: "Munich band performing at an event",
+  },
+  festivals: {
+    title: "Munich Rock Band for Festivals | Last Cats on Earth",
+    description:
+      "Last Cats on Earth are a Munich rock band for festivals, open-air stages and concert programmes, combining funk rock and alternative rock live.",
+    eyebrow: "Festivals · open air · live stages",
+    heading: "Bring a festival-sized live show.",
+    intro:
+      "Last Cats on Earth are available for festival stages and open-air programmes in Munich, Bavaria and beyond, with a high-energy set designed to connect quickly with a crowd.",
+    points: ["Festival-ready stage presence", "Original music and distinctive covers", "Reliable promoter communication"],
+    sectionTitle: "Made for the moment before sunset",
+    sectionText:
+      "Our set can open a programme, shift the energy between acts or close a stage with a room full of people singing, moving and discovering something new.",
+    image: festivalPhoto,
+    imageAlt: "Munich rock band playing a festival stage",
+    imageCaption: "Festival energy",
+    secondImage: crowdPhoto,
+    secondImageAlt: "Festival crowd watching Last Cats on Earth",
   },
 };
 
