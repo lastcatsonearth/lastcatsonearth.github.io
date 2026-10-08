@@ -112,4 +112,23 @@
   .link-button {
     @apply w-full py-2 px-6 rounded-2xl font-semibold text-foreground bg-card border border-border transition-all duration-300 ease-out hover:border-primary hover:glow-primary hover:scale-[1.02] active:scale-[0.98];
   }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
+  }
+
+  .scroll-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

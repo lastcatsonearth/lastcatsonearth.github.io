@@ -122,6 +122,9 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
             <BandHeader linkToHome />
 
             <main className="w-full mt-10 space-y-0">
+                <h1 className="sr-only">
+                    Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
+                </h1>
                 <VideoMarquee videos={liveLoops} />
                 <VideoCarousel onVideoSelect={onVideoSelect} />
                 <PhotoGallery shows={galleryShows} />
@@ -139,7 +142,25 @@ const Booking = () => {
     const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
     useEffect(() => {
-        document.title = "Last Cats on Earth | Booking";
+        document.title = "Book a Munich Rock Band | Last Cats on Earth";
+
+        const description = document.querySelector('meta[name="description"]');
+        description?.setAttribute(
+            "content",
+            "Book Last Cats on Earth, a Munich funk rock and alternative rock band for concerts, festivals, venues, parties, private events and collaborations."
+        );
+
+        const canonical = document.querySelector('link[rel="canonical"]');
+        canonical?.setAttribute("href", "https://lastcatsonearth.de/booking");
+
+        return () => {
+            document.title = "Munich Rock Band | Last Cats on Earth – Funk & Alternative Rock";
+            description?.setAttribute(
+                "content",
+                "Last Cats on Earth are a Munich rock band bringing energetic funk rock and alternative rock live music to concerts, festivals, parties and events in Munich and beyond."
+            );
+            canonical?.setAttribute("href", "https://lastcatsonearth.de/");
+        };
     }, []);
 
     useEffect(() => {
