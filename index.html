@@ -6,45 +6,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Last Cats on Earth | Munich Funk & Alternative Rock</title>
+  <title>Munich Rock Band | Last Cats on Earth – Funk & Alternative Rock</title>
 
   <meta name="description"
-    content="Last Cats on Earth is a Munich funk and alternative rock band. Listen to our music and find upcoming gigs." />
+    content="Last Cats on Earth are a Munich rock band bringing energetic funk rock and alternative rock live music to concerts, festivals, parties and events in Munich and beyond." />
 
   <meta name="author" content="Last Cats on Earth" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
 
   <link rel="canonical" href="https://lastcatsonearth.de/" />
   <link rel="icon" type="image/png" href="/favicon.png" />
 
-  <!-- Open Graph / WhatsApp / Facebook / Messenger -->
-  <meta property="og:title" content="Last Cats on Earth | Munich Funk Rock" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Munich Rock Band | Last Cats on Earth – Funk & Alternative Rock" />
   <meta property="og:description"
-    content="Last Cats on Earth is a Munich funk and alternative rock band. Listen to our music and find upcoming gigs." />
+    content="Energetic funk rock and alternative rock live music from Munich for concerts, festivals, parties and events." />
   <meta property="og:image" content="https://lastcatsonearth.de/bang_logo.png" />
   <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:alt" content="Last Cats on Earth" />
+  <meta property="og:image:alt" content="Last Cats on Earth – Munich Funk Rock & Alternative Rock Band" />
   <meta property="og:url" content="https://lastcatsonearth.de/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Last Cats on Earth" />
+  <meta property="og:locale" content="en_DE" />
 
   <!-- X / Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Last Cats on Earth | Munich Funk Rock" />
+  <meta name="twitter:title" content="Munich Rock Band | Last Cats on Earth – Funk & Alternative Rock" />
   <meta name="twitter:description"
-    content="Last Cats on Earth is a Munich funk and alternative rock band. Listen to our music and find upcoming gigs." />
+    content="Energetic funk rock and alternative rock live music from Munich for concerts, festivals, parties and events." />
   <meta name="twitter:image" content="https://lastcatsonearth.de/bang_logo.png" />
+  <meta name="twitter:image:alt" content="Last Cats on Earth – Munich Funk Rock & Alternative Rock Band" />
 
-  <!-- Structured Data -->
+  <!-- Structured Data: Music Group -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "MusicGroup",
+      "@id": "https://lastcatsonearth.de/#musicgroup",
       "name": "Last Cats on Earth",
       "url": "https://lastcatsonearth.de/",
       "image": "https://lastcatsonearth.de/bang_logo.png",
-      "genre": ["Funk Rock", "Alternative Rock"],
-      "description": "Last Cats on Earth is a Munich funk and alternative rock band. Listen to our music and find upcoming gigs.",
+      "description": "Last Cats on Earth are a Munich rock band bringing energetic funk rock and alternative rock live music to concerts, festivals, parties and events in Munich and beyond.",
+      "genre": [
+        "Funk Rock",
+        "Alternative Rock",
+        "Rock",
+        "Funk"
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Munich",
+          "sameAs": "https://www.wikidata.org/wiki/Q1726"
+        },
+        {
+          "@type": "Country",
+          "name": "Germany"
+        }
+      ],
       "sameAs": [
         "https://www.instagram.com/lastcatsonearth/",
         "https://www.youtube.com/@lastcatsonearth"
@@ -56,6 +75,7 @@
 
 <body>
   <div id="root"></div>
+
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
