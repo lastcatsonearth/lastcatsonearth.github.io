@@ -1,5 +1,4 @@
 import { useLanguage } from "@/components/booking/LanguageContext";
-import Listings from "@/components/booking/Listings";
 
 const translations = {
     en: {
@@ -38,20 +37,20 @@ const BookingForm = () => {
     };
 
     return (
-        <section className="border-t border-white/5 pt-16 max-w-xl mx-auto w-full text-center">
-            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-3">
+        <section className="border-t border-white/5 pt-8 max-w-xl mx-auto w-full text-center">
+            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">
                 {t.category}
             </p>
 
-            <h3 className="text-3xl md:text-2xl font-bold mb-4 tracking-wide">
+            <h3 className="text-3xl md:text-2xl font-bold mb-3 tracking-wide">
                 {t.headline}
             </h3>
 
-            <p className="text-sm text-white/50 mb-8 tracking-wide">
+            <p className="text-sm text-white/50 mb-5 tracking-wide">
                 {t.subheading}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center -mt-3">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button
                     onClick={handleEmailClick}
                     className="bg-white text-black font-semibold uppercase tracking-wider text-xs px-6 py-3 rounded-lg hover:bg-cat-orange hover:text-white transition"
@@ -67,7 +66,7 @@ const BookingForm = () => {
                 </button>
             </div>
 
-            <div className="mt-8 flex justify-center">
+            <div className="mt-3 flex justify-center">
                 <a
                     href="https://www.gigheaven.com/members/lastcatsonearth.html"
                     target="_blank"

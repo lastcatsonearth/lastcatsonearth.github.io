@@ -9,8 +9,8 @@ const Listings = () => {
     const { lang } = useLanguage();
 
     return (
-        <div className="mt-14 border-t border-white/5 pt-10">
-            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-5">
+        <div className="mt-8 border-t border-white/5 pt-6">
+            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-3">
                 {listingsLabel[lang]}
             </p>
 

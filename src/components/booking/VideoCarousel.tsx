@@ -131,6 +131,8 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
                             <img
                                 src={video.thumbnail}
                                 alt={video.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition"
                             />
 

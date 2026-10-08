@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { ShowGallery, PhotoGalleryTranslations, PhotoSelection } from "./photoGallery.types";
 
 interface PhotoGalleryGridProps {
@@ -5,6 +6,57 @@ interface PhotoGalleryGridProps {
     translations: PhotoGalleryTranslations;
     onPhotoSelect: (selection: PhotoSelection) => void;
 }
+
+const GalleryRowReveal = ({ children }: { children: React.ReactNode }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const lastScrollY = useRef(0);
+    const scrollDirection = useRef<"up" | "down" | null>(null);
+
+    useEffect(() => {
+        const element = ref.current;
+        if (!element) return;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            scrollDirection.current = currentScrollY > lastScrollY.current ? "down" : "up";
+            lastScrollY.current = currentScrollY;
+        };
+
+        lastScrollY.current = window.scrollY;
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    const enteredFromBottom = entry.boundingClientRect.top >= 0;
+                    if (scrollDirection.current !== "up" && enteredFromBottom) {
+                        setIsVisible(true);
+                    }
+                    return;
+                }
+
+                const rowIsBelowViewport = entry.boundingClientRect.top >= window.innerHeight;
+                if (scrollDirection.current === "up" && rowIsBelowViewport) {
+                    setIsVisible(false);
+                }
+            },
+            { threshold: 0.01, rootMargin: "0px 0px -12% 0px" }
+        );
+
+        observer.observe(element);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            observer.disconnect();
+        };
+    }, []);
+
+    return (
+        <div ref={ref} className={`gallery-row-reveal ${isVisible ? "gallery-row-reveal-visible" : ""}`}>
+            {children}
+        </div>
+    );
+};
 
 const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGalleryGridProps) => (
     <div className="space-y-10">
@@ -14,7 +66,8 @@ const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGaller
             const isFeatured = show.showTitle === "Zamanand Festival";
 
             return (
-                <div key={showIdx} className="space-y-3">
+                <GalleryRowReveal key={showIdx}>
+                    <div className="space-y-3">
                     <div className="flex items-center justify-between border-b border-white/10 pb-2">
                         <div className="flex items-baseline gap-3">
                             <h4 className="text-base md:text-lg font-semibold tracking-wide text-white/90">
@@ -51,6 +104,8 @@ const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGaller
                                     <img
                                         src={photo}
                                         alt={`${t.altTemplate} - ${show.showTitle} ${photoIdx + 1}`}
+                                        loading="lazy"
+                                        decoding="async"
                                         style={{ objectPosition }}
                                         className={`w-full h-full object-cover ${isFeatured ? "object-center" : "object-[center_40%]"
                                             } opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300`}
@@ -66,7 +121,8 @@ const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGaller
                             );
                         })}
                     </div>
-                </div>
+                    </div>
+                </GalleryRowReveal>
             );
         })}
     </div>

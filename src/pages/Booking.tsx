@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowLeft } from "lucide-react";
 
-import BandHeader from "@/components/BandHeader";
 import StarfieldCanvas from "@/components/booking/StarfieldCanvas";
 import VideoMarquee from "@/components/booking/VideoMarquee";
 import AudioPlayer from "@/components/booking/AudioPlayer";
@@ -55,6 +55,57 @@ import loopVideo3 from "@/assets/booking/videos/loop_3.mp4";
 const NEVER_STOP_RELEASED = false;
 const liveLoops = [loopVideo1, loopVideo2, loopVideo3];
 
+const Reveal = ({ children }: { children: React.ReactNode }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const lastScrollY = useRef(0);
+    const scrollDirection = useRef<"up" | "down" | null>(null);
+
+    useEffect(() => {
+        const element = ref.current;
+        if (!element) return;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            scrollDirection.current = currentScrollY > lastScrollY.current ? "down" : "up";
+            lastScrollY.current = currentScrollY;
+        };
+
+        lastScrollY.current = window.scrollY;
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    const enteredFromBottom = entry.boundingClientRect.top >= 0;
+                    if (scrollDirection.current !== "up" && enteredFromBottom) {
+                        setIsVisible(true);
+                    }
+                    return;
+                }
+
+                const sectionIsBelowViewport = entry.boundingClientRect.top >= window.innerHeight;
+                if (scrollDirection.current === "up" && sectionIsBelowViewport) {
+                    setIsVisible(false);
+                }
+            },
+            { threshold: 0.01, rootMargin: "0px 0px -18% 0px" }
+        );
+
+        observer.observe(element);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            observer.disconnect();
+        };
+    }, []);
+
+    return (
+        <div ref={ref} className={`scroll-reveal ${isVisible ? "scroll-reveal-visible" : ""}`}>
+            {children}
+        </div>
+    );
+};
+
 const galleryShows = [
     {
         showTitle: "Zamanand Festival",
@@ -98,11 +149,42 @@ const galleryShows = [
     },
 ];
 
+const preloadImage = (src: string) =>
+    new Promise<void>((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve();
+        image.onerror = () => resolve();
+        image.src = src;
+    });
+
+const preloadVideoMetadata = (src: string) =>
+    new Promise<void>((resolve) => {
+        const video = document.createElement("video");
+        const finish = () => {
+            video.removeEventListener("loadedmetadata", finish);
+            video.removeEventListener("error", finish);
+            resolve();
+        };
+        video.addEventListener("loadedmetadata", finish);
+        video.addEventListener("error", finish);
+        video.preload = "metadata";
+        video.src = src;
+    });
+
+const waitForBookingReady = async () => {
+    const criticalImages = galleryShows[0].photos.slice(0, 5);
+    await Promise.all([
+        document.fonts?.ready ?? Promise.resolve(),
+        Promise.all(criticalImages.map(preloadImage)),
+        preloadVideoMetadata(loopVideo1),
+    ]);
+};
+
 const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null) => void }) => {
     const { lang, setLang } = useLanguage();
 
     return (
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-3 sm:p-8">
+        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-3 pb-1 sm:p-8 sm:pb-3">
             <div className="relative z-30 w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider -mb-6 px-2 sm:px-6">
                 <button
                     onClick={() => setLang("en")}
@@ -119,20 +201,28 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
                 </button>
             </div>
 
-            <BandHeader linkToHome />
+            <a
+                href="/"
+                className="relative z-40 mb-8 inline-flex items-center gap-2 px-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-cat-orange"
+            >
+                <ArrowLeft className="h-4 w-4" />
+                Back to main website
+            </a>
 
             <main className="w-full mt-10 space-y-0">
                 <h1 className="sr-only">
                     Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
                 </h1>
-                <VideoMarquee videos={liveLoops} />
-                <VideoCarousel onVideoSelect={onVideoSelect} />
-                <PhotoGallery shows={galleryShows} />
-                <AudioPlayer />
-                <BookingForm />
-                <div className="pt-16 pb-0">
-                    <Footer />
-                </div>
+                <Reveal><VideoMarquee videos={liveLoops} /></Reveal>
+                <Reveal><VideoCarousel onVideoSelect={onVideoSelect} /></Reveal>
+                <Reveal><PhotoGallery shows={galleryShows} /></Reveal>
+                <Reveal><AudioPlayer /></Reveal>
+                <Reveal><BookingForm /></Reveal>
+                <Reveal>
+                    <div className="pt-16 pb-0">
+                        <Footer />
+                    </div>
+                </Reveal>
             </main>
         </div>
     );
@@ -140,6 +230,19 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
 
 const Booking = () => {
     const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        waitForBookingReady().then(() => {
+            if (isMounted) setIsReady(true);
+        });
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     useEffect(() => {
         document.title = "Book a Munich Rock Band | Last Cats on Earth";
@@ -185,7 +288,10 @@ const Booking = () => {
 
     return (
         <LanguageProvider>
-            <div className="relative min-h-screen text-white px-2 sm:px-6 py-6 sm:py-10 flex flex-col justify-between touch-pan-y overflow-x-clip">
+            <div
+                className={`relative min-h-screen text-white px-2 sm:px-6 py-6 sm:py-10 flex flex-col justify-between touch-pan-y overflow-x-clip ${isReady ? "" : "max-h-screen overflow-hidden"}`}
+                aria-busy={!isReady}
+            >
                 <StarfieldCanvas />
 
                 <div className="relative z-10 w-full max-w-3xl lg:max-w-4xl mx-auto flex-grow">
@@ -217,6 +323,17 @@ const Booking = () => {
                         </div>
                     )}
                 </div>
+
+                {!isReady && (
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 px-6 text-center">
+                        <div>
+                            <p className="text-2xl font-bold tracking-wide text-white">Last Cats on Earth</p>
+                            <p className="mt-3 text-xs uppercase tracking-[0.25em] text-cat-orange">
+                                Loading the show
+                            </p>
+                        </div>
+                    </div>
+                )}
             </div>
         </LanguageProvider>
     );

@@ -21,7 +21,7 @@ const StarfieldCanvas = () => {
 
         const initStars = () => {
             stars = [];
-            const starCount = Math.floor((canvas.width * canvas.height) / 8000);
+            const starCount = Math.floor((canvas.width * canvas.height) / 12000);
             for (let i = 0; i < starCount; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
@@ -33,7 +33,13 @@ const StarfieldCanvas = () => {
             }
         };
 
-        const draw = () => {
+        let lastDrawTime = 0;
+        const draw = (timestamp: number) => {
+            if (timestamp - lastDrawTime < 33) {
+                animationFrameId = requestAnimationFrame(draw);
+                return;
+            }
+            lastDrawTime = timestamp;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "rgba(0, 0, 0, 1)";
 
@@ -52,7 +58,7 @@ const StarfieldCanvas = () => {
 
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
-        draw();
+        animationFrameId = requestAnimationFrame(draw);
 
         return () => {
             window.removeEventListener("resize", resizeCanvas);

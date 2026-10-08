@@ -11,7 +11,9 @@ const SCROLL_SPEED = 0.5; // px per frame
 
 const translations = {
     en: {
-        welcome: "Welcome bookers & fans",
+        welcome: "",
+        bioHeading: "Last Cats on Earth",
+        bioTagline: "Born in Munich. Made for the stage.",
         bio1: (
             <>
                 Based in Munich, <strong>Last Cats on Earth</strong> deliver a mix of hard rock, funk, and alternative rock sounds.
@@ -29,13 +31,23 @@ const translations = {
         bio3: (
             <>
                 From intimate venues to bigger stages, our shows keep everyone on their toes by constantly shifting gears:
-                from hard-hitting instrumentals and melodic hooks to rap verses, choreography, and direct crowd-work. We don't just
-                play music: the stage is our home.
+                from hard-hitting instrumentals and melodic hooks to rap verses, choreography, and direct crowd-work.
+
             </>
         ),
+        bio4: (
+            <>
+                We don't just play music: the stage is our home.
+
+            </>
+        ),
+
+
     },
     de: {
-        welcome: "Willkommen Bookers & Fans",
+        welcome: "",
+        bioHeading: "Last Cats on Earth",
+        bioTagline: "Aus München. Für die Bühne gemacht.",
         bio1: (
             <>
                 Ansässig in München liefern <strong>Last Cats on Earth</strong> einen Mix aus Hard Rock, Funk und Alternative Rock.
@@ -54,8 +66,13 @@ const translations = {
         ),
         bio3: (
             <>
-                Von kleinen Clubs bis hin zu größeren Bühnen halten unsere Shows das Publikum ständig auf Trab und wechseln dabei immer wieder den Gang: von knallharten Instrumentals und melodischen Hooks bis hin zu Rap-Versen, Choreografien und direkter Interaktion mit dem Publikum. Wir machen nicht einfach nur Musik: Die Bühne ist unser Zuhause.
+                Von kleinen Clubs bis hin zu größeren Bühnen halten unsere Shows das Publikum ständig auf Trab und wechseln dabei immer wieder den Gang: von knallharten Instrumentals und melodischen Hooks bis hin zu Rap-Versen, Choreografien und direkter Interaktion mit dem Publikum.
 
+            </>
+        ),
+        bio4: (
+            <>
+                Wir machen nicht einfach nur Musik: Die Bühne ist unser Zuhause.
             </>
         ),
     }
@@ -104,16 +121,6 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
         };
     }, []);
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (!container) return;
-
-        const videoElements = container.querySelectorAll("video");
-        videoElements.forEach((video) => {
-            video.play().catch(() => { });
-        });
-    }, [videos]);
-
     const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
         const container = containerRef.current;
         if (!container) return;
@@ -143,10 +150,20 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
         <section className="text-center w-full max-w-5xl mx-auto -mt-10 sm:-mt-0">
             <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">{t.welcome}</p>
 
-            <div className="text-sm text-white mx-auto mb-10 tracking-wide text-justify space-y-4 w-full break-words [hyphens:auto] [lang:inherit]">
-                <p>{t.bio1}</p>
-                <p>{t.bio2}</p>
-                <p>{t.bio3}</p>
+            <div className="relative mx-auto mb-10 w-full overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-white/[0.14] via-white/[0.06] to-cat-orange/[0.14] p-5 text-left shadow-2xl sm:p-8">
+                <div className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full bg-cat-orange/20 blur-3xl" />
+                <div className="relative">
+                    <p className="text-4xl font-bold tracking-wide text-white sm:text-5xl">{t.bioHeading}</p>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-[0.22em] text-cat-orange sm:text-sm">
+                        {t.bioTagline}
+                    </p>
+                    <div className="mt-6 space-y-4 text-justify text-base leading-6 tracking-wide text-white/90 [hyphens:auto] [lang:inherit]">
+                        <p>{t.bio1}</p>
+                        <p>{t.bio2}</p>
+                        <p>{t.bio3}</p>
+                        <p>{t.bio4}</p>
+                    </div>
+                </div>
             </div>
 
             <div className="relative w-full [mask-image:_linear-gradient(to_right,transparent_0,_black_10%,_black_90%,transparent_100%)]">
@@ -170,10 +187,11 @@ const VideoMarquee = ({ videos }: VideoMarqueeProps) => {
                         >
                             <video
                                 src={videoSrc}
-                                autoPlay
+                                autoPlay={idx < videos.length}
                                 loop
                                 muted
                                 playsInline
+                                preload={idx < videos.length ? "metadata" : "none"}
                                 controls={false}
                                 webkit-playsinline="true"
                                 className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-700 pointer-events-none"

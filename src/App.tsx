@@ -10,6 +10,7 @@ import Booking from "./pages/Booking";
 import NotFound from "./pages/NotFound";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import IntentPage from "./pages/IntentPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/merch" element={<MerchPage />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/munich-rock-band" element={<IntentPage intent="munich" />} />
+          <Route path="/festival-and-venue-band" element={<IntentPage intent="festival" />} />
+          <Route path="/party-and-event-band" element={<IntentPage intent="party" />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
