@@ -67,9 +67,6 @@ const BookingForm = () => {
                 </button>
             </div>
 
-<<<<<<< Updated upstream
-            <Listings />
-=======
             <div className="mt-8 flex justify-center">
                 <a
                     href="https://www.gigheaven.com/members/lastcatsonearth.html"
@@ -85,7 +82,6 @@ const BookingForm = () => {
                     />
                 </a>
             </div>
->>>>>>> Stashed changes
         </section>
     );
 };
