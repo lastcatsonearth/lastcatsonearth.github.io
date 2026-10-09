@@ -45,7 +45,7 @@ const ShowsPage = () => {
               <img src={show.image} alt={`${show.title} live performance`} className="intent-image-visible h-72 w-full rounded-2xl object-cover" />
               <p className="mt-6 text-justify text-sm leading-7 text-white/70">{show.text}</p>
               <img src={show.secondImage} alt={`${show.title} audience and stage`} className="intent-image-visible mt-8 h-64 w-full rounded-2xl object-cover" />
-              <Link to="/booking" className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">Book the band <ArrowUpRight className="h-4 w-4" /></Link>
+              <Link to="/booking#contact" className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">Book the band <ArrowUpRight className="h-4 w-4" /></Link>
             </section>
           ) : (
             <div className="space-y-5 py-10">

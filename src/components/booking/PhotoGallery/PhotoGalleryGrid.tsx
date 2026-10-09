@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import type { ShowGallery, PhotoGalleryTranslations, PhotoSelection } from "./photoGallery.types";
 
 interface PhotoGalleryGridProps {
@@ -8,54 +7,7 @@ interface PhotoGalleryGridProps {
 }
 
 const GalleryRowReveal = ({ children }: { children: React.ReactNode }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-    const lastScrollY = useRef(0);
-    const scrollDirection = useRef<"up" | "down" | null>(null);
-
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            scrollDirection.current = currentScrollY > lastScrollY.current ? "down" : "up";
-            lastScrollY.current = currentScrollY;
-        };
-
-        lastScrollY.current = window.scrollY;
-        window.addEventListener("scroll", handleScroll, { passive: true });
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    const enteredFromBottom = entry.boundingClientRect.top >= 0;
-                    if (scrollDirection.current !== "up" && enteredFromBottom) {
-                        setIsVisible(true);
-                    }
-                    return;
-                }
-
-                const rowIsBelowViewport = entry.boundingClientRect.top >= window.innerHeight;
-                if (scrollDirection.current === "up" && rowIsBelowViewport) {
-                    setIsVisible(false);
-                }
-            },
-            { threshold: 0.01, rootMargin: "0px 0px -12% 0px" }
-        );
-
-        observer.observe(element);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-            observer.disconnect();
-        };
-    }, []);
-
-    return (
-        <div ref={ref} className={`gallery-row-reveal ${isVisible ? "gallery-row-reveal-visible" : ""}`}>
-            {children}
-        </div>
-    );
+    return <>{children}</>;
 };
 
 const PhotoGalleryGrid = ({ shows, translations: t, onPhotoSelect }: PhotoGalleryGridProps) => (

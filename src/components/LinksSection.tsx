@@ -58,7 +58,7 @@ const LinksSection = () => {
     },
     {
       icon: <Briefcase className="w-5 h-5" />,
-      href: "https://lastcatsonearth.de/booking",
+      href: "https://lastcatsonearth.de/booking#contact",
       label: "Check out our portfolio",
       external: true,
       variant: "secondary" as const,

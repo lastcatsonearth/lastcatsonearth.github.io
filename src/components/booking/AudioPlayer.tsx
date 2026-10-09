@@ -247,7 +247,7 @@ const SinglePlayer = ({
     );
 };
 
-const AudioPlayer = () => {
+const AudioPlayer = ({ compact = false }: { compact?: boolean }) => {
     const { lang } = useLanguage();
     const t = translations[lang];
 
@@ -288,13 +288,41 @@ const AudioPlayer = () => {
     };
 
     return (
-        <section className="pt-24 pb-20">
-            <p className="text-cat-orange uppercase tracking-[0.3em] text-sm text-center mb-12">
-                {t.category}
-            </p>
+        <section className={compact ? "w-full" : "pt-24 pb-20"}>
+            {!compact && (
+                <p className="text-cat-orange uppercase tracking-[0.3em] text-sm text-center mb-12">
+                    {t.category}
+                </p>
+            )}
 
-            {/* Mobile View: Single song display with swipe + navigation arrows */}
-            <div className="block md:hidden max-w-xs mx-auto px-2">
+            {/* Compact view keeps one release visible on every device. */}
+            {compact && (
+                <div
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    className="mx-auto max-w-sm touch-pan-y"
+                >
+                    <SinglePlayer
+                        track={tracks[mobileTrackIndex]}
+                        onPrev={handlePrev}
+                        onNext={handleNext}
+                        showControls
+                    />
+                    <div className="mt-4 flex justify-center gap-2">
+                        {tracks.map((track, idx) => (
+                            <button
+                                key={track.title}
+                                onClick={() => setMobileTrackIndex(idx)}
+                                className={`h-2 rounded-full transition-all ${idx === mobileTrackIndex ? "w-6 bg-cat-orange" : "w-2 bg-white/20"}`}
+                                aria-label={`Show ${track.title}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {!compact && <div className="block md:hidden max-w-xs mx-auto px-2">
                 <div
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
@@ -323,14 +351,14 @@ const AudioPlayer = () => {
                         />
                     ))}
                 </div>
-            </div>
+            </div>}
 
             {/* Desktop / Tablet View: Grid side-by-side */}
-            <div className="hidden md:grid grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto px-4">
+            {!compact && <div className="hidden md:grid grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto px-4">
                 {tracks.map((track) => (
                     <SinglePlayer key={track.title} track={track} />
                 ))}
-            </div>
+            </div>}
         </section>
     );
 };

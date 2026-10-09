@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 
-import StarfieldCanvas from "@/components/booking/StarfieldCanvas";
-import VideoMarquee from "@/components/booking/VideoMarquee";
 import AudioPlayer from "@/components/booking/AudioPlayer";
+import VideoMarquee from "@/components/booking/VideoMarquee";
 import VideoCarousel from "@/components/booking/VideoCarousel";
 import PhotoGallery from "@/components/booking/PhotoGallery";
 import BookingForm from "@/components/booking/BookingForm";
@@ -48,63 +47,6 @@ import zamanandPhoto19 from "@/assets/booking/photos/zamanand/19.jpeg";
 import zamanandPhoto20 from "@/assets/booking/photos/zamanand/20.jpeg";
 import zamanandPhoto21 from "@/assets/booking/photos/zamanand/21.jpeg";
 
-import loopVideo1 from "@/assets/booking/videos/loop_1.mp4";
-import loopVideo2 from "@/assets/booking/videos/loop_2.mp4";
-import loopVideo3 from "@/assets/booking/videos/loop_3.mp4";
-
-const NEVER_STOP_RELEASED = false;
-const liveLoops = [loopVideo1, loopVideo2, loopVideo3];
-
-const Reveal = ({ children }: { children: React.ReactNode }) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-    const lastScrollY = useRef(0);
-    const scrollDirection = useRef<"up" | "down" | null>(null);
-
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            scrollDirection.current = currentScrollY > lastScrollY.current ? "down" : "up";
-            lastScrollY.current = currentScrollY;
-        };
-
-        lastScrollY.current = window.scrollY;
-        window.addEventListener("scroll", handleScroll, { passive: true });
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    const enteredFromBottom = entry.boundingClientRect.top >= 0;
-                    if (scrollDirection.current !== "up" && enteredFromBottom) {
-                        setIsVisible(true);
-                    }
-                    return;
-                }
-
-                const sectionIsBelowViewport = entry.boundingClientRect.top >= window.innerHeight;
-                if (scrollDirection.current === "up" && sectionIsBelowViewport) {
-                    setIsVisible(false);
-                }
-            },
-            { threshold: 0.01, rootMargin: "0px 0px -18% 0px" }
-        );
-
-        observer.observe(element);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-            observer.disconnect();
-        };
-    }, []);
-
-    return (
-        <div ref={ref} className={`scroll-reveal ${isVisible ? "scroll-reveal-visible" : ""}`}>
-            {children}
-        </div>
-    );
-};
 
 const galleryShows = [
     {
@@ -157,26 +99,11 @@ const preloadImage = (src: string) =>
         image.src = src;
     });
 
-const preloadVideoMetadata = (src: string) =>
-    new Promise<void>((resolve) => {
-        const video = document.createElement("video");
-        const finish = () => {
-            video.removeEventListener("loadedmetadata", finish);
-            video.removeEventListener("error", finish);
-            resolve();
-        };
-        video.addEventListener("loadedmetadata", finish);
-        video.addEventListener("error", finish);
-        video.preload = "metadata";
-        video.src = src;
-    });
-
 const waitForBookingReady = async () => {
     const criticalImages = galleryShows[0].photos.slice(0, 5);
     await Promise.all([
         document.fonts?.ready ?? Promise.resolve(),
         Promise.all(criticalImages.map(preloadImage)),
-        preloadVideoMetadata(loopVideo1),
     ]);
 };
 
@@ -213,16 +140,12 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
                 <h1 className="sr-only">
                     Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
                 </h1>
-                <Reveal><VideoMarquee videos={liveLoops} /></Reveal>
-                <Reveal><VideoCarousel onVideoSelect={onVideoSelect} /></Reveal>
-                <Reveal><PhotoGallery shows={galleryShows} /></Reveal>
-                <Reveal><AudioPlayer /></Reveal>
-                <Reveal><BookingForm /></Reveal>
-                <Reveal>
-                    <div className="pt-16 pb-0">
-                        <Footer />
-                    </div>
-                </Reveal>
+                <VideoMarquee videos={[]} />
+                <VideoCarousel onVideoSelect={onVideoSelect} />
+                <PhotoGallery shows={galleryShows} />
+                <AudioPlayer />
+                <BookingForm />
+                <div className="pt-12 pb-0"><Footer /></div>
             </main>
         </div>
     );
@@ -292,8 +215,6 @@ const Booking = () => {
                 className={`relative min-h-screen text-white px-2 sm:px-6 py-6 sm:py-10 flex flex-col justify-between touch-pan-y overflow-x-clip ${isReady ? "" : "max-h-screen overflow-hidden"}`}
                 aria-busy={!isReady}
             >
-                <StarfieldCanvas />
-
                 <div className="relative z-10 w-full max-w-3xl lg:max-w-4xl mx-auto flex-grow">
                     <BookingContent onVideoSelect={setActiveVideoUrl} />
 

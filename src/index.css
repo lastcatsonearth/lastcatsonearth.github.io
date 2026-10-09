@@ -135,6 +135,17 @@
     transform: translateY(0);
   }
 
+  .home-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .home-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .intent-image {
     @apply relative min-h-[230px] overflow-hidden rounded-2xl border border-white/10 bg-black/30;
     opacity: 0;
@@ -164,6 +175,7 @@
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal,
   .gallery-row-reveal,
+  .home-reveal,
   .intent-image {
     opacity: 1;
     transform: none;

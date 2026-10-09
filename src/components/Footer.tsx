@@ -63,7 +63,7 @@ const Footer = () => {
 
   // Pages requiring compact bottom padding
   const isCompactPage =
-    location.pathname === "/" || location.pathname === "/booking";
+    location.pathname === "/" || location.pathname === "/links" || location.pathname === "/booking";
 
   const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const ua = navigator.userAgent || navigator.vendor;

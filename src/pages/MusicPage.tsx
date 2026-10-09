@@ -37,7 +37,7 @@ const MusicPage = () => {
           <AudioPlayer />
           <VideoCarousel onVideoSelect={setActiveVideoUrl} />
           <div className="border-t border-white/10 pt-8 text-center">
-            <Link to="/booking" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">
+            <Link to="/booking#contact" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">
               Book the live show <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
