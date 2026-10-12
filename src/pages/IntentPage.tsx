@@ -5,37 +5,12 @@ import { LanguageProvider, useLanguage } from "@/components/booking/LanguageCont
 
 import BandHeader from "@/components/BandHeader";
 import Footer from "@/components/Footer";
+import { intentSpacing } from "@/config/layoutSpacing";
 import liveStagePhoto from "@/assets/booking/photos/zamanand/1.jpg";
 import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.png";
 import festivalPhoto from "@/assets/booking/photos/zamanand/6.jpg";
 
 type IntentKey = "munich" | "live" | "party" | "events" | "festivals" | "festival";
-
-// Adjust the intent-page layout here. Each value is a Tailwind class so desktop
-// and mobile spacing can be tuned independently without searching the JSX.
-const intentSpacing = {
-  page: "px-2 py-6 sm:px-6 sm:py-10",
-  main: "p-3 sm:p-6",
-  article: "px-2 pb-10",
-  munichHero: "min-h-[72vh] px-6 pb-10 pt-28 sm:min-h-[78vh] sm:px-12 sm:pb-14",
-  standardHero: "pb-10",
-  heroTitle: "mt-4",
-  heroIntro: "mt-5",
-  heroBooking: "mt-7",
-  contentSection: "py-10",
-  lineupSection: "py-12",
-  lineupList: "mt-10 space-y-12 sm:space-y-16",
-  memberRow: "gap-7 pb-10 sm:gap-12",
-  memberName: "mt-2",
-  memberBio: "mt-3",
-  sectionGrid: "gap-8",
-  sectionHeading: "mt-3",
-  sectionBody: "mt-4",
-  sectionLink: "mt-6",
-  pointsList: "mt-6 space-y-4",
-  heroBrand: "left-6 top-20 sm:left-12 sm:top-24",
-  languageToggle: "left-6 top-6 sm:left-12 sm:top-10",
-} as const;
 
 const pageContent: Record<
   IntentKey,

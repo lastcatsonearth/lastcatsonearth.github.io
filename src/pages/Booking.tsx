@@ -8,6 +8,7 @@ import PhotoGallery from "@/components/booking/PhotoGallery";
 import BookingForm from "@/components/booking/BookingForm";
 import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
+import { bookingSpacing } from "@/config/layoutSpacing";
 
 // Alte Utting Photos
 import uttingPhoto1 from "@/assets/booking/photos/alte_utting/photo_1.png";
@@ -111,8 +112,8 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
     const { lang, setLang } = useLanguage();
 
     return (
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-3 pb-1 sm:p-8 sm:pb-3">
-            <div className="relative z-30 w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider -mb-6 px-2 sm:px-6">
+        <div className={`rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm ${bookingSpacing.card}`}>
+            <div className={`relative z-30 w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider ${bookingSpacing.languageToggle}`}>
                 <button
                     onClick={() => setLang("en")}
                     className={`transition-colors ${lang === "en" ? "text-cat-orange" : "text-white/40 hover:text-white"}`}
@@ -130,13 +131,13 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
 
             <a
                 href="/"
-                className="relative z-40 mb-8 inline-flex items-center gap-2 px-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-cat-orange"
+                className={`relative z-40 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-cat-orange ${bookingSpacing.backLink}`}
             >
                 <ArrowLeft className="h-4 w-4" />
                 Back to main website
             </a>
 
-            <main className="w-full mt-10 space-y-0">
+            <main className={`w-full space-y-0 ${bookingSpacing.content}`}>
                 <h1 className="sr-only">
                     Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
                 </h1>
@@ -145,7 +146,7 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
                 <PhotoGallery shows={galleryShows} />
                 <AudioPlayer />
                 <BookingForm />
-                <div className="pt-12 pb-0"><Footer /></div>
+                <div className={bookingSpacing.footer}><Footer /></div>
             </main>
         </div>
     );
@@ -212,7 +213,7 @@ const Booking = () => {
     return (
         <LanguageProvider>
             <div
-                className={`relative min-h-screen text-white px-2 sm:px-6 py-6 sm:py-10 flex flex-col justify-between touch-pan-y overflow-x-clip ${isReady ? "" : "max-h-screen overflow-hidden"}`}
+                className={`relative min-h-screen text-white flex flex-col justify-between touch-pan-y overflow-x-clip ${bookingSpacing.page} ${isReady ? "" : "max-h-screen overflow-hidden"}`}
                 aria-busy={!isReady}
             >
                 <div className="relative z-10 w-full max-w-3xl lg:max-w-4xl mx-auto flex-grow">

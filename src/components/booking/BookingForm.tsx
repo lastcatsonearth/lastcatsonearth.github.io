@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useLanguage } from "@/components/booking/LanguageContext";
+import { bookingSpacing } from "@/config/layoutSpacing";
 
 const translations = {
     en: {
@@ -37,20 +38,20 @@ const BookingForm = () => {
     };
 
     return (
-        <section id="contact" className="scroll-mt-6 border-t border-white/5 pt-8 max-w-xl mx-auto w-full text-center">
-            <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-2">
+        <section id="contact" className={`scroll-mt-6 border-t border-white/5 max-w-xl mx-auto w-full text-center ${bookingSpacing.form}`}>
+            <p className="text-cat-orange uppercase tracking-[0.25em] mb-2 text-sm">
                 {t.category}
             </p>
 
-            <h3 className="text-3xl md:text-2xl font-bold mb-3 tracking-wide">
+            <h3 className={`text-3xl md:text-2xl font-bold tracking-wide ${bookingSpacing.formHeading}`}>
                 {t.headline}
             </h3>
 
-            <p className="text-sm text-white/50 mb-5 tracking-wide">
+            <p className={`text-sm text-white/50 tracking-wide ${bookingSpacing.formIntro}`}>
                 {t.subheading}
             </p>
 
-            <form onSubmit={handleSubmit} className="mx-auto max-w-xl space-y-3 text-left">
+            <form onSubmit={handleSubmit} className={`mx-auto max-w-xl text-left ${bookingSpacing.formFields}`}>
                 <label className="block space-y-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                     Email address
                     <input name="email" type="email" required autoComplete="email" placeholder="you@example.com" className="mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange" />
