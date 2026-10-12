@@ -2,12 +2,6 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
 
-interface Member {
-    name: string;
-    role: string;
-    photo: string;
-}
-
 interface ShortBioSectionProps {
     copy: {
         shortLabel: string;
@@ -19,41 +13,67 @@ interface ShortBioSectionProps {
     Reveal: React.ComponentType<{ children: React.ReactNode }>;
 }
 
-export const ShortBioSection = ({ copy, membersRow1, membersRow2, Reveal }: ShortBioSectionProps) => {
+export const ShortBioSection = ({
+    copy,
+    membersRow1,
+    membersRow2,
+    Reveal,
+}: ShortBioSectionProps) => {
     return (
-        <section id="short-bio" className={`flex h-screen snap-start snap-always flex-col justify-center border-y border-white/10 bg-black/40 px-4 pt-16 pb-6 sm:px-6 sm:py-12 ${homeSpacing.shortSection}`}>
-            <div className={`mx-auto grid w-full max-w-6xl lg:grid-cols-[0.8fr_1.2fr] lg:items-end ${homeSpacing.shortGrid}`}>
+        <section
+            id="short-bio"
+            className={`flex h-[calc(100vh-4rem)] snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-8 pb-4 sm:px-6 sm:pt-10 sm:pb-8 ${homeSpacing.shortSection}`}
+        >
+            {/* Top Header & Bio Block */}
+            <div className={`mx-auto w-full max-w-6xl space-y-2 sm:space-y-0 lg:grid lg:grid-cols-[0.8fr_1.2fr] lg:items-start ${homeSpacing.shortGrid}`}>
                 <Reveal>
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-cat-orange">{copy.shortLabel}</p>
-                    <h2 className="mt-1 text-3xl font-bold uppercase leading-none sm:mt-2 sm:text-6xl" dangerouslySetInnerHTML={{ __html: copy.short }} />
+                    <h2
+                        className="mt-1 text-3xl font-bold uppercase leading-[0.95] sm:mt-2 sm:text-6xl"
+                        dangerouslySetInnerHTML={{ __html: copy.short }}
+                    />
                 </Reveal>
                 <Reveal>
-                    <p className="max-w-2xl text-justify text-sm leading-6 text-white/70 sm:text-xl sm:leading-8">
+                    <p className="max-w-2xl text-justify text-base leading-6 text-white/80 sm:text-xl sm:leading-8">
                         {copy.shortBody}
                     </p>
-                    <Link to="/munich-rock-band" className="mt-2 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white sm:mt-4">
+                    <Link
+                        to="/munich-rock-band"
+                        className="mt-2 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white sm:mt-4 sm:text-xs"
+                    >
                         Meet the Cats <ArrowUpRight className="h-4 w-4" />
                     </Link>
                 </Reveal>
             </div>
 
-            <div className="mx-auto mt-6 w-full max-w-6xl sm:mt-10">
-                <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:gap-6">
+            {/* Circular Band Member Previews */}
+            <div className="mx-auto mt-4 w-full max-w-6xl sm:mt-10">
+                <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-6">
+                    {/* Row 1: Tony & Alessandro on mobile */}
                     <div className="flex justify-center gap-8 sm:w-2/5 sm:justify-around">
                         {membersRow1.map(([name, role, photo]) => (
                             <Link to="/munich-rock-band" key={name} className="group flex flex-col items-center text-center">
-                                <img src={photo} alt={`${name}, ${role}`} className="aspect-square w-20 rounded-full border border-cat-orange/50 object-cover transition duration-300 group-hover:scale-105 group-hover:border-cat-orange sm:w-32 lg:w-36" />
-                                <h3 className="mt-2 text-xs font-bold uppercase tracking-wide text-white sm:text-base">{name}</h3>
+                                <img
+                                    src={photo}
+                                    alt={`${name}, ${role}`}
+                                    className="aspect-square w-20 rounded-full border border-cat-orange/50 object-cover transition duration-300 group-hover:scale-105 group-hover:border-cat-orange sm:w-32 lg:w-36"
+                                />
+                                <h3 className="mt-1 text-xs font-bold uppercase tracking-wide text-white sm:text-base">{name}</h3>
                                 <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-cat-orange sm:text-xs">{role}</p>
                             </Link>
                         ))}
                     </div>
 
-                    <div className="flex justify-center gap-6 sm:w-3/5 sm:justify-around">
+                    {/* Row 2: Chris, Tim & Tom on mobile */}
+                    <div className="flex justify-center gap-5 sm:w-3/5 sm:justify-around">
                         {membersRow2.map(([name, role, photo]) => (
                             <Link to="/munich-rock-band" key={name} className="group flex flex-col items-center text-center">
-                                <img src={photo} alt={`${name}, ${role}`} className="aspect-square w-20 rounded-full border border-cat-orange/50 object-cover transition duration-300 group-hover:scale-105 group-hover:border-cat-orange sm:w-32 lg:w-36" />
-                                <h3 className="mt-2 text-xs font-bold uppercase tracking-wide text-white sm:text-base">{name}</h3>
+                                <img
+                                    src={photo}
+                                    alt={`${name}, ${role}`}
+                                    className="aspect-square w-20 rounded-full border border-cat-orange/50 object-cover transition duration-300 group-hover:scale-105 group-hover:border-cat-orange sm:w-32 lg:w-36"
+                                />
+                                <h3 className="mt-1 text-xs font-bold uppercase tracking-wide text-white sm:text-base">{name}</h3>
                                 <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-cat-orange sm:text-xs">{role}</p>
                             </Link>
                         ))}

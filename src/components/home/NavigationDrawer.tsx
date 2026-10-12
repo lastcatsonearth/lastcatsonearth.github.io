@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, Menu, X, Instagram, Youtube } from "lucide-react";
+import { ArrowUpRight, Mail, X, Instagram, Youtube } from "lucide-react";
 import { FaApple, FaFacebook, FaSpotify, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const NavigationDrawer = ({
     copy,
 }: NavigationDrawerProps) => {
     return (
-        <nav className="fixed inset-0 z-40 pointer-events-none" aria-label="Homepage navigation">
+        <nav className="fixed inset-0 z-50 pointer-events-none" aria-label="Homepage navigation">
             <div
                 className={`absolute inset-0 bg-black/70 transition-opacity duration-300 ${isNavigationOpen ? "pointer-events-auto opacity-100" : "opacity-0"
                     }`}
@@ -29,13 +29,13 @@ export const NavigationDrawer = ({
             />
             <aside
                 id="homepage-menu"
-                className={`absolute left-0 top-0 flex h-full w-[min(78vw,240px)] flex-col overflow-hidden border-r border-white/15 bg-[#080808]/95 px-4 py-5 shadow-2xl backdrop-blur-xl transition-transform duration-300 ease-out sm:px-5 ${isNavigationOpen ? "pointer-events-auto translate-x-0" : "-translate-x-full"
+                className={`absolute left-0 top-0 flex h-full w-[min(78vw,240px)] flex-col overflow-hidden border-r border-white/15 bg-[#080808]/95 px-4 pt-20 pb-5 shadow-2xl backdrop-blur-xl transition-transform duration-300 ease-out sm:px-5 ${isNavigationOpen ? "pointer-events-auto translate-x-0" : "-translate-x-full"
                     }`}
                 aria-hidden={!isNavigationOpen}
             >
                 <div className="flex items-start justify-between border-b border-white/10 pb-4">
                     <div>
-                        <p className="-translate-x-1 text-lg font-black uppercase leading-[0.9] tracking-tight text-white">
+                        <p className="text-lg font-black uppercase leading-[0.9] tracking-tight text-white">
                             Last Cats<br />
                             <span className="text-cat-orange">on Earth</span>
                         </p>
@@ -142,18 +142,6 @@ export const NavigationDrawer = ({
                     live shows
                 </p>
             </aside>
-
-            <button
-                type="button"
-                aria-label="Open navigation"
-                aria-expanded={isNavigationOpen}
-                aria-controls="homepage-menu"
-                onClick={() => setIsNavigationOpen((open) => !open)}
-                className={`absolute left-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-cat-orange bg-cat-orange text-black shadow-lg shadow-cat-orange/20 transition hover:border-white hover:bg-white sm:left-8 sm:top-8 ${isNavigationOpen ? "pointer-events-none opacity-0" : "pointer-events-auto opacity-100"
-                    }`}
-            >
-                <Menu className="h-5 w-5" />
-            </button>
         </nav>
     );
 };

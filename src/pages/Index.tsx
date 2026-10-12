@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
 
+import { TopBar } from "@/components/home/TopBar";
 import { SideDotNav } from "@/components/home/SideDotNav";
-import { NavigationDrawer } from "@/components/home/NavigationDrawer";
 
 import { HeroSection } from "@/components/home/sections/HeroSection";
 import { ShortBioSection } from "@/components/home/sections/ShortBioSection";
@@ -35,7 +35,6 @@ const Reveal = ({ children }: { children: React.ReactNode }) => {
 
 const HomeContent = () => {
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
-  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -133,14 +132,6 @@ const HomeContent = () => {
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsNavigationOpen(false);
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -178,21 +169,22 @@ const HomeContent = () => {
   };
 
   return (
-    <div ref={containerRef} className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth text-white">
+    <div className="flex h-screen w-full flex-col overflow-hidden bg-black text-white">
+      <TopBar
+        lang={lang}
+        setLang={setLang}
+        scrollToSection={scrollToSection}
+      />
+
       <SideDotNav
         sectionsConfig={sectionsConfig}
         activeSectionIndex={activeSectionIndex}
         scrollToSection={scrollToSection}
       />
 
-      <NavigationDrawer
-        isNavigationOpen={isNavigationOpen}
-        setIsNavigationOpen={setIsNavigationOpen}
-        copy={copy}
-      />
-
-      <main id="top">
-        <HeroSection copy={copy} lang={lang} setLang={setLang} />
+      {/* Scrollable container taking the remaining height (100vh - h-16) */}
+      <main ref={containerRef} id="top" className="h-[calc(100vh-4rem)] w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+        <HeroSection copy={copy} />
         <ShortBioSection copy={copy} membersRow1={membersRow1} membersRow2={membersRow2} Reveal={Reveal} />
         <LiveSection copy={copy} setActiveVideoUrl={setActiveVideoUrl} Reveal={Reveal} />
         <MusicSection copy={copy} Reveal={Reveal} />
