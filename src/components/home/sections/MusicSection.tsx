@@ -32,8 +32,7 @@ export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
     return (
         <section
             id="music"
-            className={`flex h-[calc(100dvh-4rem)] sm:h-screen snap-start snap-always items-start pt-6 sm:items-center sm:pt-0 ${homeSpacing.musicSection}`}
-        >
+            className={`flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always items-start pt-6 sm:items-center sm:pt-0 overflow-hidden ${homeSpacing.musicSection}`}        >
             <div
                 className={`mx-auto w-full max-w-6xl ${isLandscapePhone
                     ? "grid grid-cols-2 items-center gap-4 px-2"

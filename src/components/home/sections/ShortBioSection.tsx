@@ -249,8 +249,7 @@ export const ShortBioSection = ({
     return (
         <section
             id="short-bio"
-            className={`relative flex h-[calc(100dvh-4rem)] snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-6 pb-2 sm:justify-center sm:px-6 sm:pt-0 sm:pb-8 overflow-hidden ${homeSpacing.shortSection}`}
-        >
+            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-6 pb-2 sm:justify-center sm:px-6 sm:pt-0 sm:pb-8 overflow-hidden ${homeSpacing.shortSection}`}        >
             {/* Top Header & Bio Block: side-by-side ONLY on rotated landscape mobile */}
             <div
                 className={`mx-auto w-full max-w-6xl space-y-2 sm:space-y-0 ${isLandscapePhone ? "grid grid-cols-2 gap-4 items-center" : ""

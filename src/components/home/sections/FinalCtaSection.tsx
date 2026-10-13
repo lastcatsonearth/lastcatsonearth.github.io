@@ -30,7 +30,7 @@ export const FinalCtaSection = ({ copy }: FinalCtaSectionProps) => {
     return (
         <section
             id="final-cta"
-            className={`relative flex h-[calc(100dvh-4rem)] snap-start snap-always flex-col justify-between overflow-hidden bg-cat-orange text-black ${isLandscapePhone
+            className={`relative flex h-[calc(100dvh-4rem)] snap-start snap-mandatory snap-y snap-always flex-col justify-between overflow-hidden bg-cat-orange text-black ${isLandscapePhone
                 ? "px-4 pt-2 pb-2"
                 : "px-4 pt-4 pb-3 sm:px-6 sm:pt-10 sm:pb-6"
                 }`}

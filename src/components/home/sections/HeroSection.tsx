@@ -12,16 +12,29 @@ interface HeroSectionProps {
 }
 
 export const HeroSection = ({ copy }: HeroSectionProps) => {
+    // Handler per rendere lo snap ipersensibile al minimo movimento sulla Hero
+    const handleTouchOrScrollEnd = (e: React.UIEvent<HTMLElement>) => {
+        const target = e.currentTarget;
+        // Se l'utente ha scrollato anche solo di pochi pixel ma non ha superato la metà,
+        // lo forziamo a tornare in cima o a scattare avanti in base alla direzione.
+        if (target.scrollTop > 0 && target.scrollTop < 80) {
+            target.scrollTo({ top: target.scrollTop > 40 ? window.innerHeight : 0, behavior: 'smooth' });
+        }
+    };
+
     return (
         <section
             id="hero-section"
-            className={`relative isolate flex h-[calc(100vh-4rem)] snap-start snap-always flex-col justify-between pt-4 pb-6 sm:justify-end sm:pt-0 sm:pb-12 overflow-hidden ${homeSpacing.hero}`}
+            onScroll={handleTouchOrScrollEnd}
+            className={`relative isolate flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-between pt-4 pb-6 sm:justify-end sm:pt-0 sm:pb-12 overflow-hidden overflow-y-auto sm:overflow-hidden ${homeSpacing.hero}`}
         >
-            <img
-                src={heroPhoto}
-                alt="Last Cats on Earth performing live in Munich"
-                className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
-            />
+            <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
+                <img
+                    src={heroPhoto}
+                    alt="Last Cats on Earth performing live in Munich"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_100%] sm:object-center"
+                />
+            </div>
             <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/85 via-black/40 to-black/80 sm:bg-gradient-to-t sm:from-black sm:via-black/55 sm:to-black/10" />
             <div className="absolute inset-0 -z-10 bg-cat-orange/10 mix-blend-screen" />
 

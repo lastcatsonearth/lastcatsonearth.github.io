@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 interface SectionConfig {
     id: string;
     label: string;
@@ -14,29 +16,44 @@ export const SideDotNav = ({
     activeSectionIndex,
     scrollToSection,
 }: SideDotNavProps) => {
-    const isLastSection = activeSectionIndex === sectionsConfig.length - 1;
+    const [selectedIndex, setSelectedIndex] = useState(activeSectionIndex);
+
+    useEffect(() => {
+        setSelectedIndex(activeSectionIndex);
+    }, [activeSectionIndex]);
+
+    const handleDotClick = (index: number, id: string) => {
+        setSelectedIndex(index);
+        scrollToSection(id);
+    };
+
+    const isLastSection = selectedIndex === sectionsConfig.length - 1;
 
     return (
         <nav
             className="hidden sm:flex fixed right-6 top-1/2 z-30 -translate-y-1/2 flex-col gap-3"
             aria-label="Section navigation"
         >
-            {sectionsConfig.map((sec, index) => (
-                <button
-                    key={sec.id}
-                    type="button"
-                    onClick={() => scrollToSection(sec.id)}
-                    aria-label={`Scroll to ${sec.label}`}
-                    className={`h-3 rounded-full transition-all duration-300 ${activeSectionIndex === index
-                        ? isLastSection
-                            ? "w-8 bg-black"
-                            : "w-8 bg-cat-orange"
-                        : isLastSection
-                            ? "w-3 bg-black/40 hover:bg-black/80"
-                            : "w-3 bg-white/40 hover:bg-white/80"
-                        }`}
-                />
-            ))}
+            {sectionsConfig.map((sec, index) => {
+                const isActive = selectedIndex === index;
+
+                return (
+                    <button
+                        key={sec.id}
+                        type="button"
+                        onClick={() => handleDotClick(index, sec.id)}
+                        aria-label={`Scroll to ${sec.label}`}
+                        className={`h-3 w-3 rounded-full transition-all duration-300 ${isActive
+                            ? isLastSection
+                                ? "bg-black scale-125 shadow-sm"
+                                : "bg-cat-orange scale-125 shadow-[0_0_10px_rgba(211,67,3,0.6)]"
+                            : isLastSection
+                                ? "bg-black/30 hover:bg-black/70 hover:scale-110"
+                                : "bg-white/30 hover:bg-white/70 hover:scale-110"
+                            }`}
+                    />
+                );
+            })}
         </nav>
     );
 };
