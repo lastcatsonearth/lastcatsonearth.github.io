@@ -15,7 +15,7 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
     return (
         <section
             id="hero-section"
-            className={`relative isolate flex h-[calc(100vh-4rem)] snap-start snap-always flex-col justify-between pt-4 pb-6 sm:justify-end sm:pt-0 sm:pb-12 overflow-hidden ${homeSpacing.hero}`}
+            className={`relative isolate flex h-[calc(100dvh-4rem)] snap-start snap-always flex-col justify-between pt-4 pb-6 sm:justify-end sm:pt-0 sm:pb-12 overflow-hidden ${homeSpacing.hero}`}
         >
             <img
                 src={heroPhoto}

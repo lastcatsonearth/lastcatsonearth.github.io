@@ -9,6 +9,7 @@ import { ShortBioSection } from "@/components/home/sections/ShortBioSection";
 import { LiveSection } from "@/components/home/sections/LiveSection";
 import { MusicSection } from "@/components/home/sections/MusicSection";
 import { FinalCtaSection } from "@/components/home/sections/FinalCtaSection";
+import starsBg from "@/assets/stars_background.png";
 
 const Reveal = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -183,11 +184,21 @@ const HomeContent = () => {
       />
 
       {/* Scrollable container taking the remaining height (100vh - h-16) */}
-      <main ref={containerRef} id="top" className="h-[calc(100vh-4rem)] w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+      <main ref={containerRef} id="top" className="h-[calc(100dvh-4rem)] w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none">
+        {/* Top Section - No stars */}
         <HeroSection copy={copy} />
-        <ShortBioSection copy={copy} membersRow1={membersRow1} membersRow2={membersRow2} Reveal={Reveal} />
-        <LiveSection copy={copy} setActiveVideoUrl={setActiveVideoUrl} Reveal={Reveal} />
-        <MusicSection copy={copy} Reveal={Reveal} />
+
+        {/* Middle Sections with Star Background */}
+        <div
+          className="relative bg-repeat"
+          style={{ backgroundImage: `url(${starsBg})` }}
+        >
+          <ShortBioSection copy={copy} membersRow1={membersRow1} membersRow2={membersRow2} Reveal={Reveal} />
+          <LiveSection copy={copy} setActiveVideoUrl={setActiveVideoUrl} Reveal={Reveal} />
+          <MusicSection copy={copy} Reveal={Reveal} />
+        </div>
+
+        {/* Bottom Section - No stars */}
         <FinalCtaSection copy={copy} />
       </main>
 
