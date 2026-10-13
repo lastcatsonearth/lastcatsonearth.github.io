@@ -14,6 +14,17 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
     const t = photoGalleryTranslations[lang];
     const [activeSelection, setActiveSelection] = useState<PhotoSelection | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Stato per ritardare il rendering pesante della griglia ed eliminare il lag allo scroll
+    const [isReadyToRender, setIsReadyToRender] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsReadyToRender(true);
+        }, 300); // 300ms di margine per permettere allo snap di completarsi in modo fluido
+        return () => clearTimeout(timer);
+    }, []);
+
     const currentShow = activeSelection !== null ? shows[activeSelection.showIdx] : null;
 
     useEffect(() => {
@@ -56,14 +67,20 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
                 {t.headline}
             </h3>
 
-            <PhotoGalleryGrid
-                shows={shows}
-                translations={t}
-                onPhotoSelect={(selection) => {
-                    setIsLoading(true);
-                    setActiveSelection(selection);
-                }}
-            />
+            {isReadyToRender ? (
+                <PhotoGalleryGrid
+                    shows={shows}
+                    translations={t}
+                    onPhotoSelect={(selection) => {
+                        setIsLoading(true);
+                        setActiveSelection(selection);
+                    }}
+                />
+            ) : (
+                <div className="h-64 flex items-center justify-center text-white/30 text-xs uppercase tracking-widest">
+                    Loading gallery...
+                </div>
+            )}
 
             {activeSelection !== null && currentShow && (
                 <PhotoLightbox

@@ -6,9 +6,9 @@ import VideoMarquee from "@/components/booking/VideoMarquee";
 import VideoCarousel from "@/components/booking/VideoCarousel";
 import PhotoGallery from "@/components/booking/PhotoGallery";
 import BookingForm from "@/components/booking/BookingForm";
+import StarfieldCanvas from "@/components/booking/StarfieldCanvas";
 import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
-import { bookingSpacing } from "@/config/layoutSpacing";
 
 // Alte Utting Photos
 import uttingPhoto1 from "@/assets/booking/photos/alte_utting/photo_1.png";
@@ -25,7 +25,7 @@ import renazzoPhoto4 from "@/assets/booking/photos/renazzo/4.jpg";
 import renazzoPhoto5 from "@/assets/booking/photos/renazzo/5.jpg";
 import renazzoPhoto6 from "@/assets/booking/photos/renazzo/6.jpg";
 
-// Zamanand Photos
+
 import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.jpg";
 import zamanandPhoto2 from "@/assets/booking/photos/zamanand/2.jpg";
 import zamanandPhoto3 from "@/assets/booking/photos/zamanand/3.jpg";
@@ -47,7 +47,6 @@ import zamanandPhoto18 from "@/assets/booking/photos/zamanand/18.jpeg";
 import zamanandPhoto19 from "@/assets/booking/photos/zamanand/19.jpeg";
 import zamanandPhoto20 from "@/assets/booking/photos/zamanand/20.jpeg";
 import zamanandPhoto21 from "@/assets/booking/photos/zamanand/21.jpeg";
-
 
 const galleryShows = [
     {
@@ -101,7 +100,7 @@ const preloadImage = (src: string) =>
     });
 
 const waitForBookingReady = async () => {
-    const criticalImages = galleryShows[0].photos.slice(0, 5);
+    const criticalImages = galleryShows[0].photos.slice(0, 5).map(p => p.thumb);
     await Promise.all([
         document.fonts?.ready ?? Promise.resolve(),
         Promise.all(criticalImages.map(preloadImage)),
@@ -111,42 +110,94 @@ const waitForBookingReady = async () => {
 const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null) => void }) => {
     const { lang, setLang } = useLanguage();
 
+    const sections = ["bio", "videos", "releases", "photos", "contact"];
+    const [activeIdx, setActiveIdx] = useState(0);
+
+    const scrollToSection = (index: number) => {
+        const el = document.getElementById(sections[index]);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+            setActiveIdx(index);
+        }
+    };
+
     return (
-        <div className={`rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm ${bookingSpacing.card}`}>
-            <div className={`relative z-30 w-full flex justify-end gap-2 text-m font-medium uppercase tracking-wider ${bookingSpacing.languageToggle}`}>
-                <button
-                    onClick={() => setLang("en")}
-                    className={`transition-colors ${lang === "en" ? "text-cat-orange" : "text-white/40 hover:text-white"}`}
+        <div className="relative z-10 w-full text-white">
+            <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl px-4 sm:px-8 py-3 flex items-center justify-between">
+                <a
+                    href="/"
+                    className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-cat-orange transition-transform hover:scale-105"
                 >
-                    EN
-                </button>
-                <span className="text-white/20">|</span>
-                <button
-                    onClick={() => setLang("de")}
-                    className={`transition-colors ${lang === "de" ? "text-cat-orange" : "text-white/40 hover:text-white"}`}
-                >
-                    DE
-                </button>
-            </div>
+                    <ArrowLeft className="h-4 w-4" />
+                    Home
+                </a>
 
-            <a
-                href="/"
-                className={`relative z-40 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50 transition-colors hover:text-cat-orange ${bookingSpacing.backLink}`}
-            >
-                <ArrowLeft className="h-4 w-4" />
-                Back to main website
-            </a>
+                <nav className="hidden lg:flex items-center gap-6 text-[11px] font-black uppercase tracking-[0.25em]">
+                    {sections.map((sec, idx) => (
+                        <button
+                            key={sec}
+                            onClick={() => scrollToSection(idx)}
+                            className={`transition-colors capitalize ${activeIdx === idx ? "text-cat-orange underline underline-offset-8" : "text-white/50 hover:text-white"}`}
+                        >
+                            {sec === "contact" ? "Get in Touch" : sec}
+                        </button>
+                    ))}
+                </nav>
 
-            <main className={`w-full space-y-0 ${bookingSpacing.content}`}>
+                <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest bg-white/5 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                    <button
+                        onClick={() => setLang("en")}
+                        className={`transition-colors ${lang === "en" ? "text-cat-orange font-bold" : "text-white/40 hover:text-white"}`}
+                    >
+                        EN
+                    </button>
+                    <span className="text-white/20">|</span>
+                    <button
+                        onClick={() => setLang("de")}
+                        className={`transition-colors ${lang === "de" ? "text-cat-orange font-bold" : "text-white/40 hover:text-white"}`}
+                    >
+                        DE
+                    </button>
+                </div>
+            </header>
+
+            <main className="w-full h-dvh overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none">
                 <h1 className="sr-only">
                     Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
                 </h1>
-                <VideoMarquee videos={[]} />
-                <VideoCarousel onVideoSelect={onVideoSelect} />
-                <PhotoGallery shows={galleryShows} />
-                <AudioPlayer />
-                <BookingForm />
-                <div className={bookingSpacing.footer}><Footer /></div>
+
+                <section id="bio" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
+                    <div className="w-full max-w-5xl mx-auto">
+                        <VideoMarquee videos={[]} />
+                    </div>
+                </section>
+
+                <section id="videos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
+                    <div className="w-full max-w-5xl mx-auto">
+                        <VideoCarousel onVideoSelect={onVideoSelect} />
+                    </div>
+                </section>
+
+                <section id="releases" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
+                    <div className="w-full max-w-4xl mx-auto">
+                        <AudioPlayer />
+                    </div>
+                </section>
+
+                <section id="photos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20 overflow-y-auto">
+                    <div className="w-full max-w-6xl mx-auto py-10">
+                        <PhotoGallery shows={galleryShows} />
+                    </div>
+                </section>
+
+                <section id="contact" className="h-dvh w-full snap-start snap-always flex flex-col justify-between items-center px-4 sm:px-8 pt-24 pb-8 overflow-y-auto">
+                    <div className="w-full max-w-xl mx-auto my-auto">
+                        <BookingForm />
+                    </div>
+                    <div className="w-full max-w-4xl mx-auto pb-4">
+                        <Footer />
+                    </div>
+                </section>
             </main>
         </div>
     );
@@ -158,11 +209,9 @@ const Booking = () => {
 
     useEffect(() => {
         let isMounted = true;
-
         waitForBookingReady().then(() => {
             if (isMounted) setIsReady(true);
         });
-
         return () => {
             isMounted = false;
         };
@@ -170,13 +219,11 @@ const Booking = () => {
 
     useEffect(() => {
         document.title = "Book a Munich Rock Band | Last Cats on Earth";
-
         const description = document.querySelector('meta[name="description"]');
         description?.setAttribute(
             "content",
             "Book Last Cats on Earth, a Munich funk rock and alternative rock band for concerts, festivals, venues, parties, private events and collaborations."
         );
-
         const canonical = document.querySelector('link[rel="canonical"]');
         canonical?.setAttribute("href", "https://lastcatsonearth.de/booking");
 
@@ -198,7 +245,6 @@ const Booking = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
-    // Prevent background body scrolling when the video modal is open
     useEffect(() => {
         if (activeVideoUrl) {
             document.body.style.overflow = "hidden";
@@ -213,45 +259,45 @@ const Booking = () => {
     return (
         <LanguageProvider>
             <div
-                className={`relative min-h-screen text-white flex flex-col justify-between touch-pan-y overflow-x-clip ${bookingSpacing.page} ${isReady ? "" : "max-h-screen overflow-hidden"}`}
+                className={`relative min-h-screen bg-black text-white flex flex-col justify-between overflow-x-hidden ${isReady ? "" : "max-h-screen overflow-hidden"}`}
                 aria-busy={!isReady}
             >
-                <div className="relative z-10 w-full max-w-3xl lg:max-w-4xl mx-auto flex-grow">
-                    <BookingContent onVideoSelect={setActiveVideoUrl} />
+                <StarfieldCanvas />
 
-                    {activeVideoUrl && (
-                        <div
-                            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 md:p-12 animate-fadeIn backdrop-blur-sm"
+                <BookingContent onVideoSelect={setActiveVideoUrl} />
+
+                {activeVideoUrl && (
+                    <div
+                        className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 md:p-12 animate-fadeIn backdrop-blur-md"
+                        onClick={() => setActiveVideoUrl(null)}
+                    >
+                        <button
+                            className="absolute top-6 right-6 text-white/60 hover:text-white text-3xl font-light transition-colors z-50 p-2"
                             onClick={() => setActiveVideoUrl(null)}
+                            aria-label="Close overlay"
                         >
-                            <button
-                                className="absolute top-6 right-6 text-white/60 hover:text-white text-3xl font-light transition-colors z-50 p-2"
-                                onClick={() => setActiveVideoUrl(null)}
-                                aria-label="Close overlay"
-                            >
-                                ✕
-                            </button>
-                            <div
-                                className="relative w-full max-w-4xl aspect-video bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl"
-                                onClick={(e) => e.stopPropagation()}
-                            >
-                                <iframe
-                                    className="w-full h-full"
-                                    src={activeVideoUrl}
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
-                            </div>
+                            ✕
+                        </button>
+                        <div
+                            className="relative w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden border border-white/20 shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <iframe
+                                className="w-full h-full"
+                                src={activeVideoUrl}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
 
                 {!isReady && (
-                    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 px-6 text-center">
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black px-6 text-center">
                         <div>
-                            <p className="text-2xl font-bold tracking-wide text-white">Last Cats on Earth</p>
-                            <p className="mt-3 text-xs uppercase tracking-[0.25em] text-cat-orange">
-                                Loading the show
+                            <p className="text-3xl font-black uppercase tracking-wider text-white">Last Cats on Earth</p>
+                            <p className="mt-3 text-xs uppercase tracking-[0.3em] text-cat-orange">
+                                Loading Press Kit
                             </p>
                         </div>
                     </div>
