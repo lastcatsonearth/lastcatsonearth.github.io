@@ -3,6 +3,7 @@ export interface ShowGallery {
     location?: string;
     date?: string;
     photos: string[];
+    fullPhotos: string[];
 }
 
 export interface PhotoSelection {
@@ -19,3 +20,4 @@ export interface PhotoGalleryTranslations {
     counterTemplate: string;
     back: string;
 }
+

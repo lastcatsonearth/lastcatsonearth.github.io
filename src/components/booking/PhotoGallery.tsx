@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/components/booking/LanguageContext";
 import PhotoGalleryGrid from "./PhotoGallery/PhotoGalleryGrid";
 import PhotoLightbox from "./PhotoGallery/PhotoLightbox";
@@ -26,15 +26,18 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
     }, []);
 
     const currentShow = activeSelection !== null ? shows[activeSelection.showIdx] : null;
+    const lightboxShow = useMemo(
+        () => (currentShow ? { ...currentShow, photos: currentShow.fullPhotos } : null),
+        [currentShow]
+    );
 
     useEffect(() => {
         if (!activeSelection || !currentShow) return;
 
-        const total = currentShow.photos.length;
-        const nextImg = new Image();
-        nextImg.src = currentShow.photos[(activeSelection.photoIdx + 1) % total];
-        const prevImg = new Image();
-        prevImg.src = currentShow.photos[(activeSelection.photoIdx - 1 + total) % total];
+        const list = currentShow.fullPhotos;
+        const total = list.length;
+        new Image().src = list[(activeSelection.photoIdx + 1) % total];
+        new Image().src = list[(activeSelection.photoIdx - 1 + total) % total];
     }, [activeSelection, currentShow]);
 
     const moveSelection = useCallback((direction: 1 | -1) => {
@@ -84,7 +87,7 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
 
             {activeSelection !== null && currentShow && (
                 <PhotoLightbox
-                    show={currentShow}
+                    show={lightboxShow}
                     selection={activeSelection}
                     translations={t}
                     isLoading={isLoading}

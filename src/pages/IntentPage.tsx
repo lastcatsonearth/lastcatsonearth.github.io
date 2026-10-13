@@ -5,12 +5,37 @@ import { LanguageProvider, useLanguage } from "@/components/booking/LanguageCont
 
 import BandHeader from "@/components/BandHeader";
 import Footer from "@/components/Footer";
-import { intentSpacing } from "@/config/layoutSpacing";
-import liveStagePhoto from "@/assets/booking/photos/zamanand/1.webp";
-import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.webp";
-import festivalPhoto from "@/assets/booking/photos/zamanand/6.webp";
+import liveStagePhoto from "@/assets/booking/photos/zamanand/1.jpg";
+import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.png";
+import festivalPhoto from "@/assets/booking/photos/zamanand/6.jpg";
 
 type IntentKey = "munich" | "live" | "party" | "events" | "festivals" | "festival";
+
+// Adjust the intent-page layout here. Each value is a Tailwind class so desktop
+// and mobile spacing can be tuned independently without searching the JSX.
+const intentSpacing = {
+  page: "px-2 py-6 sm:px-6 sm:py-10",
+  main: "p-3 sm:p-6",
+  article: "px-2 pb-10",
+  munichHero: "min-h-[72vh] px-6 pb-10 pt-28 sm:min-h-[78vh] sm:px-12 sm:pb-14",
+  standardHero: "pb-10",
+  heroTitle: "mt-4",
+  heroIntro: "mt-5",
+  heroBooking: "mt-7",
+  contentSection: "py-10",
+  lineupSection: "py-12",
+  lineupList: "mt-10 space-y-12 sm:space-y-16",
+  memberRow: "gap-7 pb-10 sm:gap-12",
+  memberName: "mt-2",
+  memberBio: "mt-3",
+  sectionGrid: "gap-8",
+  sectionHeading: "mt-3",
+  sectionBody: "mt-4",
+  sectionLink: "mt-6",
+  pointsList: "mt-6 space-y-4",
+  heroBrand: "left-6 top-20 sm:left-12 sm:top-24",
+  languageToggle: "left-6 top-6 sm:left-12 sm:top-10",
+} as const;
 
 const pageContent: Record<
   IntentKey,
@@ -190,7 +215,7 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
       ...pageContent.munich,
       title: "Münchner Rockband für Live-Shows | Last Cats on Earth",
       description: "Last Cats on Earth sind eine Münchner Rockband für Clubs, Konzerte, Festivals, Veranstaltungsorte und Events.",
-      eyebrow: "München · Deutschland",
+      eyebrow: "",
       heading: "Eine Münchner Rockband für echte Live-Räume.",
       intro: "Last Cats on Earth verbinden Hard Rock, Funk, Alternative Rock, Rap und Pop-Rock-Energie zu einem eigenen Live-Set. Wir kommen aus München und sind für Shows in Bayern, Deutschland und darüber hinaus verfügbar.",
     }
@@ -285,7 +310,7 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
                 <div className="absolute inset-0 -z-10 bg-cat-orange/15 mix-blend-screen" />
                 <div className={`absolute z-10 text-left ${intentSpacing.heroBrand}`}>
                   <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white">Last Cats on Earth</p>
-                  <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.12em] text-cat-orange">{lang === "de" ? "München · Deutschland" : "Munich · Germany"}</p>
+                  <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.3em] text-cat-orange">Munich · Germany</p>
                 </div>
                 <div className={`absolute z-10 flex items-center gap-1 rounded-full border border-white/20 bg-black/50 p-1 text-[9px] font-black uppercase tracking-[0.18em] backdrop-blur-md ${intentSpacing.languageToggle}`}>
                   <button type="button" onClick={() => setLang("en")} className={`rounded-full px-3 py-1.5 transition ${lang === "en" ? "bg-cat-orange text-black" : "text-white/60 hover:text-white"}`}>EN</button>
@@ -295,7 +320,7 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
             )}
             <div className={isMunich ? "relative max-w-3xl" : ""}>
               <p className="text-[11px] uppercase tracking-[0.8em] text-cat-orange">{content.eyebrow}</p>
-              <h1 className={`${intentSpacing.heroTitle} font-black uppercase tracking-tight ${isMunich ? "max-w-4xl text-5xl leading-[0.95] sm:text-7xl sm:leading-[0.9] lg:text-8xl" : "text-3xl leading-[0.9] sm:text-5xl"}`}>
+              <h1 className={`${intentSpacing.heroTitle} font-black uppercase leading-[0.9] tracking-tight ${isMunich ? "max-w-4xl text-5xl sm:text-7xl lg:text-8xl" : "text-3xl sm:text-5xl"}`}>
                 {content.heading}
               </h1>
               <p className={`${intentSpacing.heroIntro} text-sm leading-7 ${isMunich ? "max-w-2xl text-white/75 sm:text-base" : "mx-auto max-w-xl text-white/60"}`}>{content.intro}</p>
@@ -374,8 +399,8 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
                         </>
                       ) : (
                         <>
-                          <img src={photo} alt={`${name}, ${role}`} className="order-1 aspect-square w-44 rounded-full border border-cat-orange/50 object-cover sm:order-2 sm:w-56 sm:justify-self-end" />
-                          <div className="order-2 sm:order-1"><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange">{role}</p><h3 className={`${intentSpacing.memberName} text-2xl font-bold`}>{name}</h3><p className={`${intentSpacing.memberBio} text-sm leading-7 text-white/60`}>{bio}</p></div>
+                          <div className="order-1"><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange">{role}</p><h3 className={`${intentSpacing.memberName} text-2xl font-bold`}>{name}</h3><p className={`${intentSpacing.memberBio} text-sm leading-7 text-white/60`}>{bio}</p></div>
+                          <img src={photo} alt={`${name}, ${role}`} className="order-2 aspect-square w-44 rounded-full border border-cat-orange/50 object-cover sm:w-56 sm:justify-self-end" />
                         </>
                       )}
                     </article>
