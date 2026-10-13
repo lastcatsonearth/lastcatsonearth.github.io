@@ -3,3 +3,12 @@ dist
 .vscode
 .DS_Store
 src/assets/only_cat.xcf
+
+src/assets/booking/photos/**/*.jpg
+src/assets/booking/photos/**/*.jpeg
+
+src/assets/booking/photos/**/*.jpg
+src/assets/booking/photos/**/*.jpeg
+
+src/assets/booking/photos/**/*.jpg
+src/assets/booking/photos/**/*.png

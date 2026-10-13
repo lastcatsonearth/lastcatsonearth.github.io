@@ -6,88 +6,50 @@ import VideoMarquee from "@/components/booking/VideoMarquee";
 import VideoCarousel from "@/components/booking/VideoCarousel";
 import PhotoGallery from "@/components/booking/PhotoGallery";
 import BookingForm from "@/components/booking/BookingForm";
-import StarfieldCanvas from "@/components/booking/StarfieldCanvas";
+// import StarfieldCanvas from "@/components/booking/StarfieldCanvas";
 import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
 
-// Alte Utting Photos
-import uttingPhoto1 from "@/assets/booking/photos/alte_utting/photo_1.png";
-import uttingPhoto2 from "@/assets/booking/photos/alte_utting/photo_2.png";
-import uttingPhoto3 from "@/assets/booking/photos/alte_utting/photo_3.png";
-import uttingPhoto4 from "@/assets/booking/photos/alte_utting/photo_4.png";
-import uttingPhoto5 from "@/assets/booking/photos/alte_utting/photo_5.png";
 
-// Renazzo Photos
-import renazzoPhoto1 from "@/assets/booking/photos/renazzo/1.jpg";
-import renazzoPhoto2 from "@/assets/booking/photos/renazzo/2.jpg";
-import renazzoPhoto3 from "@/assets/booking/photos/renazzo/3.jpg";
-import renazzoPhoto4 from "@/assets/booking/photos/renazzo/4.jpg";
-import renazzoPhoto5 from "@/assets/booking/photos/renazzo/5.jpg";
-import renazzoPhoto6 from "@/assets/booking/photos/renazzo/6.jpg";
+const glob = (m: Record<string, string>) => {
+    const out: Record<string, string[]> = {};
+    Object.keys(m)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+        .forEach((p) => {
+            const parts = p.split("/");
+            (out[parts[parts.length - 2]] ??= []).push(m[p]);
+        });
+    return out;
+};
 
-
-import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.jpg";
-import zamanandPhoto2 from "@/assets/booking/photos/zamanand/2.jpg";
-import zamanandPhoto3 from "@/assets/booking/photos/zamanand/3.jpg";
-import zamanandPhoto4 from "@/assets/booking/photos/zamanand/4.jpg";
-import zamanandPhoto5 from "@/assets/booking/photos/zamanand/5.jpg";
-import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.jpg";
-import zamanandPhoto7 from "@/assets/booking/photos/zamanand/7.jpg";
-import zamanandPhoto8 from "@/assets/booking/photos/zamanand/8.jpg";
-import zamanandPhoto9 from "@/assets/booking/photos/zamanand/9.jpeg";
-import zamanandPhoto10 from "@/assets/booking/photos/zamanand/10.jpeg";
-import zamanandPhoto11 from "@/assets/booking/photos/zamanand/11.jpeg";
-import zamanandPhoto12 from "@/assets/booking/photos/zamanand/12.jpeg";
-import zamanandPhoto13 from "@/assets/booking/photos/zamanand/13.jpeg";
-import zamanandPhoto14 from "@/assets/booking/photos/zamanand/14.jpeg";
-import zamanandPhoto15 from "@/assets/booking/photos/zamanand/15.jpg";
-import zamanandPhoto16 from "@/assets/booking/photos/zamanand/16.jpeg";
-import zamanandPhoto17 from "@/assets/booking/photos/zamanand/17.jpeg";
-import zamanandPhoto18 from "@/assets/booking/photos/zamanand/18.jpeg";
-import zamanandPhoto19 from "@/assets/booking/photos/zamanand/19.jpeg";
-import zamanandPhoto20 from "@/assets/booking/photos/zamanand/20.jpeg";
-import zamanandPhoto21 from "@/assets/booking/photos/zamanand/21.jpeg";
+const thumbs = glob(
+    import.meta.glob("/src/assets/booking/thumbs/**/*.webp", { import: "default", eager: true }) as Record<string, string>
+);
+const full = glob(
+    import.meta.glob("/src/assets/booking/photos/**/*.webp", { import: "default", eager: true }) as Record<string, string>
+);
 
 const galleryShows = [
     {
         showTitle: "Zamanand Festival",
         location: "Munich, DE",
         date: "Sep 2026",
-        photos: [
-            zamanandPhoto1,
-            zamanandPhoto2,
-            zamanandPhoto3,
-            zamanandPhoto4,
-            zamanandPhoto5,
-            zamanandPhoto6,
-            zamanandPhoto7,
-            zamanandPhoto8,
-            zamanandPhoto9,
-            zamanandPhoto10,
-            zamanandPhoto11,
-            zamanandPhoto12,
-            zamanandPhoto13,
-            zamanandPhoto14,
-            zamanandPhoto15,
-            zamanandPhoto16,
-            zamanandPhoto17,
-            zamanandPhoto18,
-            zamanandPhoto19,
-            zamanandPhoto20,
-            zamanandPhoto21,
-        ],
+        photos: thumbs.zamanand,
+        fullPhotos: full.zamanand,
     },
     {
         showTitle: "Woodstock Party",
         location: "Renazzo, IT",
         date: "Jul 2026",
-        photos: [renazzoPhoto1, renazzoPhoto2, renazzoPhoto3, renazzoPhoto4, renazzoPhoto5, renazzoPhoto6],
+        photos: thumbs.renazzo,
+        fullPhotos: full.renazzo,
     },
     {
         showTitle: "Alte Utting",
         location: "Munich, DE",
         date: "Jun 2026",
-        photos: [uttingPhoto1, uttingPhoto2, uttingPhoto3, uttingPhoto4, uttingPhoto5],
+        photos: thumbs.alte_utting,
+        fullPhotos: full.alte_utting,
     },
 ];
 
@@ -100,7 +62,7 @@ const preloadImage = (src: string) =>
     });
 
 const waitForBookingReady = async () => {
-    const criticalImages = galleryShows[0].photos.slice(0, 5).map(p => p.thumb);
+    const criticalImages = galleryShows[0].photos.slice(0, 5); // p è già la stringa del percorso
     await Promise.all([
         document.fonts?.ready ?? Promise.resolve(),
         Promise.all(criticalImages.map(preloadImage)),
@@ -262,7 +224,7 @@ const Booking = () => {
                 className={`relative min-h-screen bg-black text-white flex flex-col justify-between overflow-x-hidden ${isReady ? "" : "max-h-screen overflow-hidden"}`}
                 aria-busy={!isReady}
             >
-                <StarfieldCanvas />
+                {/* <StarfieldCanvas /> */}
 
                 <BookingContent onVideoSelect={setActiveVideoUrl} />
 
