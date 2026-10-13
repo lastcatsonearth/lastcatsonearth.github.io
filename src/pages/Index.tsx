@@ -76,6 +76,7 @@ const HomeContent = () => {
       release: "Songs that stay with you.",
       releaseLabel: "Listen closer",
       releaseBody: "NEVER STOP and FLASHBACK! are only the beginning. Press play, then come see what happens when the songs leave the speakers.",
+      releaseBodyShort: "",
       booking: "Book the band",
       stageLabel: "Have a stage?",
       stageHeading: "Let’s make it loud.",

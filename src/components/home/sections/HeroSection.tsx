@@ -32,6 +32,9 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
                 <img
                     src={heroPhoto}
                     alt="Last Cats on Earth performing live in Munich"
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover object-[center_100%] sm:object-center"
                 />
             </div>

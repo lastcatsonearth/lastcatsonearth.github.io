@@ -56,10 +56,16 @@ export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
                         >
                             {copy.release}
                         </h2>
+                        {/* Mobile: short, punchy */}
+                        <p className="mt-3 text-base font-medium leading-snug text-white/80 sm:hidden">
+                            {copy.releaseBodyShort}
+                        </p>
+
+                        {/* sm+: full text */}
                         <p
-                            className={`text-justify leading-relaxed text-white/60 ${isLandscapePhone
+                            className={`hidden sm:block text-justify leading-relaxed text-white/60 ${isLandscapePhone
                                 ? "mt-1.5 text-xs line-clamp-4"
-                                : "mt-3 max-w-xl text-sm leading-6 sm:mt-6 sm:text-base sm:leading-7"
+                                : "mt-6 max-w-xl text-base leading-7"
                                 }`}
                         >
                             {copy.releaseBody}
@@ -82,7 +88,7 @@ export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
                         className={
                             isLandscapePhone
                                 ? "w-full scale-90 origin-center"
-                                : "w-full max-w-[65%] mx-auto scale-85 origin-top sm:scale-100 sm:max-w-none sm:origin-center"
+                                : "w-full max-w-[75%] mx-auto scale-85 origin-top sm:scale-100 sm:max-w-none sm:origin-center"
                         }
                     >
                         <AudioPlayer compact />

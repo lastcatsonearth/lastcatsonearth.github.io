@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
@@ -33,11 +33,9 @@ export const ShortBioSection = ({
     membersRow2,
     Reveal,
 }: ShortBioSectionProps) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [balls, setBalls] = useState<BallPhysics[]>([]);
     const [isLandscapePhone, setIsLandscapePhone] = useState(false);
-    const activeDragId = useRef<string | null>(null);
-    const touchOffset = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+    const [balls, setBalls] = useState<BallPhysics[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Detect orientation changes specifically for mobile landscape
     useEffect(() => {
@@ -54,20 +52,17 @@ export const ShortBioSection = ({
         };
     }, []);
 
-    // Initialize ball positions based strictly on current mode
+    // Initialize ball positions with wider horizontal padding for bottom row
     useEffect(() => {
         if (!containerRef.current) return;
         const rect = containerRef.current.getBoundingClientRect();
         const width = rect.width || window.innerWidth;
         const height = rect.height || window.innerHeight;
 
-        // Smaller radius ONLY in landscape mobile mode to fit everything safely
         const radius = isLandscapePhone ? 32 : 48;
-
         const initialBalls: BallPhysics[] = [];
 
         if (isLandscapePhone) {
-            // Compact landscape distribution for rotated phone
             const allMembers = [...membersRow1, ...membersRow2];
             allMembers.forEach(([name, role, photo], index) => {
                 const col = Math.floor(index / 3);
@@ -88,7 +83,7 @@ export const ShortBioSection = ({
                 });
             });
         } else {
-            // 100% ORIGINAL PORTRAIT MOBILE POSITIONS
+            // Row 1: normal distribution
             membersRow1.forEach(([name, role, photo], index) => {
                 const step = width / (membersRow1.length + 1);
                 initialBalls.push({
@@ -97,7 +92,7 @@ export const ShortBioSection = ({
                     role,
                     photo,
                     x: step * (index + 1),
-                    y: 80,
+                    y: 75,
                     vx: 0,
                     vy: 0,
                     radius,
@@ -105,15 +100,18 @@ export const ShortBioSection = ({
                 });
             });
 
+            // Row 2: narrower inner margin (multiplying step range) to space them out horizontally
             membersRow2.forEach(([name, role, photo], index) => {
-                const step = width / (membersRow2.length + 1);
+                const horizontalPadding = 50; // pushes outer balls closer to edges
+                const availableWidth = width - horizontalPadding * 2;
+                const step = availableWidth / (membersRow2.length - 1);
                 initialBalls.push({
                     id: name,
                     name,
                     role,
                     photo,
-                    x: step * (index + 1),
-                    y: 225,
+                    x: horizontalPadding + step * index,
+                    y: 240,
                     vx: 0,
                     vy: 0,
                     radius,
@@ -125,132 +123,12 @@ export const ShortBioSection = ({
         setBalls(initialBalls);
     }, [membersRow1, membersRow2, isLandscapePhone]);
 
-    // Physics animation loop
-    useEffect(() => {
-        let animationFrameId: number;
-
-        const updatePhysics = () => {
-            setBalls((prevBalls) => {
-                if (!containerRef.current) return prevBalls;
-                const rect = containerRef.current.getBoundingClientRect();
-                const width = rect.width;
-                const height = rect.height;
-
-                const next = prevBalls.map((b) => ({ ...b }));
-
-                for (let i = 0; i < next.length; i++) {
-                    for (let j = i + 1; j < next.length; j++) {
-                        const b1 = next[i];
-                        const b2 = next[j];
-
-                        const dx = b2.x - b1.x;
-                        const dy = b2.y - b1.y;
-                        const dist = Math.hypot(dx, dy);
-                        const minDist = b1.radius + b2.radius + 12;
-
-                        if (dist < minDist && dist > 0) {
-                            const overlap = minDist - dist;
-                            const nx = dx / dist;
-                            const ny = dy / dist;
-
-                            if (activeDragId.current === b1.id) {
-                                b2.x += nx * overlap;
-                                b2.y += ny * overlap;
-                                b2.vx += nx * 1.0;
-                                b2.vy += ny * 1.0;
-                            } else if (activeDragId.current === b2.id) {
-                                b1.x -= nx * overlap;
-                                b1.y -= ny * overlap;
-                                b1.vx -= nx * 1.0;
-                                b1.vy -= ny * 1.0;
-                            } else {
-                                const force = overlap * 0.08;
-                                b1.x -= nx * force;
-                                b1.y -= ny * force;
-                                b2.x += nx * force;
-                                b2.y += ny * force;
-                            }
-                        }
-                    }
-                }
-
-                return next.map((ball) => {
-                    const textBottomOffset = isLandscapePhone ? 20 : 34;
-                    const sidePadding = 4;
-                    const topPadding = isLandscapePhone ? 8 : 16;
-
-                    const minX = ball.radius + sidePadding;
-                    const maxX = width - ball.radius - sidePadding;
-                    const minY = ball.radius + topPadding;
-                    const maxY = height - ball.radius - textBottomOffset;
-
-                    if (ball.id === activeDragId.current) {
-                        ball.x = Math.max(minX, Math.min(maxX, ball.x));
-                        ball.y = Math.max(minY, Math.min(maxY, ball.y));
-                        return ball;
-                    }
-
-                    ball.vx *= 0.80;
-                    ball.vy *= 0.80;
-                    ball.x += ball.vx + Math.sin(Date.now() * 0.001 + ball.radius) * 0.05;
-                    ball.y += ball.vy + Math.cos(Date.now() * 0.001 + ball.radius) * 0.05;
-
-                    if (ball.x <= minX) { ball.x = minX; ball.vx = 0; }
-                    if (ball.x >= maxX) { ball.x = maxX; ball.vx = 0; }
-                    if (ball.y <= minY) { ball.y = minY; ball.vy = 0; }
-                    if (ball.y >= maxY) { ball.y = maxY; ball.vy = 0; }
-
-                    return ball;
-                });
-            });
-
-            animationFrameId = requestAnimationFrame(updatePhysics);
-        };
-
-        animationFrameId = requestAnimationFrame(updatePhysics);
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [isLandscapePhone]);
-
-    const handleTouchStart = (id: string, clientX: number, clientY: number) => {
-        activeDragId.current = id;
-        const ball = balls.find((b) => b.id === id);
-        if (ball && containerRef.current) {
-            const rect = containerRef.current.getBoundingClientRect();
-            touchOffset.current = {
-                x: clientX - rect.left - ball.x,
-                y: clientY - rect.top - ball.y,
-            };
-        }
-    };
-
-    const handleTouchMove = (clientX: number, clientY: number) => {
-        if (!activeDragId.current || !containerRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        const rawX = clientX - rect.left - touchOffset.current.x;
-        const rawY = clientY - rect.top - touchOffset.current.y;
-
-        const textBottomOffset = isLandscapePhone ? 20 : 34;
-        const radius = isLandscapePhone ? 32 : 48;
-        const sidePadding = 4;
-        const topPadding = isLandscapePhone ? 8 : 16;
-
-        const x = Math.max(radius + sidePadding, Math.min(rect.width - radius - sidePadding, rawX));
-        const y = Math.max(radius + topPadding, Math.min(rect.height - radius - textBottomOffset, rawY));
-
-        setBalls((prev) =>
-            prev.map((b) => (b.id === activeDragId.current ? { ...b, x, y, vx: 0, vy: 0 } : b))
-        );
-    };
-
-    const handleTouchEnd = () => {
-        activeDragId.current = null;
-    };
-
     return (
         <section
             id="short-bio"
-            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-6 pb-2 sm:justify-center sm:px-6 sm:pt-0 sm:pb-8 overflow-hidden ${homeSpacing.shortSection}`}        >
-            {/* Top Header & Bio Block: side-by-side ONLY on rotated landscape mobile */}
+            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-6 pb-2 sm:justify-center sm:px-6 sm:pt-0 sm:pb-8 overflow-hidden ${homeSpacing.shortSection}`}
+        >
+            {/* Top Header & Bio Block */}
             <div
                 className={`mx-auto w-full max-w-6xl space-y-2 sm:space-y-0 ${isLandscapePhone ? "grid grid-cols-2 gap-4 items-center" : ""
                     } lg:grid lg:grid-cols-[0.8fr_1.2fr] lg:items-start ${homeSpacing.shortGrid}`}
@@ -280,15 +158,11 @@ export const ShortBioSection = ({
                 </Reveal>
             </div>
 
-            {/* --- MOBILE / LANDSCAPE PHYSICS PLAYGROUND --- */}
+            {/* --- MOBILE / LANDSCAPE PLAYGROUND (STATIC) --- */}
             <div
                 ref={containerRef}
-                className={`relative mx-auto w-full max-w-md touch-none overflow-hidden sm:hidden ${isLandscapePhone ? "mt-1 h-40" : "mt-2 h-80"
+                className={`relative mx-auto w-full max-w-md pointer-events-none select-none overflow-hidden sm:hidden ${isLandscapePhone ? "mt-1 h-40" : "mt-2 h-80"
                     }`}
-                onTouchMove={(e) => handleTouchMove(e.touches[0].clientX, e.touches[0].clientY)}
-                onTouchEnd={handleTouchEnd}
-                onMouseMove={(e) => handleTouchMove(e.clientX, e.clientY)}
-                onMouseUp={handleTouchEnd}
             >
                 {balls.map((ball) => {
                     const ballSize = isLandscapePhone ? "64px" : "96px";
@@ -297,24 +171,19 @@ export const ShortBioSection = ({
                     return (
                         <div
                             key={ball.id}
-                            className="absolute flex flex-col items-center text-center cursor-grab active:cursor-grabbing select-none"
+                            className="absolute flex flex-col items-center text-center select-none"
                             style={{
                                 left: `${ball.x}px`,
                                 top: `${ball.y}px`,
                                 transform: "translate(-50%, -50%)",
                                 width: ballSize,
                             }}
-                            onTouchStart={(e) =>
-                                handleTouchStart(ball.id, e.touches[0].clientX, e.touches[0].clientY)
-                            }
-                            onMouseDown={(e) => handleTouchStart(ball.id, e.clientX, e.clientY)}
                         >
                             <div className="relative select-none">
                                 <img
                                     src={ball.photo}
                                     alt={`${ball.name}, ${ball.role}`}
                                     draggable={false}
-                                    style={{ transform: "none" }}
                                     className={`aspect-square ${photoSize} shrink-0 rounded-full border-2 border-cat-orange/80 object-cover shadow-lg shadow-cat-orange/20`}
                                 />
                             </div>

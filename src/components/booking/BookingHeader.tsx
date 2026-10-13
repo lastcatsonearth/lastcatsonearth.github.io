@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 
-const sections = ["bio", "videos", "releases", "photos", "contact"];
+const sections = ["bio", "videos", "releases", "photos", "contact", "links"];
 
 const navLabels: Record<string, { en: string; de: string }> = {
     bio: { en: "bio", de: "bio" },
@@ -10,6 +10,7 @@ const navLabels: Record<string, { en: string; de: string }> = {
     releases: { en: "releases", de: "releases" },
     photos: { en: "photos", de: "photos" },
     contact: { en: "Get in Touch", de: "Kontakt" },
+    links: { en: "links", de: "links" },
 };
 
 const BookingHeader = () => {
@@ -24,31 +25,34 @@ const BookingHeader = () => {
         }
     };
 
-    // Automatically update active tab when scrolling through sections
+    // Observer with rootMargin to trigger smoothly when the section enters the viewport focus zone
     useEffect(() => {
-        const observers: IntersectionObserver[] = [];
+        const observerOptions: IntersectionObserverInit = {
+            root: null, // default viewport
+            rootMargin: "-25% 0px -25% 0px", // focus area in the middle 50% of screen
+            threshold: 0.1, // trigger as soon as 10% enters the middle viewport zone
+        };
 
-        sections.forEach((sectionId, index) => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const index = sections.indexOf(entry.target.id);
+                    if (index !== -1) {
+                        setActiveIndex(index);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach((sectionId) => {
             const el = document.getElementById(sectionId);
-            if (!el) return;
-
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            setActiveIndex(index);
-                        }
-                    });
-                },
-                { threshold: 0.5 } // Triggers when 50% of the section is in view
-            );
-
-            observer.observe(el);
-            observers.push(observer);
+            if (el) {
+                observer.observe(el);
+            }
         });
 
         return () => {
-            observers.forEach((obs) => obs.disconnect());
+            observer.disconnect();
         };
     }, []);
 
@@ -67,7 +71,10 @@ const BookingHeader = () => {
                     <button
                         key={section}
                         onClick={() => scrollToSection(index)}
-                        className={`capitalize transition-colors ${activeIndex === index ? "text-cat-orange underline underline-offset-8" : "text-white/50 hover:text-white"}`}
+                        className={`capitalize transition-colors ${activeIndex === index
+                            ? "text-cat-orange underline underline-offset-8"
+                            : "text-white/50 hover:text-white"
+                            }`}
                     >
                         {navLabels[section]?.[lang] || section}
                     </button>
@@ -77,14 +84,16 @@ const BookingHeader = () => {
             <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-black uppercase tracking-widest backdrop-blur-sm">
                 <button
                     onClick={() => setLang("en")}
-                    className={`transition-colors ${lang === "en" ? "font-bold text-cat-orange" : "text-white/40 hover:text-white"}`}
+                    className={`transition-colors ${lang === "en" ? "text-cat-orange" : "text-white/40 hover:text-white"
+                        }`}
                 >
                     EN
                 </button>
                 <span className="text-white/20">|</span>
                 <button
                     onClick={() => setLang("de")}
-                    className={`transition-colors ${lang === "de" ? "font-bold text-cat-orange" : "text-white/40 hover:text-white"}`}
+                    className={`transition-colors ${lang === "de" ? "text-cat-orange" : "text-white/40 hover:text-white"
+                        }`}
                 >
                     DE
                 </button>

@@ -32,17 +32,25 @@ const BookingSections = ({ onVideoSelect }: { onVideoSelect: (url: string | null
                     </div>
                 </section>
 
-                <section id="photos" className="flex h-dvh w-full snap-start snap-always flex-col items-center justify-center overflow-y-auto px-4 pt-20 sm:px-8">
-                    <div className="mx-auto w-full max-w-6xl py-10">
+                <section id="photos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-16 sm:pt-20 touch-pan-y">
+                    <div className="w-full max-w-6xl mx-auto py-4 sm:py-10">
                         <PhotoGallery shows={galleryShows} />
                     </div>
                 </section>
 
-                <section id="contact" className="flex h-dvh w-full snap-start snap-always flex-col items-center justify-between overflow-y-auto px-4 pb-8 pt-24 sm:px-8">
-                    <div className="mx-auto my-auto w-full max-w-xl">
+                <section id="contact" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20 touch-pan-y">
+                    <div className="w-full max-w-xl mx-auto my-auto">
                         <BookingForm />
                     </div>
-                    <div className="mx-auto w-full max-w-4xl pb-4">
+                </section>
+
+                <section id="links" className="h-dvh w-full snap-start snap-always flex flex-col justify-between items-center px-4 sm:px-8 pt-24 pb-8 touch-pan-y">
+                    <div className="w-full max-w-4xl mx-auto my-auto text-center">
+                        {/* Optional quick wrap or summary if needed, or leave space */}
+                        <p className="text-cat-orange uppercase tracking-[0.25em] text-xs mb-4">Last Cats on Earth</p>
+                        <h3 className="text-3xl font-bold uppercase tracking-wide">Let's make some noise.</h3>
+                    </div>
+                    <div className="w-full max-w-4xl mx-auto pb-4">
                         <Footer />
                     </div>
                 </section>

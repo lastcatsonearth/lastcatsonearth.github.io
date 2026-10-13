@@ -13,7 +13,7 @@ const translations = {
         category: "Kontakt aufnehmen",
         headline: "DIE CATS BUCHEN",
         subheading: "Für Buchungen und Anfragen wende dich direkt an uns.",
-        emailSubject: "Nachricht von der Website",
+        emailSubject: "Nachrichten von der Website",
     }
 };
 
@@ -38,42 +38,60 @@ const BookingForm = () => {
     };
 
     return (
-        <section id="contact" className={`scroll-mt-6 max-w-xl mx-auto w-full text-center ${bookingSpacing.form}`}>
-            <p className="text-cat-orange uppercase tracking-[0.25em] mb-2 text-sm">
+        <div className={`scroll-mt-6 max-w-xl mx-auto w-full text-center ${bookingSpacing.form}`}>
+            <p className="text-cat-orange uppercase tracking-[0.25em] mb-1 text-xs sm:text-sm">
                 {t.category}
             </p>
 
-            <h3 className={`text-3xl md:text-2xl font-bold tracking-wide ${bookingSpacing.formHeading}`}>
+            <h3 className={`text-2xl sm:text-3xl md:text-2xl font-bold tracking-wide ${bookingSpacing.formHeading}`}>
                 {t.headline}
             </h3>
 
-            <p className={`text-sm text-white/50 tracking-wide ${bookingSpacing.formIntro}`}>
+            <p className={`text-xs sm:text-sm text-white/50 tracking-wide mb-3 sm:mb-5 ${bookingSpacing.formIntro}`}>
                 {t.subheading}
             </p>
 
-            <form onSubmit={handleSubmit} className={`mx-auto max-w-xl text-left ${bookingSpacing.formFields}`}>
-                <label className="block space-y-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
+            <form onSubmit={handleSubmit} className={`mx-auto max-w-xl text-left space-y-2.5 sm:space-y-4 ${bookingSpacing.formFields}`}>
+                <label className="block space-y-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                     Email address
-                    <input name="email" type="email" required autoComplete="email" placeholder="you@example.com" className="mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange" />
+                    <input
+                        name="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        placeholder="you@example.com"
+                        className="mt-0.5 sm:mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange"
+                    />
                 </label>
-                <label className="block space-y-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
+                <label className="block space-y-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                     Subject
-                    <input name="subject" required placeholder="Your subject" className="mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange" />
+                    <input
+                        name="subject"
+                        required
+                        placeholder="Your subject"
+                        className="mt-0.5 sm:mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange"
+                    />
                 </label>
-                <label className="block space-y-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
+                <label className="block space-y-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                     Message
-                    <textarea name="message" required rows={7} placeholder="Write your message here." className="mt-1 w-full resize-none rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange" />
+                    <textarea
+                        name="message"
+                        required
+                        rows={7}
+                        placeholder="Write your message here."
+                        className="mt-0.5 sm:mt-1 w-full resize-none rounded-lg border border-white/10 bg-black/30 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange sm:rows-5"
+                    />
                 </label>
-                <button type="submit" className="w-full rounded-lg bg-cat-orange px-6 py-3 text-xs font-bold uppercase tracking-wider text-black transition hover:bg-white">
+                <button type="submit" className="w-full rounded-lg bg-cat-orange px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-bold uppercase tracking-wider text-black transition hover:bg-white">
                     {sent ? "Opening your email app..." : "Send booking inquiry"}
                 </button>
             </form>
 
-            <p className="mt-4 text-xs text-white/40">
+            <p className="mt-2.5 sm:mt-4 text-xs text-white/40">
                 Prefer Instagram? <button type="button" onClick={handleInstagramClick} className="text-cat-orange hover:text-white">Send us a DM.</button>
             </p>
 
-            <div className="mt-6 flex justify-center">
+            <div className="mt-3 sm:mt-6 flex justify-center">
                 <a
                     href="https://www.gigheaven.com/members/lastcatsonearth.html"
                     target="_blank"
@@ -81,15 +99,15 @@ const BookingForm = () => {
                 >
                     <img
                         src="https://www.gigheaven.com/badge/orange.svg?l=37462"
-                        height="80"
-                        width="80"
+                        height="64"
+                        width="64"
                         alt="Last Cats on Earth - Gig Heaven"
                         referrerPolicy="unsafe-url"
-                        className="transition-transform hover:scale-105"
+                        className="h-16 w-16 sm:h-20 sm:w-20 transition-transform hover:scale-105"
                     />
                 </a>
             </div>
-        </section>
+        </div>
     );
 };
 
