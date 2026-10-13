@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
-import crowdPhoto from "@/assets/booking/photos/zamanand/6.jpg";
+import crowdPhoto from "@/assets/booking/photos/zamanand/6.webp";
 
 interface LiveSectionProps {
     copy: {

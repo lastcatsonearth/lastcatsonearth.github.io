@@ -6,9 +6,9 @@ import { LanguageProvider, useLanguage } from "@/components/booking/LanguageCont
 import BandHeader from "@/components/BandHeader";
 import Footer from "@/components/Footer";
 import { intentSpacing } from "@/config/layoutSpacing";
-import liveStagePhoto from "@/assets/booking/photos/zamanand/1.jpg";
-import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.png";
-import festivalPhoto from "@/assets/booking/photos/zamanand/6.jpg";
+import liveStagePhoto from "@/assets/booking/photos/zamanand/1.webp";
+import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.webp";
+import festivalPhoto from "@/assets/booking/photos/zamanand/6.webp";
 
 type IntentKey = "munich" | "live" | "party" | "events" | "festivals" | "festival";
 

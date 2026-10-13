@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
-import heroPhoto from "@/assets/booking/photos/zamanand/1.jpg";
+import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
 
 interface HeroSectionProps {
     copy: {

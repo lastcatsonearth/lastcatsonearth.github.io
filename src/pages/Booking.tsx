@@ -6,10 +6,8 @@ import VideoMarquee from "@/components/booking/VideoMarquee";
 import VideoCarousel from "@/components/booking/VideoCarousel";
 import PhotoGallery from "@/components/booking/PhotoGallery";
 import BookingForm from "@/components/booking/BookingForm";
-// import StarfieldCanvas from "@/components/booking/StarfieldCanvas";
 import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
-
 
 const glob = (m: Record<string, string>) => {
     const out: Record<string, string[]> = {};
@@ -62,7 +60,7 @@ const preloadImage = (src: string) =>
     });
 
 const waitForBookingReady = async () => {
-    const criticalImages = galleryShows[0].photos.slice(0, 5); // p è già la stringa del percorso
+    const criticalImages = galleryShows[0].photos.slice(0, 5);
     await Promise.all([
         document.fonts?.ready ?? Promise.resolve(),
         Promise.all(criticalImages.map(preloadImage)),
@@ -130,7 +128,7 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
 
                 <section id="bio" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
                     <div className="w-full max-w-5xl mx-auto">
-                        <VideoMarquee videos={[]} />
+                        <VideoMarquee />
                     </div>
                 </section>
 
@@ -224,8 +222,6 @@ const Booking = () => {
                 className={`relative min-h-screen bg-black text-white flex flex-col justify-between overflow-x-hidden ${isReady ? "" : "max-h-screen overflow-hidden"}`}
                 aria-busy={!isReady}
             >
-                {/* <StarfieldCanvas /> */}
-
                 <BookingContent onVideoSelect={setActiveVideoUrl} />
 
                 {activeVideoUrl && (

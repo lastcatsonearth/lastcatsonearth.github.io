@@ -3,10 +3,10 @@ import { ArrowUpRight } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import BandHeader from "@/components/BandHeader";
 import Footer from "@/components/Footer";
-import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.jpg";
-import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.jpg";
-import renazzoPhoto1 from "@/assets/booking/photos/renazzo/1.jpg";
-import uttingPhoto2 from "@/assets/booking/photos/alte_utting/photo_2.png";
+import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.webp";
+import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.webp";
+import renazzoPhoto1 from "@/assets/booking/photos/renazzo/1.webp";
+import uttingPhoto2 from "@/assets/booking/photos/alte_utting/photo_2.webp";
 
 const shows = [
   { slug: "zamanand-festival-munich-september-2026", title: "Zamanand Festival", location: "Munich, Germany", date: "September 2026", image: zamanandPhoto1, secondImage: zamanandPhoto6, text: "A high-energy festival set in Munich, moving between hard rock, funk, alternative hooks and direct crowd work." },

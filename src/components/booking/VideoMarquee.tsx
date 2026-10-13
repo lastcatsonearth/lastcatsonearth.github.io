@@ -1,9 +1,5 @@
 import { useLanguage } from "@/components/booking/LanguageContext";
-import heroPhoto from "@/assets/booking/photos/zamanand/1.jpg";
-
-interface VideoMarqueeProps {
-    videos?: string[];
-}
+import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
 
 const translations = {
     en: {
@@ -63,7 +59,7 @@ const translations = {
     }
 };
 
-const VideoMarquee = ({ }: VideoMarqueeProps) => {
+const VideoMarquee = () => {
     const { lang } = useLanguage();
     const t = translations[lang];
 
