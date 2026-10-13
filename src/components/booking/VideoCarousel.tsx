@@ -100,7 +100,7 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
     );
 
     return (
-        <section className="border-t border-white/5 pt-16">
+        <section className="pt-16">
             <p className="text-cat-orange uppercase tracking-[0.25em] text-sm mb-3 text-center">
                 {t.reel}
             </p>
@@ -133,7 +133,7 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
                                 alt={video.title}
                                 loading="lazy"
                                 decoding="async"
-                                className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition"
+                                className="w-full h-full object-cover opacity-100 group-hover:opacity-100 transition"
                             />
 
                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40" />

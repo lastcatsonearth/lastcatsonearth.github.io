@@ -8,6 +8,8 @@ import PhotoGallery from "@/components/booking/PhotoGallery";
 import BookingForm from "@/components/booking/BookingForm";
 import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
+import starsBg from "@/assets/stars_background.png";
+
 
 const glob = (m: Record<string, string>) => {
     const out: Record<string, string[]> = {};
@@ -82,6 +84,7 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
     };
 
     return (
+
         <div className="relative z-10 w-full text-white">
             <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl px-4 sm:px-8 py-3 flex items-center justify-between">
                 <a
@@ -120,45 +123,49 @@ const BookingContent = ({ onVideoSelect }: { onVideoSelect: (url: string | null)
                     </button>
                 </div>
             </header>
+            <div
+                className="relative bg-repeat"
+                style={{ backgroundImage: `url(${starsBg})` }}
+            >
+                <main className="w-full h-dvh overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none">
+                    <h1 className="sr-only">
+                        Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
+                    </h1>
 
-            <main className="w-full h-dvh overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none">
-                <h1 className="sr-only">
-                    Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations
-                </h1>
+                    <section id="bio" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
+                        <div className="w-full max-w-5xl mx-auto">
+                            <VideoMarquee />
+                        </div>
+                    </section>
 
-                <section id="bio" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
-                    <div className="w-full max-w-5xl mx-auto">
-                        <VideoMarquee />
-                    </div>
-                </section>
+                    <section id="videos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
+                        <div className="w-full max-w-5xl mx-auto">
+                            <VideoCarousel onVideoSelect={onVideoSelect} />
+                        </div>
+                    </section>
 
-                <section id="videos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
-                    <div className="w-full max-w-5xl mx-auto">
-                        <VideoCarousel onVideoSelect={onVideoSelect} />
-                    </div>
-                </section>
+                    <section id="releases" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
+                        <div className="w-full max-w-4xl mx-auto">
+                            <AudioPlayer />
+                        </div>
+                    </section>
 
-                <section id="releases" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20">
-                    <div className="w-full max-w-4xl mx-auto">
-                        <AudioPlayer />
-                    </div>
-                </section>
+                    <section id="photos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20 overflow-y-auto">
+                        <div className="w-full max-w-6xl mx-auto py-10">
+                            <PhotoGallery shows={galleryShows} />
+                        </div>
+                    </section>
 
-                <section id="photos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20 overflow-y-auto">
-                    <div className="w-full max-w-6xl mx-auto py-10">
-                        <PhotoGallery shows={galleryShows} />
-                    </div>
-                </section>
-
-                <section id="contact" className="h-dvh w-full snap-start snap-always flex flex-col justify-between items-center px-4 sm:px-8 pt-24 pb-8 overflow-y-auto">
-                    <div className="w-full max-w-xl mx-auto my-auto">
-                        <BookingForm />
-                    </div>
-                    <div className="w-full max-w-4xl mx-auto pb-4">
-                        <Footer />
-                    </div>
-                </section>
-            </main>
+                    <section id="contact" className="h-dvh w-full snap-start snap-always flex flex-col justify-between items-center px-4 sm:px-8 pt-24 pb-8 overflow-y-auto">
+                        <div className="w-full max-w-xl mx-auto my-auto">
+                            <BookingForm />
+                        </div>
+                        <div className="w-full max-w-4xl mx-auto pb-4">
+                            <Footer />
+                        </div>
+                    </section>
+                </main>
+            </div>
         </div>
     );
 };

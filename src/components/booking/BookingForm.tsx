@@ -38,7 +38,7 @@ const BookingForm = () => {
     };
 
     return (
-        <section id="contact" className={`scroll-mt-6 border-t border-white/5 max-w-xl mx-auto w-full text-center ${bookingSpacing.form}`}>
+        <section id="contact" className={`scroll-mt-6 max-w-xl mx-auto w-full text-center ${bookingSpacing.form}`}>
             <p className="text-cat-orange uppercase tracking-[0.25em] mb-2 text-sm">
                 {t.category}
             </p>
@@ -72,6 +72,23 @@ const BookingForm = () => {
             <p className="mt-4 text-xs text-white/40">
                 Prefer Instagram? <button type="button" onClick={handleInstagramClick} className="text-cat-orange hover:text-white">Send us a DM.</button>
             </p>
+
+            <div className="mt-6 flex justify-center">
+                <a
+                    href="https://www.gigheaven.com/members/lastcatsonearth.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img
+                        src="https://www.gigheaven.com/badge/orange.svg?l=37462"
+                        height="80"
+                        width="80"
+                        alt="Last Cats on Earth - Gig Heaven"
+                        referrerPolicy="unsafe-url"
+                        className="transition-transform hover:scale-105"
+                    />
+                </a>
+            </div>
         </section>
     );
 };

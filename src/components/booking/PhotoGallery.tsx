@@ -62,7 +62,7 @@ const PhotoGallery = ({ shows }: PhotoGalleryProps) => {
     }, [activeSelection, currentShow, moveSelection]);
 
     return (
-        <section className="border-t border-white/5 pt-12 pb-6">
+        <section className="pt-12 pb-6">
             <p className="text-cat-orange uppercase tracking-[0.25em] text-xs mb-2 text-center">
                 {t.category}
             </p>
