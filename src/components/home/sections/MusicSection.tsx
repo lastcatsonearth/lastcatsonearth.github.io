@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AudioPlayer from "@/components/booking/AudioPlayer";
@@ -14,34 +15,77 @@ interface MusicSectionProps {
 }
 
 export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
+    const [isLandscapePhone, setIsLandscapePhone] = useState(false);
+
+    useEffect(() => {
+        const checkLandscape = () => {
+            const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            const isShort = window.innerHeight < 550;
+            setIsLandscapePhone(isLandscape && isShort);
+        };
+
+        checkLandscape();
+        window.addEventListener("resize", checkLandscape);
+        return () => window.removeEventListener("resize", checkLandscape);
+    }, []);
+
     return (
         <section
             id="music"
             className={`flex h-[calc(100dvh-4rem)] sm:h-screen snap-start snap-always items-start pt-6 sm:items-center sm:pt-0 ${homeSpacing.musicSection}`}
         >
-            <div className={`mx-auto grid w-full max-w-6xl gap-2 sm:gap-0 lg:grid-cols-[1fr_0.8fr] lg:items-center ${homeSpacing.musicGrid}`}>
+            <div
+                className={`mx-auto w-full max-w-6xl ${isLandscapePhone
+                    ? "grid grid-cols-2 items-center gap-4 px-2"
+                    : `grid gap-2 sm:gap-0 lg:grid-cols-[1fr_0.8fr] lg:items-center ${homeSpacing.musicGrid}`
+                    }`}
+            >
+                {/* Colonna Sinistra / Info */}
                 <Reveal>
-                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-cat-orange">
-                        {copy.releaseLabel}
-                    </p>
-                    <h2 className="mt-2 text-3xl font-bold uppercase leading-none sm:mt-3 sm:text-6xl">
-                        {copy.release}
-                    </h2>
-                    <p className="mt-3 max-w-xl text-justify text-sm leading-6 text-white/60 sm:mt-6 sm:text-base sm:leading-7">
-                        {copy.releaseBody}
-                    </p>
-                    {/* Hidden on mobile, shown on desktop */}
-                    <Link
-                        to="/booking#contact"
-                        className="mt-6 hidden items-center gap-2 rounded-full border border-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black sm:inline-flex"
-                    >
-                        {copy.booking} <ArrowUpRight className="h-4 w-4" />
-                    </Link>
+                    <div>
+                        <p
+                            className={`font-bold uppercase tracking-[0.3em] text-cat-orange ${isLandscapePhone ? "text-[10px]" : "text-xs"
+                                }`}
+                        >
+                            {copy.releaseLabel}
+                        </p>
+                        <h2
+                            className={`font-bold uppercase leading-none ${isLandscapePhone
+                                ? "mt-1 text-2xl"
+                                : "mt-2 text-3xl sm:mt-3 sm:text-6xl"
+                                }`}
+                        >
+                            {copy.release}
+                        </h2>
+                        <p
+                            className={`text-justify leading-relaxed text-white/60 ${isLandscapePhone
+                                ? "mt-1.5 text-xs line-clamp-4"
+                                : "mt-3 max-w-xl text-sm leading-6 sm:mt-6 sm:text-base sm:leading-7"
+                                }`}
+                        >
+                            {copy.releaseBody}
+                        </p>
+
+                        {/* Hidden on mobile portrait, shown on desktop & optionally landscape */}
+                        <Link
+                            to="/booking#contact"
+                            className={`items-center gap-2 rounded-full border border-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black ${isLandscapePhone ? "hidden" : "mt-6 hidden sm:inline-flex"
+                                }`}
+                        >
+                            {copy.booking} <ArrowUpRight className="h-4 w-4" />
+                        </Link>
+                    </div>
                 </Reveal>
 
-                {/* Compact & further scaled-down card wrapper on mobile */}
+                {/* Colonna Destra / Audio Player */}
                 <Reveal>
-                    <div className="w-full max-w-[65%] mx-auto scale-85 origin-top sm:scale-100 sm:max-w-none sm:origin-center">
+                    <div
+                        className={
+                            isLandscapePhone
+                                ? "w-full scale-90 origin-center"
+                                : "w-full max-w-[65%] mx-auto scale-85 origin-top sm:scale-100 sm:max-w-none sm:origin-center"
+                        }
+                    >
                         <AudioPlayer compact />
                     </div>
                 </Reveal>
