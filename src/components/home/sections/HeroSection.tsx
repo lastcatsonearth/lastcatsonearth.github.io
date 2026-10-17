@@ -29,7 +29,7 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
         <section
             id="hero-section"
             onScroll={handleTouchOrScrollEnd}
-            className={`relative isolate flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-between pt-4 pb-6 sm:justify-end sm:pt-0 sm:pb-12 overflow-hidden overflow-y-auto sm:overflow-hidden ${homeSpacing.hero}`}
+            className={`relative isolate flex h-[calc(100dvh-4rem)] phone-landscape:h-[calc(100dvh-3rem)] snap-start snap-always flex-col justify-between pt-4 pb-6 sm:justify-end sm:pt-0 sm:pb-12 overflow-hidden overflow-y-auto sm:overflow-hidden ${homeSpacing.hero}`}
         >
             <div className="absolute inset-0 -z-10 h-full w-full overflow-hidden">
                 <img

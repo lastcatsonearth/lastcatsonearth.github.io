@@ -119,7 +119,7 @@ export const ShortBioSection = ({
     return (
         <section
             id="short-bio"
-            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-6 pb-2 sm:justify-center sm:px-6 sm:pt-0 sm:pb-8 overflow-hidden ${homeSpacing.shortSection}`}
+            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-auto phone-landscape:overflow-visible phone-landscape:py-12 snap-start snap-always flex-col justify-start border-y border-white/10 bg-black/40 px-4 pt-6 pb-2 sm:justify-center sm:px-6 sm:pt-0 sm:pb-8 overflow-hidden ${homeSpacing.shortSection}`}
         >
             {/* Top Header & Bio Block */}
             <div
@@ -137,7 +137,7 @@ export const ShortBioSection = ({
                     />
                 </Reveal>
                 <Reveal>
-                    <p className={`text-justify text-white/80 max-w-2xl ${isLandscapePhone ? "text-xs leading-4 line-clamp-3" : "text-sm leading-5 sm:text-xl sm:leading-8"
+                    <p className={`text-justify text-white/80 max-w-2xl ${isLandscapePhone ? "text-sm leading-6" : "text-sm leading-5 sm:text-xl sm:leading-8"
                         }`}>
                         {copy.shortBody}
                     </p>

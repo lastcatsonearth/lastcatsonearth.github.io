@@ -23,7 +23,7 @@ export const MusicSection = ({ copy }: MusicSectionProps) => {
     return (
         <section
             id="music"
-            className={`flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always items-start pt-6 sm:items-center sm:pt-0 overflow-hidden ${homeSpacing.musicSection}`}        >
+            className={`flex h-[calc(100dvh-4rem)] phone-landscape:h-auto phone-landscape:overflow-visible phone-landscape:py-12 snap-start snap-always items-start pt-6 sm:items-center sm:pt-0 overflow-hidden ${homeSpacing.musicSection}`}        >
             <div
                 className={`mx-auto w-full max-w-6xl ${isLandscapePhone
                     ? "grid grid-cols-2 items-center gap-4 px-2"
@@ -52,7 +52,7 @@ export const MusicSection = ({ copy }: MusicSectionProps) => {
                         {/* sm+: full text */}
                         <p
                             className={`hidden sm:block text-justify leading-relaxed text-white/60 ${isLandscapePhone
-                                ? "mt-1.5 text-xs line-clamp-4"
+                                ? "mt-2 text-sm leading-6"
                                 : "mt-6 max-w-xl text-base leading-7"
                                 }`}
                         >

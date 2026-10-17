@@ -5,6 +5,10 @@ export default {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        // Phones held sideways: wide but very little height. Use as `phone-landscape:…`
+        "phone-landscape": { raw: "(orientation: landscape) and (max-height: 550px)" },
+      },
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
         sceageus: ["Sceageus", "sans-serif"],

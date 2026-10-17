@@ -31,7 +31,7 @@ export const SideDotNav = ({
 
     return (
         <nav
-            className="hidden sm:flex fixed right-6 top-1/2 z-30 -translate-y-1/2 flex-col gap-3"
+            className="hidden sm:flex phone-landscape:hidden fixed right-6 top-1/2 z-30 -translate-y-1/2 flex-col gap-3"
             aria-label="Section navigation"
         >
             {sectionsConfig.map((sec, index) => {

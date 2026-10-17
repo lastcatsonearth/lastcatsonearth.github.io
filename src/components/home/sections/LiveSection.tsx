@@ -23,7 +23,7 @@ export const LiveSection = ({ copy, setActiveVideoUrl }: LiveSectionProps) => {
     return (
         <section
             id="live"
-            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-dvh snap-start snap-always flex-col justify-center overflow-hidden border-y border-white/10 bg-black/40 px-4 pt-4 pb-2 sm:px-6 sm:pt-0 sm:pb-8 ${homeSpacing.liveSection}`}        >
+            className={`relative flex h-[calc(100dvh-4rem)] phone-landscape:h-auto phone-landscape:overflow-visible phone-landscape:py-12 snap-start snap-always flex-col justify-center overflow-hidden border-y border-white/10 bg-black/40 px-4 pt-4 pb-2 sm:px-6 sm:pt-0 sm:pb-8 ${homeSpacing.liveSection}`}        >
             <div className="mx-auto w-full max-w-6xl">
                 <Reveal>
                     {/* In modalità landscape per iPhone passa a una disposizione a 2 colonne affiancate */}
@@ -56,7 +56,7 @@ export const LiveSection = ({ copy, setActiveVideoUrl }: LiveSectionProps) => {
                             <img
                                 src={crowdPhoto}
                                 alt="Audience watching Last Cats on Earth live"
-                                className={`w-full object-cover ${isLandscapePhone ? "h-[160px]" : "h-[340px] sm:h-[440px]"
+                                className={`w-full object-cover ${isLandscapePhone ? "h-[220px]" : "h-[340px] sm:h-[440px]"
                                     }`}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />

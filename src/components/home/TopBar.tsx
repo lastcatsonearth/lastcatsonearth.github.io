@@ -9,7 +9,7 @@ export const TopBar = ({ scrollToSection }: { scrollToSection: (id: string) => v
     const p = useLocalePath();
 
     return (
-        <header className="sticky top-0 left-0 right-0 z-40 flex h-16 w-full shrink-0 items-center justify-between border-b border-white/10 bg-black px-4 sm:px-8">
+        <header className="sticky top-0 left-0 right-0 z-40 flex h-16 phone-landscape:h-12 w-full shrink-0 items-center justify-between border-b border-white/10 bg-black px-4 sm:px-8">
             {/* Brand: 5% from the left on mobile, 12% on desktop */}
             <div className="absolute left-[5%] sm:left-[12%] flex flex-col">
                 <button

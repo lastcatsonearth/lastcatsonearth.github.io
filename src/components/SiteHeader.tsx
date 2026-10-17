@@ -16,7 +16,7 @@ const SiteHeader = () => {
 
     return (
         <header className="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl">
-            <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+            <div className="mx-auto flex h-16 phone-landscape:h-12 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
                 <Link to={p("/")} className="group flex flex-col leading-none">
                     <span className="text-xs font-black uppercase tracking-tight text-white transition group-hover:text-cat-orange sm:text-sm">
                         Last Cats <span className="text-cat-orange">on Earth</span>

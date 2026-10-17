@@ -126,7 +126,7 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
 
             <main>
                 {/* ── Hero ── */}
-                <header className="relative isolate flex min-h-[calc(100svh-4rem)] items-end overflow-hidden">
+                <header className="relative isolate flex min-h-[calc(100svh-4rem)] phone-landscape:min-h-[calc(100svh-3rem)] items-end overflow-hidden">
                     <img
                         src={media.hero.src}
                         alt={media.hero.alt}
@@ -136,9 +136,9 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
                     <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/70 to-black/20" />
                     <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
 
-                    <div className="mx-auto w-full max-w-6xl px-5 pb-12 pt-28 sm:px-8 sm:pb-16">
+                    <div className="mx-auto w-full max-w-6xl px-5 pb-12 pt-28 sm:px-8 sm:pb-16 phone-landscape:pb-8 phone-landscape:pt-12">
                         <Kicker>{copy.hero.kicker}</Kicker>
-                        <h1 className="mt-4 max-w-5xl text-[2.6rem] font-black uppercase leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl">
+                        <h1 className="mt-4 max-w-5xl text-[2.6rem] font-black uppercase leading-[0.9] tracking-tight sm:text-7xl lg:text-8xl phone-landscape:text-5xl">
                             {copy.hero.title} <span className="text-cat-orange">{copy.hero.highlight}</span>
                         </h1>
                         <p className="mt-6 max-w-2xl text-base leading-7 text-white/80 sm:text-lg sm:leading-8">{copy.hero.intro}</p>
@@ -159,7 +159,7 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
                             </button>
                         </div>
 
-                        <ul className="mt-10 flex flex-wrap gap-2">
+                        <ul className="mt-10 flex flex-wrap gap-2 phone-landscape:mt-6">
                             {copy.facts.map((fact) => (
                                 <li key={fact} className="rounded-full border border-white/15 bg-black/40 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
                                     {fact}
