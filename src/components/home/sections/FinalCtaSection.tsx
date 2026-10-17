@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { homeSpacing } from "@/config/layoutSpacing";
-import { useLocalePath } from "@/components/booking/LanguageContext";
-
-// in cima al componente
+import { useLocalePath } from "@/i18n/LanguageContext";
+import { useIsLandscapePhone } from "@/hooks/useIsLandscapePhone";
 
 interface FinalCtaSectionProps {
     copy: {
@@ -18,19 +16,7 @@ interface FinalCtaSectionProps {
 export const FinalCtaSection = ({ copy }: FinalCtaSectionProps) => {
     const p = useLocalePath();
 
-    const [isLandscapePhone, setIsLandscapePhone] = useState(false);
-
-    useEffect(() => {
-        const checkLandscape = () => {
-            const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-            const isShort = window.innerHeight < 550;
-            setIsLandscapePhone(isLandscape && isShort);
-        };
-
-        checkLandscape();
-        window.addEventListener("resize", checkLandscape);
-        return () => window.removeEventListener("resize", checkLandscape);
-    }, []);
+    const isLandscapePhone = useIsLandscapePhone();
 
     return (
         <section
@@ -77,7 +63,7 @@ export const FinalCtaSection = ({ copy }: FinalCtaSectionProps) => {
                 className={`mx-auto w-full max-w-6xl border-t border-black/15 text-black [&_svg]:text-black [&_a]:text-black hover:[&_a]:text-white [&_p]:text-black/80 ${isLandscapePhone ? "pt-1.5" : "pt-3 sm:pt-6"
                     }`}
             >
-                <Footer />
+                <Footer compact />
             </div>
         </section>
     );

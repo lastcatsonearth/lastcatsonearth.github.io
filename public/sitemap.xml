@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Indexable pages only (no /links, no noindex /en legal pages). Add new shows here. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://lastcatsonearth.de/</loc></url>
   <url><loc>https://lastcatsonearth.de/en</loc></url>
@@ -18,7 +19,6 @@
   <url><loc>https://lastcatsonearth.de/en/shows/woodstock-party-renazzo-july-2026</loc></url>
   <url><loc>https://lastcatsonearth.de/shows/alte-utting-munich-june-2026</loc></url>
   <url><loc>https://lastcatsonearth.de/en/shows/alte-utting-munich-june-2026</loc></url>
-  <url><loc>https://lastcatsonearth.de/links</loc></url>
   <url><loc>https://lastcatsonearth.de/merch</loc></url>
   <url><loc>https://lastcatsonearth.de/impressum</loc></url>
   <url><loc>https://lastcatsonearth.de/privacy</loc></url>

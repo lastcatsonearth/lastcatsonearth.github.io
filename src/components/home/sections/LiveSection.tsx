@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
 import crowdPhoto from "@/assets/booking/photos/zamanand/6.webp";
-import { useLocalePath } from "@/components/booking/LanguageContext";
+import { useLocalePath } from "@/i18n/LanguageContext";
+import Reveal from "@/components/Reveal";
+import { useIsLandscapePhone } from "@/hooks/useIsLandscapePhone";
 
 interface LiveSectionProps {
     copy: {
@@ -12,28 +13,12 @@ interface LiveSectionProps {
         liveLink: string;
     };
     setActiveVideoUrl: (url: string) => void;
-    Reveal: React.ComponentType<{ children: React.ReactNode }>;
 }
 
-export const LiveSection = ({ copy, setActiveVideoUrl, Reveal }: LiveSectionProps) => {
+export const LiveSection = ({ copy, setActiveVideoUrl }: LiveSectionProps) => {
     const p = useLocalePath();
 
-    const [isLandscapePhone, setIsLandscapePhone] = useState(false);
-
-    // Rilevamento isolato dell'orientamento orizzontale su schermi bassi (iPhone landscape)
-    useEffect(() => {
-        const checkOrientation = () => {
-            const isLandscape = window.innerWidth > window.innerHeight && window.innerHeight < 550;
-            setIsLandscapePhone(isLandscape);
-        };
-        checkOrientation();
-        window.addEventListener("resize", checkOrientation);
-        window.addEventListener("orientationchange", checkOrientation);
-        return () => {
-            window.removeEventListener("resize", checkOrientation);
-            window.removeEventListener("orientationchange", checkOrientation);
-        };
-    }, []);
+    const isLandscapePhone = useIsLandscapePhone();
 
     return (
         <section
@@ -53,7 +38,7 @@ export const LiveSection = ({ copy, setActiveVideoUrl, Reveal }: LiveSectionProp
                                 </h2>
                             </div>
                             <Link
-                                to={p("/music")}
+                                to={p("/booking#videos")}
                                 className={`inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-white/60 hover:text-cat-orange ${isLandscapePhone ? "mt-1 text-[9px]" : "mt-1 text-[10px] sm:mt-0"
                                     }`}
                             >

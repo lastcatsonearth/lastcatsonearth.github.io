@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLanguage } from "@/components/booking/LanguageContext";
+import { useLanguage } from "@/i18n/LanguageContext";
 import PhotoGalleryGrid from "./PhotoGallery/PhotoGalleryGrid";
 import PhotoLightbox from "./PhotoGallery/PhotoLightbox";
 import { photoGalleryTranslations } from "./PhotoGallery/photoGallery.constants";

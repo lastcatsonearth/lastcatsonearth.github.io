@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import bandLogo from "@/assets/only_cat.webp";
-import { useLanguage, useLocalePath } from "@/components/booking/LanguageContext";
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 
 
 interface BandHeaderProps {

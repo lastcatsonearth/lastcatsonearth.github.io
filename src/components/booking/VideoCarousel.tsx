@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import React from "react";
-import { useLanguage } from "@/components/booking/LanguageContext";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export interface LiveVideo {
     id: string;
@@ -9,7 +9,9 @@ export interface LiveVideo {
     thumbnail: string;
 }
 
-const yt = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.webp`;
+// YouTube thumbnails: HD webp first, falls back to the always-available hqdefault.jpg (see onError below).
+const yt = (id: string) => `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`;
+const ytFallback = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 const raw = [
     { id: "dWhzsrdGyko", title: "Full Show", venue: "Renazzo, Italy" },
@@ -47,7 +49,8 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
     const t = translations[lang];
 
     const [startIdx, setStartIdx] = useState(0);
-    const [visibleCount, setVisibleCount] = useState(getVisibleCount());
+    // Start at 1 (= what the static HTML renders) and measure after mount, to avoid a hydration mismatch.
+    const [visibleCount, setVisibleCount] = useState(1);
 
     const touchStartX = useRef<number | null>(null);
     const touchEndX = useRef<number | null>(null);
@@ -57,6 +60,7 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
 
     useEffect(() => {
         const handleResize = () => setVisibleCount(getVisibleCount());
+        handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
@@ -119,7 +123,11 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
 
                                 <img
                                     src={video.thumbnail}
-                                    alt={video.title}
+                                    onError={(e) => {
+                                        const fallback = ytFallback(video.id);
+                                        if (e.currentTarget.src !== fallback) e.currentTarget.src = fallback;
+                                    }}
+                                    alt={`${video.title} – Last Cats on Earth live at ${video.venue}`}
                                     loading="lazy"
                                     decoding="async"
                                     draggable={false}

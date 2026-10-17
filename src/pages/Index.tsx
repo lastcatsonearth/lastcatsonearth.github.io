@@ -1,46 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import { LanguageProvider, useLanguage } from "@/components/booking/LanguageContext";
-
+import { useLanguage } from "@/i18n/LanguageContext";
+import { Seo } from "@/components/Seo";
+import VideoOverlay from "@/components/VideoOverlay";
 import { TopBar } from "@/components/home/TopBar";
 import { SideDotNav } from "@/components/home/SideDotNav";
-
 import { HeroSection } from "@/components/home/sections/HeroSection";
 import { ShortBioSection } from "@/components/home/sections/ShortBioSection";
 import { LiveSection } from "@/components/home/sections/LiveSection";
 import { MusicSection } from "@/components/home/sections/MusicSection";
 import { FinalCtaSection } from "@/components/home/sections/FinalCtaSection";
 import starsBg from "@/assets/stars_background.webp";
-import { Seo } from "@/Seo";
 
-const Reveal = ({ children }: { children: React.ReactNode }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12 }
-    );
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  return <div ref={ref} className={`home-reveal ${visible ? "home-reveal-visible" : ""}`}>{children}</div>;
-};
+// Section ids, in scroll order. Used by the side dots and the scroll observer.
+const sectionsConfig = [
+  { id: "hero-section", label: "Hero" },
+  { id: "short-bio", label: "Short Bio" },
+  { id: "live", label: "Live" },
+  { id: "music", label: "Music" },
+  { id: "final-cta", label: "Contact & Footer" },
+];
 
 const HomeContent = () => {
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const { lang, setLang } = useLanguage();
+  const { lang } = useLanguage();
 
   const copy = lang === "de"
     ? {
@@ -77,7 +62,6 @@ const HomeContent = () => {
       release: "Songs that stay with you.",
       releaseLabel: "Listen closer",
       releaseBody: "NEVER STOP and FLASHBACK! are only the beginning. Press play, then come see what happens when the songs leave the speakers.",
-      releaseBodyShort: "",
       booking: "Book the band",
       stageLabel: "Have a stage?",
       stageHeading: "Let’s make it loud.",
@@ -88,44 +72,6 @@ const HomeContent = () => {
       bookLabel: "Book the band",
       followLabel: "Listen · watch · follow",
     };
-
-  const membersRow1: [string, string, string][] = lang === "de"
-    ? [
-      ["Tony", "Gesang", "/images/members/tony.webp"],
-      ["Alessandro", "Gitarre", "/images/members/alessandro.webp"],
-    ]
-    : [
-      ["Tony", "Vocals", "/images/members/tony.webp"],
-      ["Alessandro", "Guitar", "/images/members/alessandro.webp"],
-    ];
-
-  const membersRow2: [string, string, string][] = lang === "de"
-    ? [
-      ["Chris", "Gitarre", "/images/members/chris.webp"],
-      ["Tim", "Bass", "/images/members/tim.webp"],
-      ["Tom", "Schlagzeug", "/images/members/tom.webp"],
-    ]
-    : [
-      ["Chris", "Guitar", "/images/members/chris.webp"],
-      ["Tim", "Bass", "/images/members/tim.webp"],
-      ["Tom", "Drums", "/images/members/tom.webp"],
-    ];
-
-  const sectionsConfig = [
-    { id: "hero-section", label: "Hero" },
-    { id: "short-bio", label: "Short Bio" },
-    { id: "live", label: "Live" },
-    { id: "music", label: "Music" },
-    { id: "final-cta", label: "Contact & Footer" },
-  ];
-
-  <Seo
-    path="/"
-    title={lang === "de" ? "Rockband München | Last Cats on Earth – Funk & Alternative Rock" : "Munich Funk Rock & Alternative Rock Band | Last Cats on Earth"}
-    description={lang === "de"
-      ? "Last Cats on Earth sind eine Münchner Funk- und Alternative-Rockband für Konzerte, Festivals, Firmenfeiern und Events."
-      : "Last Cats on Earth are a Munich funk rock and alternative rock band for live shows, festivals, venues, parties and events."}
-  />
 
   useEffect(() => {
     const container = containerRef.current;
@@ -155,7 +101,7 @@ const HomeContent = () => {
     sectionElements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [sectionsConfig]);
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -166,11 +112,16 @@ const HomeContent = () => {
 
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-black text-white">
-      <TopBar
-        lang={lang}
-        setLang={setLang}
-        scrollToSection={scrollToSection}
+      <Seo
+        path="/"
+        title={lang === "de"
+          ? "Rockband München | Last Cats on Earth – Funk & Alternative Rock"
+          : "Munich Funk Rock & Alternative Rock Band | Last Cats on Earth"}
+        description={lang === "de"
+          ? "Last Cats on Earth sind eine Münchner Funk- und Alternative-Rockband für Konzerte, Festivals, Firmenfeiern und Events."
+          : "Last Cats on Earth are a Munich funk rock and alternative rock band for live shows, festivals, venues, parties and events."}
       />
+      <TopBar scrollToSection={scrollToSection} />
 
       <SideDotNav
         sectionsConfig={sectionsConfig}
@@ -189,39 +140,18 @@ const HomeContent = () => {
           className="relative bg-repeat"
           style={{ backgroundImage: `url(${starsBg})` }}
         >
-          <ShortBioSection copy={copy} membersRow1={membersRow1} membersRow2={membersRow2} Reveal={Reveal} />
-          <LiveSection copy={copy} setActiveVideoUrl={setActiveVideoUrl} Reveal={Reveal} />
-          <MusicSection copy={copy} Reveal={Reveal} />
+          <ShortBioSection copy={copy} />
+          <LiveSection copy={copy} setActiveVideoUrl={setActiveVideoUrl} />
+          <MusicSection copy={copy} />
         </div>
 
         {/* Bottom Section - No stars */}
         <FinalCtaSection copy={copy} />
       </main>
 
-      {activeVideoUrl && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4" onClick={() => setActiveVideoUrl(null)}>
-          <button
-            type="button"
-            className="absolute right-6 top-6 z-10 p-2 text-3xl text-white/60 hover:text-white"
-            onClick={() => setActiveVideoUrl(null)}
-            aria-label="Close video"
-          >
-            ×
-          </button>
-          <div className="aspect-video w-full max-w-4xl overflow-hidden rounded-xl border border-white/10 bg-black" onClick={(event) => event.stopPropagation()}>
-            <iframe
-              className="h-full w-full"
-              src={activeVideoUrl}
-              title="Last Cats on Earth live video"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      )}
+      {activeVideoUrl && <VideoOverlay url={activeVideoUrl} onClose={() => setActiveVideoUrl(null)} />}
     </div>
   );
 };
 
-const Index = HomeContent;
-export default Index;
+export default HomeContent;

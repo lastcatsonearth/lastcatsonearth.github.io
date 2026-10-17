@@ -1,175 +1,69 @@
-import { Instagram, Briefcase, Mail, Youtube } from "lucide-react";
-import { FaSpotify, FaApple, FaFacebook, FaTiktok } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
-import { useLanguage, useLocalePath } from "@/components/booking/LanguageContext";
+import type { MouseEvent, ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { externalProps, socialsWithMail } from "@/config/site";
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 
+const labels = {
+    en: { follow: "Listen • Watch • Follow", rights: "All rights reserved.", privacy: "Privacy Policy" },
+    de: { follow: "Hören • Sehen • Folgen", rights: "Alle Rechte vorbehalten.", privacy: "Datenschutz" },
+} as const;
 
-interface SocialIconProps {
-  href: string;
-  icon: React.ReactNode;
-  label: string;
-  external?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
-}
-
-const iconSize = "w-7 h-7";
-
-const SocialIcon = ({
-  href,
-  icon,
-  label,
-  external = true,
-  onClick,
-}: SocialIconProps) => {
-  const content = (
-    <div className="relative flex flex-col items-center group">
-      {/* Orange Vignette / Tooltip */}
-      <div className="absolute -top-7 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 z-50">
-        <div className="bg-primary text-primary-foreground text-[10px] font-semibold py-0.5 px-2 rounded shadow-md whitespace-nowrap uppercase tracking-wider flex items-center justify-center">
-          {label}
-          {/* Arrow pointing to icon */}
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rotate-45" />
-        </div>
-      </div>
-
-      {/* Icon Wrapper */}
-      <div className="p-3 text-cat-orange transition-all duration-300 group-hover:scale-110 group-hover:brightness-110">
-        {icon}
-      </div>
-    </div>
-  );
-
-  if (external) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={label}
-        onClick={onClick}
-      >
-        {content}
-      </a>
-    );
-  }
-
-  return (
-    <Link to={href} aria-label={label}>
-      {content}
-    </Link>
-  );
+// On mobile, try the Instagram app first and fall back to the website.
+const openInstagramApp = (e: MouseEvent<HTMLAnchorElement>) => {
+    const ua = navigator.userAgent || navigator.vendor;
+    if (/Instagram/i.test(ua) || !/iPhone|iPad|iPod|Android/i.test(ua)) return;
+    e.preventDefault();
+    window.location.href = "instagram://user?username=lastcatsonearth";
+    setTimeout(() => window.open("https://www.instagram.com/lastcatsonearth/", "_blank", "noopener,noreferrer"), 1500);
 };
 
-const Footer = () => {
-  const p = useLocalePath();
+const SocialIcon = ({ href, label, children }: { href: string; label: string; children: ReactNode }) => (
+    <a
+        href={href}
+        {...externalProps(href)}
+        aria-label={label}
+        onClick={label === "Instagram" ? openInstagramApp : undefined}
+        className="group relative flex flex-col items-center"
+    >
+        {/* Hover label */}
+        <span className="pointer-events-none absolute -top-7 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded bg-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground opacity-0 shadow-md transition-all duration-200 group-hover:-translate-y-0.5 group-hover:opacity-100">
+            {label}
+            <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-primary" />
+        </span>
+        <span className="p-3 text-cat-orange transition-all duration-300 group-hover:scale-110 group-hover:brightness-110">
+            {children}
+        </span>
+    </a>
+);
 
-  const location = useLocation();
+/** compact: no bottom padding (used where the footer sits at the very bottom of a full-screen section). */
+const Footer = ({ compact = false }: { compact?: boolean }) => {
+    const p = useLocalePath();
+    const { lang } = useLanguage();
+    const t = labels[lang];
 
-  // Pages requiring compact bottom padding
-  const isCompactPage =
-    location.pathname === "/" || location.pathname === "/links" || location.pathname === "/booking";
+    return (
+        <footer>
+            <p className="mb-1 text-center text-sm font-bold uppercase tracking-[0.2em] text-cat-orange">{t.follow}</p>
 
-  const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const ua = navigator.userAgent || navigator.vendor;
-    const isInstagramApp = /Instagram/i.test(ua);
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+            <div className="-mt-1 flex flex-nowrap items-center justify-center">
+                {socialsWithMail.map(({ label, href, Icon }) => (
+                    <SocialIcon key={label} href={href} label={label}>
+                        <Icon className="h-7 w-7" />
+                    </SocialIcon>
+                ))}
+            </div>
 
-    if (isInstagramApp) {
-      return;
-    }
-
-    if (isMobile) {
-      e.preventDefault();
-      const appUri = "instagram://user?username=lastcatsonearth";
-      const webUri = "https://www.instagram.com/lastcatsonearth/";
-
-      window.location.href = appUri;
-
-      setTimeout(() => {
-        window.open(webUri, "_blank", "noopener,noreferrer");
-      }, 1500);
-    }
-  };
-
-  return (
-    <div className="mt-0">
-      {/* Label placed above the horizontal rule */}
-      <div className="flex justify-center mb-2">
-        <p className="inline-block px-3 py-1 -mb-1 font-bold text-sm uppercase tracking-[0.2em] text-cat-orange rounded-full">
-          LISTEN • WATCH • FOLLOW
-        </p>
-      </div>
-
-      {/* Horizontal border line */}
-      <footer className=" -mt-2 mb-0 pb-0 overflow-visible">
-        {/* Icons */}
-        <div className="flex items-center justify-center gap-0 sm:gap-0 flex-nowrap -mt-3 overflow-visible">
-          <SocialIcon
-            href="https://www.instagram.com/lastcatsonearth/"
-            icon={<Instagram className={iconSize} />}
-            label="Instagram"
-            onClick={handleInstagramClick}
-          />
-
-          <SocialIcon
-            href="https://www.youtube.com/@lastcatsonearth"
-            icon={<Youtube className="w-8 h-8" />}
-            label="YouTube"
-          />
-
-          <SocialIcon
-            href="https://www.facebook.com/lastcatsonearth"
-            icon={<FaFacebook className={iconSize} />}
-            label="Facebook"
-          />
-
-          <SocialIcon
-            href="https://www.tiktok.com/@lastcatsonearthband"
-            icon={<FaTiktok className={iconSize} />}
-            label="TikTok"
-          />
-
-          <SocialIcon
-            href="https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa?si=VLqYdbF_R_-8cLo5zJJwKw"
-            icon={<FaSpotify className={iconSize} />}
-            label="Spotify"
-          />
-
-          <SocialIcon
-            href="https://music.apple.com/at/artist/last-cats-on-earth/1887321356"
-            icon={<FaApple className={iconSize} />}
-            label="Apple Music"
-          />
-
-          <SocialIcon
-            href="mailto:contact@lastcatsonearth.de"
-            icon={<Mail className={iconSize} />}
-            label="Contact"
-            external={true}
-          />
-        </div>
-
-        {/* Horizontal line above credits */}
-        <div className="border-t border-border mt-1 pt-4" />
-
-        <div
-          className={` -mb-0 text-center text-xs text-muted-foreground mt-0 space-y-1 ${isCompactPage ? "pb-0" : "pb-4"
-            }`}
-        >
-          <p>© 2026 Last Cats on Earth. All rights reserved.</p>
-          <p className="flex items-center justify-center gap-2">
-            <Link to={p("/impressum")} className="hover:text-cat-orange transition-colors underline underline-offset-4">
-              Impressum
-            </Link>
-            <span>•</span>
-            <Link to={p("/privacy")} className="hover:text-cat-orange transition-colors underline underline-offset-4">
-              Privacy Policy
-            </Link>
-        </p>
-    </div>
-      </footer >
-    </div >
-  );
+            <div className={`mt-1 space-y-1 border-t border-border pt-4 text-center text-xs text-muted-foreground ${compact ? "" : "pb-4"}`}>
+                <p>© {new Date().getFullYear()} Last Cats on Earth. {t.rights}</p>
+                <p className="flex items-center justify-center gap-2">
+                    <Link to={p("/impressum")} className="underline underline-offset-4 transition-colors hover:text-cat-orange">Impressum</Link>
+                    <span aria-hidden="true">•</span>
+                    <Link to={p("/privacy")} className="underline underline-offset-4 transition-colors hover:text-cat-orange">{t.privacy}</Link>
+                </p>
+            </div>
+        </footer>
+    );
 };
 
 export default Footer;

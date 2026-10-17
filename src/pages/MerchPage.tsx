@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import BandHeader from "@/components/BandHeader";
 import Footer from "@/components/Footer";
+import { Seo } from "@/components/Seo";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 import shirtImage1 from "@/assets/merch_images/black_tee/back.webp";
 import shirtImage2 from "@/assets/merch_images/black_tee/front_full.webp";
@@ -15,6 +17,7 @@ const FORMSPREE_URL = "https://formspree.io/f/xrejwwzz";
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbwupUQXO0fe8ka0U2woDUxWbKel0upWwbzOduugTgAkTXKvuopSGs0UIsNk-AE74Wpp_g/exec";
 
 const MerchPage = () => {
+    const { lang } = useLanguage();
     const [currentImage, setCurrentImage] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [cart, setCart] = useState<Record<Size, number>>({
@@ -128,6 +131,14 @@ const MerchPage = () => {
 
     return (
         <div className="min-h-screen bg-black text-white px-6 pt-10 pb-12 flex flex-col justify-between">
+            {/* Merch copy is English-only, so only the German URL is indexed. */}
+            <Seo
+                path="/merch"
+                title="Merch – Black Cat Tee | Last Cats on Earth"
+                description="Official Last Cats on Earth merch: the Black Cat Tee, heavy black cotton, screen printed locally in a limited run. Reserve online, pick up at the show."
+                image={shirtImage2}
+                noindex={lang === "en"}
+            />
             <div className="w-full">
                 <BandHeader linkToHome />
 
@@ -165,6 +176,7 @@ const MerchPage = () => {
                                     {/* Left arrow */}
                                     <button
                                         onClick={prev}
+                                        aria-label="Previous image"
                                         className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -175,6 +187,7 @@ const MerchPage = () => {
                                     {/* Right arrow */}
                                     <button
                                         onClick={next}
+                                        aria-label="Next image"
                                         className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center text-white/0 group-hover:text-white/60 hover:!text-white transition-colors duration-200"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -201,9 +214,9 @@ const MerchPage = () => {
                                 <p className="text-cat-orange uppercase tracking-[0.25em] text-xs mb-3">
                                     Merchandise
                                 </p>
-                                <h2 className="font-sceageus text-4xl md:text-5xl leading-none mb-4">
+                                <h1 className="font-sceageus text-4xl md:text-5xl leading-none mb-4">
                                     BLACK CAT TEE
-                                </h2>
+                                </h1>
                                 <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
                                     Heavy black cotton t-shirt featuring the official Last Cats on Earth
                                     cat logo. Screen printed locally in limited quantities.

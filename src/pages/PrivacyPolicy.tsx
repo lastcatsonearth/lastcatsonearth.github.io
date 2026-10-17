@@ -1,13 +1,21 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Footer from "@/components/Footer";
-import { useLocalePath } from "@/components/booking/LanguageContext";
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
+import { Seo } from "@/components/Seo";
 
 const PrivacyPolicy = () => {
     const p = useLocalePath();
+    const { lang } = useLanguage();
 
     return (
         <div className="min-h-screen relative bg-background text-foreground flex flex-col justify-between">
+            <Seo
+                path="/privacy"
+                title="Datenschutzerklärung | Last Cats on Earth"
+                description="Datenschutzerklärung der Website von Last Cats on Earth, Rockband aus München."
+                noindex={lang === "en"}
+            />
             <main className="relative max-w-2xl mx-auto px-6 py-12 w-full">
                 {/* Back navigation */}
                 <Link
@@ -15,7 +23,7 @@ const PrivacyPolicy = () => {
                     className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-primary transition-colors mb-8"
                 >
                     <ArrowLeft size={16} />
-                    <span>Back to main page</span>
+                    <span>{lang === "de" ? "Zurück zur Startseite" : "Back to main page"}</span>
                 </Link>
 
                 <h1 className="text-3xl font-serif font-bold tracking-tight mb-8">

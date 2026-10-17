@@ -1,8 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
-import { useLocalePath } from "@/components/booking/LanguageContext";
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
+import Reveal from "@/components/Reveal";
+import { members } from "@/content/members";
+import { useIsLandscapePhone } from "@/hooks/useIsLandscapePhone";
 
 interface ShortBioSectionProps {
     copy: {
@@ -10,9 +13,6 @@ interface ShortBioSectionProps {
         short: string;
         shortBody: string;
     };
-    membersRow1: [string, string, string][];
-    membersRow2: [string, string, string][];
-    Reveal: React.ComponentType<{ children: React.ReactNode }>;
 }
 
 interface BallPhysics {
@@ -30,30 +30,20 @@ interface BallPhysics {
 
 export const ShortBioSection = ({
     copy,
-    membersRow1,
-    membersRow2,
-    Reveal,
 }: ShortBioSectionProps) => {
     const p = useLocalePath();
+    const { lang } = useLanguage();
+    const isLandscapePhone = useIsLandscapePhone();
+    // [name, role, photo] – first two on the top row, rest on the bottom row
+    const rows = useMemo(() => {
+        const all = members.map((m) => [m.name, m.role[lang], m.photo] as [string, string, string]);
+        return [all.slice(0, 2), all.slice(2)];
+    }, [lang]);
+    const [membersRow1, membersRow2] = rows;
 
-    const [isLandscapePhone, setIsLandscapePhone] = useState(false);
     const [balls, setBalls] = useState<BallPhysics[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Detect orientation changes specifically for mobile landscape
-    useEffect(() => {
-        const checkOrientation = () => {
-            const isLandscape = window.innerWidth > window.innerHeight && window.innerHeight < 550;
-            setIsLandscapePhone(isLandscape);
-        };
-        checkOrientation();
-        window.addEventListener("resize", checkOrientation);
-        window.addEventListener("orientationchange", checkOrientation);
-        return () => {
-            window.removeEventListener("resize", checkOrientation);
-            window.removeEventListener("orientationchange", checkOrientation);
-        };
-    }, []);
 
     // Initialize ball positions with wider horizontal padding for bottom row
     useEffect(() => {

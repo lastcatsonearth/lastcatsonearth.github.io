@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AudioPlayer from "@/components/booking/AudioPlayer";
 import { homeSpacing } from "@/config/layoutSpacing";
-import { useLocalePath } from "@/components/booking/LanguageContext";
+import { useLocalePath } from "@/i18n/LanguageContext";
+import Reveal from "@/components/Reveal";
+import { useIsLandscapePhone } from "@/hooks/useIsLandscapePhone";
 
 interface MusicSectionProps {
     copy: {
@@ -12,24 +13,12 @@ interface MusicSectionProps {
         releaseBody: string;
         booking: string;
     };
-    Reveal: React.ComponentType<{ children: React.ReactNode }>;
 }
 
-export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
-    const [isLandscapePhone, setIsLandscapePhone] = useState(false);
+export const MusicSection = ({ copy }: MusicSectionProps) => {
+    const isLandscapePhone = useIsLandscapePhone();
     const p = useLocalePath();
 
-    useEffect(() => {
-        const checkLandscape = () => {
-            const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-            const isShort = window.innerHeight < 550;
-            setIsLandscapePhone(isLandscape && isShort);
-        };
-
-        checkLandscape();
-        window.addEventListener("resize", checkLandscape);
-        return () => window.removeEventListener("resize", checkLandscape);
-    }, []);
 
     return (
         <section

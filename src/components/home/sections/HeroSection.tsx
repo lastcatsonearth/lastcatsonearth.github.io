@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
-import { useLocalePath } from "@/components/booking/LanguageContext";
+import { useLocalePath } from "@/i18n/LanguageContext";
 
 interface HeroSectionProps {
     copy: {
@@ -35,7 +35,7 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
                 <img
                     src={heroPhoto}
                     alt="Last Cats on Earth performing live in Munich"
-                    fetchPriority="high"
+                    {...{ fetchpriority: "high" }}
                     loading="eager"
                     decoding="async"
                     className="absolute inset-0 h-full w-full object-cover object-[center_100%] sm:object-center"

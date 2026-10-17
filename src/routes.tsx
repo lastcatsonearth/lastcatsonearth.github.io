@@ -1,10 +1,7 @@
 import { Outlet } from "react-router-dom";
 import type { RouteRecord } from "vite-react-ssg";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { LanguageProvider, type Lang } from "@/components/booking/LanguageContext";
+import { LanguageProvider } from "@/i18n/LanguageContext";
+import { shows } from "@/content/shows";
 import Index from "./pages/Index";
 import Booking from "./pages/Booking";
 import LinksPage from "./pages/LinksPage";
@@ -14,32 +11,18 @@ import ShowsPage from "./pages/ShowsPage";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
-import { Head } from "vite-react-ssg";
 
-
-const queryClient = new QueryClient();
-
-export const Redirect = ({ to }: { to: string }) => (
-    <Head>
-        <meta name="robots" content="noindex" />
-        <link rel="canonical" href={`https://lastcatsonearth.de${to}`} />
-        <meta httpEquiv="refresh" content={`0; url=${to}`} />
-    </Head>
-);
+// Every page exists twice: German at "/…" and English at "/en/…".
+// The language is read from the URL in LanguageProvider.
+// Old URLs (/events, /festivals, …) are 301-redirected in public/_redirects.
 
 const Shell = () => (
     <LanguageProvider>
-        <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-                <Toaster /><Sonner />
-                <Outlet />
-            </TooltipProvider>
-        </QueryClientProvider>
+        <Outlet />
     </LanguageProvider>
 );
 
-
-const children = (): RouteRecord[] => [
+const pages = (): RouteRecord[] => [
     { index: true, element: <Index /> },
     { path: "booking", element: <Booking /> },
     { path: "links", element: <LinksPage /> },
@@ -48,25 +31,20 @@ const children = (): RouteRecord[] => [
     { path: "live-band-munich", element: <IntentPage intent="live" /> },
     { path: "party-band-munich", element: <IntentPage intent="party" /> },
     { path: "shows", element: <ShowsPage /> },
-    { path: "impressum", element: <Impressum /> },
-    { path: "privacy", element: <PrivacyPolicy /> },
-    { path: "*", element: <NotFound /> },
     {
         path: "shows/:slug",
         element: <ShowsPage />,
-        getStaticPaths: () => [
-            "shows/zamanand-festival-munich-september-2026",
-            "shows/woodstock-party-renazzo-july-2026",
-            "shows/alte-utting-munich-june-2026",
-        ],
+        getStaticPaths: () => shows.map((show) => `shows/${show.slug}`),
     },
-    { path: "events", element: <Redirect to="/party-band-munich" /> },
-    { path: "party-and-event-band", element: <Redirect to="/party-band-munich" /> },
-    { path: "festivals", element: <Redirect to="/munich-rock-band" /> },
-    { path: "festival-and-venue-band", element: <Redirect to="/live-band-munich" /> },
+    { path: "impressum", element: <Impressum /> },
+    { path: "privacy", element: <PrivacyPolicy /> },
+    { path: "*", element: <NotFound /> },
 ];
 
+// "/404" is pre-rendered to dist/404.html, which Cloudflare Pages serves (with status 404) for unknown URLs.
+const notFoundPage: RouteRecord = { path: "404", element: <NotFound /> };
+
 export const routes: RouteRecord[] = [
-    { path: "/", element: <Shell />, children: children() },
-    { path: "/en", element: <Shell />, children: children() },
+    { path: "/", element: <Shell />, children: [...pages(), notFoundPage] },
+    { path: "/en", element: <Shell />, children: pages() },
 ];

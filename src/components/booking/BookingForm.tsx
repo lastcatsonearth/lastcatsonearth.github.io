@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useLanguage } from "@/components/booking/LanguageContext";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { bookingSpacing } from "@/config/layoutSpacing";
 
 const translations = {

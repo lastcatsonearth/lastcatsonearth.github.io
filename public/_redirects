@@ -1,2 +1,12 @@
-/de/ / 301
-/de/legal/impressum/ /impressum 301
+# Cloudflare Pages redirects: <from> <to> <status>
+/de/                        /                    301
+/de/legal/impressum/        /impressum           301
+/events                     /party-band-munich   301
+/party-and-event-band       /party-band-munich   301
+/festivals                  /munich-rock-band    301
+/festival-and-venue-band    /live-band-munich    301
+/en/events                  /en/party-band-munich  301
+/en/party-and-event-band    /en/party-band-munich  301
+/en/festivals               /en/munich-rock-band   301
+/en/festival-and-venue-band /en/live-band-munich   301
+/music                      /booking#videos      301

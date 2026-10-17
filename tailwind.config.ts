@@ -1,68 +1,28 @@
 import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
 
+// Brand color: cat-orange. The hsl(var(--…)) colors are defined in src/index.css.
 export default {
-  darkMode: ["class"],
   content: ["./src/**/*.{ts,tsx}"],
-  prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "1.5rem",
-      screens: {
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-      },
-    },
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
-        display: ['Bebas Neue', 'sans-serif'],
-        sceageus: ['Sceageus', 'sans-serif'],
+        sans: ["Montserrat", "sans-serif"],
+        sceageus: ["Sceageus", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        neon: {
-          orange: "hsl(var(--neon-orange))",
-          magenta: "hsl(var(--neon-magenta))",
-          cyan: "hsl(var(--neon-cyan))",
         },
         cat: {
           orange: "#D34303",
-        }
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -76,49 +36,10 @@ export default {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "pulse-glow": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.7" },
-        },
-        "float": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-5px)" },
-        },
-        "shooting-star": {
-          "0%": {
-            transform: "translate3d(0,0,0)",
-            opacity: "0",
-          },
-          "8%": {
-            opacity: "1",
-          },
-          "70%": {
-            transform: "translate3d(-180px,180px,0)",
-            opacity: "1",
-          },
-          "100%": {
-            transform: "translate3d(-240px,240px,0)",
-            opacity: "0",
-          },
-        },
-        "infinite-scroll": {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-100%)" },
-        },
       },
       animation: {
         "fade-in": "fade-in 0.5s ease-out forwards",
-        "fade-in-delay-1": "fade-in 0.5s ease-out 0.1s forwards",
-        "fade-in-delay-2": "fade-in 0.5s ease-out 0.2s forwards",
-        "fade-in-delay-3": "fade-in 0.5s ease-out 0.3s forwards",
-        "fade-in-delay-4": "fade-in 0.5s ease-out 0.4s forwards",
-        "fade-in-delay-5": "fade-in 0.5s ease-out 0.5s forwards",
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "float": "float 3s ease-in-out infinite",
-        "shooting-star": "shooting-star 2.2s linear infinite",
-        "infinite-scroll": "infinite-scroll 25s linear infinite",
       },
     },
   },
-  plugins: [tailwindcssAnimate],
 } satisfies Config;

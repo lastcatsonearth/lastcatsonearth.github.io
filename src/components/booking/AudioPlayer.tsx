@@ -1,6 +1,6 @@
 import { useState, useRef, TouchEvent } from "react";
 import { FaSpotify, FaPlay, FaPause, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useLanguage } from "@/components/booking/LanguageContext";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 import flashbackAudio from "@/assets/booking/music/flashback/flashback.mp3";
 import flashbackCover from "@/assets/booking/music/flashback/flashback.webp";

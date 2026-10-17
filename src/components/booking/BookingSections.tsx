@@ -50,7 +50,7 @@ const BookingSections = ({ onVideoSelect }: { onVideoSelect: (url: string | null
                         <h3 className="text-3xl font-bold uppercase tracking-wide">Let's make some noise.</h3>
                     </div>
                     <div className="w-full max-w-4xl mx-auto pb-4">
-                        <Footer />
+                        <Footer compact />
                     </div>
                 </section>
             </main>

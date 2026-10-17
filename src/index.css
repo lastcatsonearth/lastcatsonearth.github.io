@@ -4,137 +4,36 @@
 
 @font-face {
   font-family: 'Sceageus';
-  src: url('./assets/Sceageus.woff2') format('woff2'),
-    url('./assets/Sceageus.otf') format('opentype');
+  src: url('./assets/Sceageus.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
+/* Theme tokens used by tailwind.config.ts (HSL without hsl()) */
 @layer base {
   :root {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
-
     --primary: 35 100% 55%;
     --primary-foreground: 0 0% 0%;
-
-    --secondary: 330 100% 55%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
-
-    --accent: 190 100% 50%;
-    --accent-foreground: 0 0% 0%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
     --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 35 100% 55%;
-
     --radius: 1rem;
-
-    /* Custom brand colors - matching logo */
-    --neon-orange: 35 100% 55%;
-    --neon-magenta: 330 100% 55%;
-    --neon-cyan: 190 100% 50%;
-
-    /* Glow effects */
-    --glow-primary: 0 0 20px hsl(35 100% 55% / 0.5), 0 0 40px hsl(35 100% 55% / 0.3);
-    --glow-secondary: 0 0 20px hsl(330 100% 55% / 0.5), 0 0 40px hsl(330 100% 55% / 0.3);
-    --glow-accent: 0 0 20px hsl(190 100% 50% / 0.5), 0 0 40px hsl(190 100% 50% / 0.3);
-    --glow-primary-intense: 0 0 30px hsl(35 100% 55% / 0.7), 0 0 60px hsl(35 100% 55% / 0.4);
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Montserrat', sans-serif;
     background-image: url("./assets/stars_background.webp");
   }
 }
 
-@layer utilities {
-  .font-display {
-    font-family: 'Bebas Neue', sans-serif;
-  }
-
-  .glow-primary {
-    box-shadow: var(--glow-primary);
-  }
-
-  .glow-secondary {
-    box-shadow: var(--glow-secondary);
-  }
-
-  .glow-accent {
-    box-shadow: var(--glow-accent);
-  }
-
-  .glow-primary-intense {
-    box-shadow: var(--glow-primary-intense);
-  }
-
-  .text-glow-white {
-    text-shadow:
-      0 0 10px rgba(255, 255, 255, 0.7),
-      0 0 20px rgba(255, 255, 255, 0.5);
-  }
-
-  .text-outline-black {
-    -webkit-text-stroke: 0.5px #1a1a1a;
-  }
-
-  .text-glow-primary {
-    text-shadow: 0 0 10px hsl(35 100% 55% / 0.5), 0 0 20px hsl(35 100% 55% / 0.3);
-  }
-
-  .text-glow-secondary {
-    text-shadow: 0 0 10px hsl(330 100% 55% / 0.5), 0 0 20px hsl(330 100% 55% / 0.3);
-  }
-}
-
 @layer components {
-  .link-button {
-    @apply w-full py-2 px-6 rounded-2xl font-semibold text-foreground bg-card border border-border transition-all duration-300 ease-out hover:border-primary hover:glow-primary hover:scale-[1.02] active:scale-[0.98];
-  }
-
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 350ms ease, transform 350ms ease;
-  }
-
-  .scroll-reveal-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .gallery-row-reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 400ms ease, transform 400ms ease;
-  }
-
-  .gallery-row-reveal-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  /* Homepage sections: fade/slide in on scroll (see components/Reveal.tsx) */
   .home-reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -146,6 +45,7 @@
     transform: translateY(0);
   }
 
+  /* Intent pages: photos fly in from the side (see FlyingImage in pages/IntentPage.tsx) */
   .intent-image {
     @apply relative min-h-[230px] overflow-hidden rounded-2xl border border-white/10 bg-black/30;
     opacity: 0;
@@ -173,8 +73,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal,
-  .gallery-row-reveal,
   .home-reveal,
   .intent-image {
     opacity: 1;

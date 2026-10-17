@@ -1,67 +1,221 @@
-import BandHeader from "@/components/BandHeader";
-import LinksSection from "@/components/LinksSection";
-import Footer from "@/components/Footer";
-import { Instagram, Mail, Menu, X, Youtube } from "lucide-react";
-import { FaApple, FaFacebook, FaSpotify, FaTiktok } from "react-icons/fa";
+import type { ReactNode } from "react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
+import { Seo } from "@/components/Seo";
+import LangToggle from "@/components/LangToggle";
+import { EMAIL, socials } from "@/config/site";
+import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
+import starsBg from "@/assets/stars_background.webp";
+import releaseCover from "@/assets/booking/music/never_stop/never_stop.webp";
+import favicon from "@/assets/favicon.webp";
+// TODO: add this file yourself (portrait flyer, ~400px wide, webp). The build fails until it exists.
+import nextShowFlyer from "@/assets/flyers/maerchenbazar-2026-11-28.webp";
+
+import type { Lang } from "@/i18n/LanguageContext";
+type Bilingual = Record<Lang, string>;
+
+// ---------------------------------------------------------------
+// EDIT HERE. Update these two when something new happens.
+// ---------------------------------------------------------------
+const nextShow: { title: Bilingual; href: string } = {
+  title: { en: "Märchenbazar · 28 Nov", de: "Märchenbazar · 28. Nov." },
+  // TODO: paste the Bandsintown event URL here (https://www.bandsintown.com/e/...)
+  href: "https://www.bandsintown.com/",
+};
+
+const latestRelease: { title: string; href: string } = {
+  title: "NEVER STOP",
+  href: "https://open.spotify.com/intl-it/track/7AJohGsgWQTzB32uLrYuYk",
+};
+// ---------------------------------------------------------------
+
+const copy = {
+  en: {
+    title: "Links | Last Cats on Earth",
+    description: "All links to Last Cats on Earth, the Munich rock band: next show, latest release, music, videos and booking.",
+    kicker: "Alternative rock · Munich",
+    book: "Book the band",
+    bookSub: "Press kit and booking inquiry",
+    nextShow: "Next show",
+    latestRelease: "Latest release",
+    listenNow: "Listen on Spotify",
+    website: "Our website",
+    websiteSub: "Meet the band, watch us live",
+    email: "Write us an email",
+    legal: "Impressum",
+    privacy: "Privacy Policy",
+    follow: "Listen · Watch · Follow",
+  },
+  de: {
+    title: "Links | Last Cats on Earth",
+    description: "Alle Links zu Last Cats on Earth, der Münchner Rockband: nächste Show, neuester Release, Musik, Videos und Booking.",
+    kicker: "Alternative Rock · München",
+    book: "Die Band buchen",
+    bookSub: "Pressekit und Booking-Anfrage",
+    nextShow: "Nächste Show",
+    latestRelease: "Neuester Release",
+    listenNow: "Auf Spotify hören",
+    website: "Unsere Webseite",
+    websiteSub: "Die Band kennenlernen, live erleben",
+    email: "E-Mail schreiben",
+    legal: "Impressum",
+    privacy: "Datenschutz",
+    follow: "Hören · Sehen · Folgen",
+  },
+} as const;
+
+const rowClass =
+  "group flex items-center gap-4 rounded-2xl border border-white/10 bg-black/50 p-3 backdrop-blur-sm transition hover:border-cat-orange hover:bg-white/10";
+
+const FeatureRow = ({
+  tag,
+  title,
+  image,
+  href,
+  external = false,
+}: {
+  tag: string;
+  title: string;
+  image: ReactNode;
+  href: string;
+  external?: boolean;
+}) => {
+  const inner = (
+    <>
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl">
+        {image}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-cat-orange">{tag}</span>
+        <span className="mt-0.5 block truncate text-sm font-bold">{title}</span>
+      </span>
+      <ArrowUpRight className="h-4 w-4 shrink-0 text-white/30 transition group-hover:text-cat-orange" />
+    </>
+  );
+  return external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={rowClass}>
+      {inner}
+    </a>
+  ) : (
+    <Link to={href} className={rowClass}>
+      {inner}
+    </Link>
+  );
+};
 
 const LinksPage = () => {
-  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
+  const { lang } = useLanguage();
+  const p = useLocalePath();
+  const t = copy[lang];
 
   return (
-  <div className="relative min-h-screen">
-    <nav className="fixed inset-0 z-40 pointer-events-none" aria-label="Site navigation">
-      <div className={`absolute inset-0 bg-black/70 transition-opacity duration-300 ${isNavigationOpen ? "pointer-events-auto opacity-100" : "opacity-0"}`} onClick={() => setIsNavigationOpen(false)} />
-      <aside className={`absolute left-0 top-0 flex h-full w-[min(78vw,240px)] flex-col overflow-hidden border-r border-white/15 bg-[#080808]/95 px-4 py-5 shadow-2xl backdrop-blur-xl transition-transform duration-300 ease-out sm:px-5 ${isNavigationOpen ? "pointer-events-auto translate-x-0" : "-translate-x-full"}`}>
-        <div className="flex items-start justify-between border-b border-white/10 pb-4">
+    <div className="relative min-h-screen bg-black text-white">
+      <Seo path="/links" title={t.title} description={t.description} noindex />
+
+      <div
+        className="pointer-events-none absolute inset-0 bg-repeat opacity-60"
+        style={{ backgroundImage: `url(${starsBg})` }}
+        aria-hidden="true"
+      />
+
+      <main className="relative mx-auto w-full max-w-md px-4 pb-8 pt-4">
+        <header className="relative isolate flex min-h-[300px] items-end overflow-hidden rounded-3xl border border-white/10 p-6">
+          <img
+            src={heroPhoto}
+            alt="Last Cats on Earth performing live in Munich"
+            className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+            {...{ fetchpriority: "high" }}
+          />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/60 to-black/10" />
+          <div className="absolute inset-0 -z-10 bg-cat-orange/10 mix-blend-screen" />
+
+          <LangToggle className="absolute right-4 top-4" />
+
           <div>
-            <p className="text-lg font-black uppercase leading-[0.9] tracking-tight text-white">Last Cats<br /><span className="text-cat-orange">on Earth</span></p>
-            <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.25em] text-white/40">Munich · Germany</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-cat-orange">{t.kicker}</p>
+            <h1 className="mt-3 text-5xl font-black uppercase leading-[0.88] tracking-tight">
+              Last Cats <span className="text-cat-orange">on Earth</span>
+            </h1>
           </div>
-          <button type="button" onClick={() => setIsNavigationOpen(false)} className="rounded-full border border-white/15 p-2 text-white/60 transition hover:border-cat-orange hover:text-cat-orange" aria-label="Close navigation"><X className="h-5 w-5" /></button>
-        </div>
-        <div className="flex-1 py-5">
-          <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.28em] text-white/35">Explore</p>
-          {[
-            ["Home", "/"],
-            ["Music", "/#music"],
-            ["EPK", "/booking#contact"],
-            ["Links", "/links"],
-          ].map(([label, href]) => <Link key={href} to={href} onClick={() => setIsNavigationOpen(false)} className="block border-b border-white/5 py-2 text-lg font-bold tracking-wide text-white/80 transition hover:pl-2 hover:text-cat-orange">{label}</Link>)}
-          <p className="mb-2 mt-5 text-[9px] font-bold uppercase tracking-[0.28em] text-white/35">Listen · watch · follow</p>
-          <div className="flex flex-wrap items-center gap-1">
-            {[
-              ["Instagram", "https://www.instagram.com/lastcatsonearth/", <Instagram className="h-6 w-6" />],
-              ["YouTube", "https://www.youtube.com/@lastcatsonearth", <Youtube className="h-6 w-6" />],
-              ["Facebook", "https://www.facebook.com/lastcatsonearth", <FaFacebook className="h-6 w-6" />],
-              ["TikTok", "https://www.tiktok.com/@lastcatsonearthband", <FaTiktok className="h-6 w-6" />],
-              ["Spotify", "https://open.spotify.com/intl-it/artist/2nW6fmoJwCEknAfAVhmGwa", <FaSpotify className="h-6 w-6" />],
-              ["Apple Music", "https://music.apple.com/at/artist/last-cats-on-earth/1887321356", <FaApple className="h-6 w-6" />],
-              ["Contact", "mailto:contact@lastcatsonearth.de", <Mail className="h-6 w-6" />],
-            ].map(([label, href, icon]) => (
-              <a key={label as string} href={href as string} target={(href as string).startsWith("mailto:") ? undefined : "_blank"} rel="noopener noreferrer" aria-label={label as string} title={label as string} className="flex h-11 w-11 items-center justify-center text-cat-orange transition hover:scale-110 hover:brightness-125">
-                {icon}
-              </a>
-            ))}
-          </div>
-        </div>
-        <p className="border-t border-white/10 pt-5 text-[10px] uppercase leading-tight tracking-[0.2em] text-white/30">Original music<br />live shows</p>
-      </aside>
-      <button type="button" aria-label="Open navigation" aria-expanded={isNavigationOpen} onClick={() => setIsNavigationOpen((open) => !open)} className={`pointer-events-auto absolute left-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-cat-orange bg-cat-orange text-black shadow-lg shadow-cat-orange/20 transition hover:border-white hover:bg-white sm:left-8 sm:top-8 ${isNavigationOpen ? "pointer-events-none opacity-0" : "opacity-100"}`}>
-        <Menu className="h-5 w-5" />
-      </button>
-    </nav>
-    <main className="relative max-w-md mx-auto px-0 py-10">
-      <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-3">
-        <BandHeader linkToHome />
-        <LinksSection />
-        <div className="-mt-2">
-          <Footer />
-        </div>
-      </div>
-    </main>
-  </div>
+        </header>
+
+        <Link
+          to={p("/booking#contact")}
+          className="group mt-3 flex items-center justify-between rounded-2xl bg-cat-orange px-5 py-4 text-black transition hover:bg-white"
+        >
+          <span>
+            <span className="block text-base font-black uppercase tracking-wide">{t.book}</span>
+            <span className="mt-0.5 block text-xs font-semibold text-black/70">{t.bookSub}</span>
+          </span>
+          <ArrowUpRight className="h-6 w-6 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </Link>
+
+        <ul className="mt-3 space-y-2.5">
+          <li>
+            <FeatureRow
+              tag={t.nextShow}
+              title={nextShow.title[lang]}
+              image={<img src={nextShowFlyer} alt="" className="h-full w-full object-cover object-top" />}
+              href={nextShow.href}
+              external
+            />
+          </li>
+          <li>
+            <FeatureRow
+              tag={t.latestRelease}
+              title={`${latestRelease.title} · ${t.listenNow}`}
+              image={<img src={releaseCover} alt="" className="h-full w-full object-cover" />}
+              href={latestRelease.href}
+              external
+            />
+          </li>
+          <li>
+            <FeatureRow
+              tag={t.website}
+              title={t.websiteSub}
+              image={<img src={favicon} alt="" className="h-full w-full object-cover" />}
+              href={p("/")}
+            />
+          </li>
+        </ul>
+
+        <a
+          href={`mailto:${EMAIL}`}
+          className="mt-3 flex items-center justify-center gap-2 rounded-2xl border border-cat-orange px-5 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black"
+        >
+          <Mail className="h-4 w-4" />
+          {t.email}
+        </a>
+
+        <p className="mt-6 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-white/40">{t.follow}</p>
+        <nav className="mt-2 flex items-center justify-between px-1" aria-label="Social media">
+          {socials.map(({ label, href, Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              title={label}
+              className="flex h-11 w-11 items-center justify-center text-cat-orange transition hover:scale-110 hover:brightness-125"
+            >
+              <Icon className="h-6 w-6" />
+            </a>
+          ))}
+        </nav>
+
+        <footer className="mt-6 space-y-2 text-center text-xs text-white/40">
+          <p className="flex items-center justify-center gap-2">
+            <Link to={p("/impressum")} className="underline underline-offset-4 transition hover:text-cat-orange">{t.legal}</Link>
+            <span aria-hidden="true">•</span>
+            <Link to={p("/privacy")} className="underline underline-offset-4 transition hover:text-cat-orange">{t.privacy}</Link>
+          </p>
+          <p>© 2026 Last Cats on Earth</p>
+        </footer>
+      </main>
+    </div>
   );
 };
 

@@ -1,15 +1,17 @@
 <!doctype html>
-<html lang="de" class="dark">
+<html lang="de">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Last Cats on Earth" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="icon" type="image/png" href="/favicon.webp" />
-  <meta property="og:site_name" content="Last Cats on Earth" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <!-- Title, description, canonical, Open Graph etc. are set per page in src/components/Seo.tsx -->
 
+  <!-- Band info for Google (Knowledge Panel). Keep sameAs in sync with src/config/site.ts -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -17,9 +19,23 @@
     "@id": "https://lastcatsonearth.de/#musicgroup",
     "name": "Last Cats on Earth",
     "url": "https://lastcatsonearth.de/",
-    "image": "https://lastcatsonearth.de/bang_logo.webp",
+    "image": "https://lastcatsonearth.de/og-image.jpg",
+    "logo": "https://lastcatsonearth.de/favicon.png",
     "description": "Last Cats on Earth sind eine Münchner Rockband mit Funk Rock und Alternative Rock für Konzerte, Festivals, Firmenfeiern und Events in München und darüber hinaus.",
+    "genre": ["Funk Rock", "Alternative Rock", "Rock", "Funk"],
     "foundingLocation": { "@type": "Place", "name": "München, Deutschland" },
+    "areaServed": [
+      { "@type": "City", "name": "München", "sameAs": "https://www.wikidata.org/wiki/Q1726" },
+      { "@type": "Country", "name": "Deutschland" },
+      { "@type": "Continent", "name": "Europe" }
+    ],
+    "member": [
+      { "@type": "Person", "name": "Tony", "roleName": "Vocals" },
+      { "@type": "Person", "name": "Alessandro", "roleName": "Guitar" },
+      { "@type": "Person", "name": "Chris", "roleName": "Guitar" },
+      { "@type": "Person", "name": "Tim", "roleName": "Bass" },
+      { "@type": "Person", "name": "Tom", "roleName": "Drums" }
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "booking",
@@ -27,20 +43,14 @@
       "areaServed": ["München", "Bayern", "Deutschland"],
       "availableLanguage": ["English", "German"]
     },
-    "memberOf": {
-      "@type": "Organization",
-      "name": "Gig Heaven",
-      "url": "https://www.gigheaven.com/members/lastcatsonearth.html"
-    },
-    "genre": ["Funk Rock", "Alternative Rock", "Rock", "Funk"],
-    "areaServed": [
-      { "@type": "City", "name": "München", "sameAs": "https://www.wikidata.org/wiki/Q1726" },
-      { "@type": "Country", "name": "Deutschland" },
-      { "@type": "Continent", "name": "Europe" }
-    ],
     "sameAs": [
       "https://www.instagram.com/lastcatsonearth/",
-      "https://www.youtube.com/@lastcatsonearth"
+      "https://www.youtube.com/@lastcatsonearth",
+      "https://www.facebook.com/lastcatsonearth",
+      "https://www.tiktok.com/@lastcatsonearthband",
+      "https://open.spotify.com/artist/2nW6fmoJwCEknAfAVhmGwa",
+      "https://music.apple.com/at/artist/last-cats-on-earth/1887321356",
+      "https://www.gigheaven.com/members/lastcatsonearth.html"
     ]
   }
   </script>

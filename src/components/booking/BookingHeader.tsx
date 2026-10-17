@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
-import { useLanguage } from "./LanguageContext";
+import { Link } from "react-router-dom";
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 
 const sections = ["bio", "videos", "releases", "photos", "contact", "links"];
 
@@ -15,6 +16,7 @@ const navLabels: Record<string, { en: string; de: string }> = {
 
 const BookingHeader = () => {
     const { lang, setLang } = useLanguage();
+    const p = useLocalePath();
     const [activeIndex, setActiveIndex] = useState(0);
 
     const scrollToSection = (index: number) => {
@@ -58,13 +60,13 @@ const BookingHeader = () => {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-white/10 bg-black/70 px-4 py-3 backdrop-blur-xl sm:px-8">
-            <a
-                href="/"
+            <Link
+                to={p("/")}
                 className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-cat-orange transition-transform hover:scale-105"
             >
                 <ArrowLeft className="h-4 w-4" />
                 {lang === "de" ? "Startseite" : "Home"}
-            </a>
+            </Link>
 
             <nav className="hidden items-center gap-6 text-[11px] font-black uppercase tracking-[0.25em] lg:flex">
                 {sections.map((section, index) => (

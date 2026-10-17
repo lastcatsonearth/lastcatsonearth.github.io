@@ -1,4 +1,4 @@
-import { useLanguage } from "@/components/booking/LanguageContext";
+import { useLanguage } from "@/i18n/LanguageContext";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
 
 const translations = {
