@@ -12,7 +12,7 @@ const BookingSections = ({ onVideoSelect }: { onVideoSelect: (url: string | null
     <div className="relative z-10 w-full text-white">
         <BookingHeader />
         <div className="relative bg-repeat" style={{ backgroundImage: `url(${starsBg})` }}>
-            <main className="w-full h-dvh overflow-y-scroll snap-y snap-mandatory phone-landscape:snap-none scroll-smooth overscroll-y-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">                <h1 className="sr-only">Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations</h1>
+            <main className="w-full h-dvh overflow-y-scroll snap-y snap-mandatory phone-landscape:snap-proximity scroll-smooth overscroll-y-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">                <h1 className="sr-only">Book Last Cats on Earth, a Munich Rock Band for Events and Collaborations</h1>
 
                 <section id="bio" className="flex h-dvh phone-landscape:h-auto phone-landscape:pt-16 phone-landscape:pb-6 w-full snap-start snap-always flex-col items-center justify-center px-4 pt-20 sm:px-8">
                     <div className="mx-auto w-full max-w-5xl">

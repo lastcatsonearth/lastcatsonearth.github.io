@@ -57,7 +57,7 @@ const ShowsPage = () => {
     const show = shows.find((entry) => entry.slug === slug);
 
     return (
-        <div className="min-h-screen px-2 py-6 text-white sm:px-6 sm:py-10">
+        <div className="snap-page-plain snap-end min-h-screen px-2 py-6 text-white sm:px-6 sm:py-10">
             {show ? (
                 <Seo
                     path={`/shows/${show.slug}`}
@@ -73,7 +73,7 @@ const ShowsPage = () => {
             <main className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm sm:p-6">
                 <BandHeader linkToHome />
                 <article className="mx-auto max-w-2xl px-2 pb-10">
-                    <header className="border-b border-white/10 py-10 text-center">
+                    <header className="snap-start border-b border-white/10 py-10 text-center">
                         <p className="text-[11px] uppercase tracking-[0.28em] text-cat-orange">{show ? t.detailKicker : t.listKicker}</p>
                         <h1 className="mt-4 text-3xl font-bold tracking-wide sm:text-5xl">{show ? show.title : t.listHeading}</h1>
                         <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60">
@@ -82,7 +82,7 @@ const ShowsPage = () => {
                     </header>
 
                     {show ? (
-                        <section className="py-10">
+                        <section className="snap-start py-10">
                             <img src={show.image} alt={`${SITE_NAME} live at ${show.title}, ${show.city.en}`} className="h-72 w-full rounded-2xl object-cover" />
                             <p className="mt-6 text-justify text-sm leading-7 text-white/70">{show.text[lang]}</p>
                             <img src={show.secondImage} alt={`${show.title}: audience and stage`} loading="lazy" className="mt-8 h-64 w-full rounded-2xl object-cover" />
@@ -96,7 +96,7 @@ const ShowsPage = () => {
                             </div>
                         </section>
                     ) : (
-                        <div className="space-y-5 py-10">
+                        <div className="snap-start space-y-5 py-10">
                             {shows.map((entry) => (
                                 <Link key={entry.slug} to={p(`/shows/${entry.slug}`)} className="group grid grid-cols-[96px_1fr] gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 transition hover:border-cat-orange/50">
                                     <img src={entry.image} alt={`${entry.title} live`} loading="lazy" className="h-24 w-24 rounded-xl object-cover opacity-80 transition group-hover:opacity-100" />

@@ -111,7 +111,7 @@ const LinksPage = () => {
   const t = copy[lang];
 
   return (
-    <div className="relative min-h-screen bg-black text-white">
+    <div className="snap-page-plain snap-end relative min-h-screen bg-black text-white">
       <Seo path="/links" title={t.title} description={t.description} noindex />
 
       <div
@@ -121,7 +121,7 @@ const LinksPage = () => {
       />
 
       <main className="relative mx-auto w-full max-w-md px-4 pb-8 pt-4">
-        <header className="relative isolate flex min-h-[300px] items-end overflow-hidden rounded-3xl border border-white/10 p-6">
+        <header className="snap-start scroll-mt-4 relative isolate flex min-h-[300px] items-end overflow-hidden rounded-3xl border border-white/10 p-6">
           <img
             src={heroPhoto}
             alt="Last Cats on Earth performing live in Munich"

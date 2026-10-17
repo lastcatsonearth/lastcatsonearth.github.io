@@ -130,7 +130,7 @@ const MerchPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white px-6 pt-10 pb-12 flex flex-col justify-between">
+        <div className="snap-page-plain snap-end min-h-screen bg-black text-white px-6 pt-10 pb-12 flex flex-col justify-between">
             {/* Merch copy is English-only, so only the German URL is indexed. */}
             <Seo
                 path="/merch"
@@ -142,7 +142,7 @@ const MerchPage = () => {
             <div className="w-full">
                 <BandHeader linkToHome />
 
-                <section className="max-w-6xl mx-auto mt-10">
+                <section className="snap-start scroll-mt-6 max-w-6xl mx-auto mt-10">
                     <div className="border border-white/10 bg-white/[0.03] rounded-2xl overflow-hidden backdrop-blur-sm">
                         <div className="grid md:grid-cols-2 gap-0">
 

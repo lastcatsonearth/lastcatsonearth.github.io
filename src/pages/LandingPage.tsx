@@ -83,7 +83,7 @@ const Kicker = ({ children, className = "" }: { children: React.ReactNode; class
 const Section = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
     const { ref, inView } = useInView<HTMLElement>(0.1);
     return (
-        <section id={id} ref={ref} className={`home-reveal ${inView ? "home-reveal-visible" : ""} mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>
+        <section id={id} ref={ref} className={`home-reveal ${inView ? "home-reveal-visible" : ""} snap-start mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>
             {children}
         </section>
     );
@@ -120,13 +120,13 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
     const related = (Object.keys(landingPath) as LandingKey[]).filter((k) => k !== page);
 
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="snap-page min-h-screen bg-black text-white">
             <Seo path={landingPath[page]} title={copy.seo.title} description={copy.seo.description} image={media.hero.src} jsonLd={jsonLd(page, lang)} />
             <SiteHeader />
 
             <main>
                 {/* ── Hero ── */}
-                <header className="relative isolate flex min-h-[calc(100svh-4rem)] phone-landscape:min-h-[calc(100svh-3rem)] items-end overflow-hidden">
+                <header className="relative isolate flex snap-start min-h-[calc(100svh-4rem)] phone-landscape:min-h-[calc(100svh-3rem)] items-end overflow-hidden">
                     <img
                         src={media.hero.src}
                         alt={media.hero.alt}
@@ -356,7 +356,7 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
                 </Section>
 
                 {/* ── Final CTA ── */}
-                <section className="bg-cat-orange text-black">
+                <section className="snap-start bg-cat-orange text-black">
                     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-16 sm:px-8 sm:py-24 lg:flex-row lg:items-end lg:justify-between">
                         <div>
                             <h2 className="max-w-3xl text-5xl font-black uppercase leading-[0.85] tracking-tighter sm:text-7xl">{copy.cta.heading}</h2>
@@ -374,7 +374,7 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
                 </section>
             </main>
 
-            <div className="mx-auto w-full max-w-6xl px-5 pt-12 sm:px-8">
+            <div className="snap-end mx-auto w-full max-w-6xl px-5 pt-12 sm:px-8">
                 <Footer />
             </div>
 
