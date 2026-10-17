@@ -1,6 +1,8 @@
 import { Instagram, Briefcase, Mail, Youtube } from "lucide-react";
 import { FaSpotify, FaApple, FaFacebook, FaTiktok } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useLanguage, useLocalePath } from "@/components/booking/LanguageContext";
+
 
 interface SocialIconProps {
   href: string;
@@ -59,6 +61,8 @@ const SocialIcon = ({
 };
 
 const Footer = () => {
+  const p = useLocalePath();
+
   const location = useLocation();
 
   // Pages requiring compact bottom padding
@@ -154,23 +158,17 @@ const Footer = () => {
         >
           <p>© 2026 Last Cats on Earth. All rights reserved.</p>
           <p className="flex items-center justify-center gap-2">
-            <Link
-              to="/impressum"
-              className="hover:text-cat-orange transition-colors underline underline-offset-4"
-            >
+            <Link to={p("/impressum")} className="hover:text-cat-orange transition-colors underline underline-offset-4">
               Impressum
             </Link>
             <span>•</span>
-            <Link
-              to="/privacy"
-              className="hover:text-cat-orange transition-colors underline underline-offset-4"
-            >
+            <Link to={p("/privacy")} className="hover:text-cat-orange transition-colors underline underline-offset-4">
               Privacy Policy
             </Link>
-          </p>
-        </div>
-      </footer>
+        </p>
     </div>
+      </footer >
+    </div >
   );
 };
 

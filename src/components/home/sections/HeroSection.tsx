@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 interface HeroSectionProps {
     copy: {
@@ -13,6 +14,8 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ copy }: HeroSectionProps) => {
     // Handler per rendere lo snap ipersensibile al minimo movimento sulla Hero
+    const p = useLocalePath();
+
     const handleTouchOrScrollEnd = (e: React.UIEvent<HTMLElement>) => {
         const target = e.currentTarget;
         // Se l'utente ha scrollato anche solo di pochi pixel ma non ha superato la metà,
@@ -61,7 +64,7 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
             <div className="relative mx-auto mb-[15vh] w-full max-w-6xl sm:mb-0">
                 <div className={`${homeSpacing.heroButton} flex flex-col gap-4 sm:flex-row sm:items-center`}>
                     <Link
-                        to="/booking#contact"
+                        to={p("/booking#contact")}
                         className="inline-flex w-fit items-center gap-2 rounded-full bg-cat-orange px-6 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-black transition hover:scale-105 hover:bg-white"
                     >
                         {copy.booking} <ArrowUpRight className="h-4 w-4" />

@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import bandLogo from "@/assets/only_cat.png";
+import { useLanguage, useLocalePath } from "@/components/booking/LanguageContext";
+
 
 interface BandHeaderProps {
   linkToHome?: boolean;
 }
 
 const BandHeader = ({ linkToHome = false }: BandHeaderProps) => {
+  const p = useLocalePath();
   const wrapper = (children: React.ReactNode) =>
     linkToHome ? (
-      <Link to="/" className="cursor-pointer">
+      <Link to={p("/")} className="cursor-pointer">
         {children}
       </Link>
     ) : (

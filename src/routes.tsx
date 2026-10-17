@@ -1,4 +1,5 @@
-import { Outlet, Navigate, type RouteObject } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import type { RouteRecord } from "vite-react-ssg";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,8 +14,18 @@ import ShowsPage from "./pages/ShowsPage";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import { Head } from "vite-react-ssg";
+
 
 const queryClient = new QueryClient();
+
+export const Redirect = ({ to }: { to: string }) => (
+    <Head>
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href={`https://lastcatsonearth.de${to}`} />
+        <meta httpEquiv="refresh" content={`0; url=${to}`} />
+    </Head>
+);
 
 const Shell = () => (
     <LanguageProvider>
@@ -28,7 +39,7 @@ const Shell = () => (
 );
 
 
-const children = (): RouteObject[] => [
+const children = (): RouteRecord[] => [
     { index: true, element: <Index /> },
     { path: "booking", element: <Booking /> },
     { path: "links", element: <LinksPage /> },
@@ -40,9 +51,22 @@ const children = (): RouteObject[] => [
     { path: "impressum", element: <Impressum /> },
     { path: "privacy", element: <PrivacyPolicy /> },
     { path: "*", element: <NotFound /> },
+    {
+        path: "shows/:slug",
+        element: <ShowsPage />,
+        getStaticPaths: () => [
+            "shows/zamanand-festival-munich-september-2026",
+            "shows/woodstock-party-renazzo-july-2026",
+            "shows/alte-utting-munich-june-2026",
+        ],
+    },
+    { path: "events", element: <Redirect to="/party-band-munich" /> },
+    { path: "party-and-event-band", element: <Redirect to="/party-band-munich" /> },
+    { path: "festivals", element: <Redirect to="/munich-rock-band" /> },
+    { path: "festival-and-venue-band", element: <Redirect to="/live-band-munich" /> },
 ];
 
-export const routes: RouteObject[] = [
+export const routes: RouteRecord[] = [
     { path: "/", element: <Shell />, children: children() },
     { path: "/en", element: <Shell />, children: children() },
 ];

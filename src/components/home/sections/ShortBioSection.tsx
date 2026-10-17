@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 interface ShortBioSectionProps {
     copy: {
@@ -33,6 +34,8 @@ export const ShortBioSection = ({
     membersRow2,
     Reveal,
 }: ShortBioSectionProps) => {
+    const p = useLocalePath();
+
     const [isLandscapePhone, setIsLandscapePhone] = useState(false);
     const [balls, setBalls] = useState<BallPhysics[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -149,7 +152,7 @@ export const ShortBioSection = ({
                         {copy.shortBody}
                     </p>
                     <Link
-                        to="/munich-rock-band"
+                        to={p("/munich-rock-band")}
                         className={`inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white ${isLandscapePhone ? "mt-1 text-[10px]" : "mt-2 sm:mt-4 text-[11px] sm:text-xs"
                             }`}
                     >
@@ -204,7 +207,7 @@ export const ShortBioSection = ({
                     <div className="flex w-2/5 justify-around gap-8">
                         {membersRow1.map(([name, role, photo]) => (
                             <Link
-                                to="/munich-rock-band"
+                                to={p("/munich-rock-band")}
                                 key={name}
                                 className="group flex flex-col items-center text-center"
                             >
@@ -226,7 +229,7 @@ export const ShortBioSection = ({
                     <div className="flex w-3/5 justify-around gap-5">
                         {membersRow2.map(([name, role, photo]) => (
                             <Link
-                                to="/munich-rock-band"
+                                to={p("/munich-rock-band")}
                                 key={name}
                                 className="group flex flex-col items-center text-center"
                             >

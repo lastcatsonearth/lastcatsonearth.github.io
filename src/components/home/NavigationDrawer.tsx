@@ -1,6 +1,10 @@
 import { ArrowUpRight, Mail, X, Instagram, Youtube } from "lucide-react";
 import { FaApple, FaFacebook, FaSpotify, FaTiktok } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useLocalePath } from "@/components/booking/LanguageContext";
+
+// in cima al componente
+
 
 interface NavigationDrawerProps {
     isNavigationOpen: boolean;
@@ -19,6 +23,8 @@ export const NavigationDrawer = ({
     setIsNavigationOpen,
     copy,
 }: NavigationDrawerProps) => {
+    const p = useLocalePath();
+
     return (
         <nav className="fixed inset-0 z-50 pointer-events-none" aria-label="Homepage navigation">
             <div
@@ -101,8 +107,9 @@ export const NavigationDrawer = ({
                         {copy.workLabel}
                     </p>
                     <div className="space-y-0">
+
                         <Link
-                            to="/booking#contact"
+                            to={p("/booking#contact")}
                             onClick={() => setIsNavigationOpen(false)}
                             className="flex items-center justify-between rounded-xl bg-cat-orange px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-white"
                         >

@@ -10,6 +10,12 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+export const useLocalePath = () => {
+    const { lang } = useLanguage();
+    return (path: string) =>
+        lang === "en" ? (path === "/" ? "/en" : `/en${path}`) : path;
+};
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     const { pathname } = useLocation();
     const navigate = useNavigate();

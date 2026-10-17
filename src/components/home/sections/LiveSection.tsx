@@ -3,6 +3,7 @@ import { ArrowUpRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
 import crowdPhoto from "@/assets/booking/photos/zamanand/6.webp";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 interface LiveSectionProps {
     copy: {
@@ -15,6 +16,8 @@ interface LiveSectionProps {
 }
 
 export const LiveSection = ({ copy, setActiveVideoUrl, Reveal }: LiveSectionProps) => {
+    const p = useLocalePath();
+
     const [isLandscapePhone, setIsLandscapePhone] = useState(false);
 
     // Rilevamento isolato dell'orientamento orizzontale su schermi bassi (iPhone landscape)
@@ -50,7 +53,7 @@ export const LiveSection = ({ copy, setActiveVideoUrl, Reveal }: LiveSectionProp
                                 </h2>
                             </div>
                             <Link
-                                to="/music"
+                                to={p("/music")}
                                 className={`inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-white/60 hover:text-cat-orange ${isLandscapePhone ? "mt-1 text-[9px]" : "mt-1 text-[10px] sm:mt-0"
                                     }`}
                             >

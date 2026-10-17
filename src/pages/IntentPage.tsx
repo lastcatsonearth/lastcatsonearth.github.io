@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import liveStagePhoto from "@/assets/booking/photos/zamanand/1.webp";
 import crowdPhoto from "@/assets/booking/photos/alte_utting/photo_2.webp";
 import festivalPhoto from "@/assets/booking/photos/zamanand/6.webp";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 type IntentKey = "munich" | "live" | "party" | "events" | "festivals" | "festival";
 
@@ -209,6 +210,8 @@ const FlyingImage = ({
 };
 
 const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
+  const p = useLocalePath();
+
   const { lang, setLang } = useLanguage();
   const content = intent === "munich" && lang === "de"
     ? {
@@ -325,7 +328,7 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
               </h1>
               <p className={`${intentSpacing.heroIntro} text-sm leading-7 ${isMunich ? "max-w-2xl text-white/75 sm:text-base" : "mx-auto max-w-xl text-white/60"}`}>{content.intro}</p>
               <Link
-                to="/booking#contact"
+                to={p("/booking#contact")}
                 className={`${intentSpacing.heroBooking} inline-flex items-center gap-2 rounded-full bg-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-black transition hover:bg-white`}
               >
                 {lang === "de" ? "Booking starten" : "Go to booking"} <ArrowUpRight className="h-4 w-4" />
@@ -373,7 +376,7 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
                 </h2>
                 <p className={`${intentSpacing.sectionBody} text-sm leading-7 text-white/60`}>{content.sectionText}</p>
                 <Link
-                  to="/booking#contact"
+                  to={p("/booking#contact")}
                   className={`${intentSpacing.sectionLink} inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:text-white`}
                 >
                   See live videos and booking details <ArrowUpRight className="h-4 w-4" />

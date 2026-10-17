@@ -7,6 +7,7 @@ import zamanandPhoto1 from "@/assets/booking/photos/zamanand/1.webp";
 import zamanandPhoto6 from "@/assets/booking/photos/zamanand/6.webp";
 import renazzoPhoto1 from "@/assets/booking/photos/renazzo/1.webp";
 import uttingPhoto2 from "@/assets/booking/photos/alte_utting/photo_2.webp";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 const shows = [
   { slug: "zamanand-festival-munich-september-2026", title: "Zamanand Festival", location: "Munich, Germany", date: "September 2026", image: zamanandPhoto1, secondImage: zamanandPhoto6, text: "A high-energy festival set in Munich, moving between hard rock, funk, alternative hooks and direct crowd work." },
@@ -15,6 +16,8 @@ const shows = [
 ];
 
 const ShowsPage = () => {
+  const p = useLocalePath();
+
   const { slug } = useParams();
   const show = shows.find((entry) => entry.slug === slug);
   const isDetail = Boolean(slug);
@@ -45,7 +48,7 @@ const ShowsPage = () => {
               <img src={show.image} alt={`${show.title} live performance`} className="intent-image-visible h-72 w-full rounded-2xl object-cover" />
               <p className="mt-6 text-justify text-sm leading-7 text-white/70">{show.text}</p>
               <img src={show.secondImage} alt={`${show.title} audience and stage`} className="intent-image-visible mt-8 h-64 w-full rounded-2xl object-cover" />
-              <Link to="/booking#contact" className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">Book the band <ArrowUpRight className="h-4 w-4" /></Link>
+              <Link to={p("/booking#contact")} className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">Book the band <ArrowUpRight className="h-4 w-4" /></Link>
             </section>
           ) : (
             <div className="space-y-5 py-10">

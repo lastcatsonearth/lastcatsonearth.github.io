@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AudioPlayer from "@/components/booking/AudioPlayer";
 import { homeSpacing } from "@/config/layoutSpacing";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 interface MusicSectionProps {
     copy: {
@@ -16,6 +17,7 @@ interface MusicSectionProps {
 
 export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
     const [isLandscapePhone, setIsLandscapePhone] = useState(false);
+    const p = useLocalePath();
 
     useEffect(() => {
         const checkLandscape = () => {
@@ -56,10 +58,7 @@ export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
                         >
                             {copy.release}
                         </h2>
-                        {/* Mobile: short, punchy */}
-                        <p className="mt-3 text-base font-medium leading-snug text-white/80 sm:hidden">
-                            {copy.releaseBodyShort}
-                        </p>
+
 
                         {/* sm+: full text */}
                         <p
@@ -73,7 +72,7 @@ export const MusicSection = ({ copy, Reveal }: MusicSectionProps) => {
 
                         {/* Hidden on mobile portrait, shown on desktop & optionally landscape */}
                         <Link
-                            to="/booking#contact"
+                            to={p("/booking#contact")}
                             className={`items-center gap-2 rounded-full border border-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black ${isLandscapePhone ? "hidden" : "mt-6 hidden sm:inline-flex"
                                 }`}
                         >

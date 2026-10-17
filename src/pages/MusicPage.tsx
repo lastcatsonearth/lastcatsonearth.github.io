@@ -6,8 +6,11 @@ import Footer from "@/components/Footer";
 import AudioPlayer from "@/components/booking/AudioPlayer";
 import VideoCarousel from "@/components/booking/VideoCarousel";
 import { LanguageProvider } from "@/components/booking/LanguageContext";
+import { useLocalePath } from "@/components/booking/LanguageContext";
 
 const MusicPage = () => {
+  const p = useLocalePath();
+
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
   useEffect(() => {
     const previousTitle = document.title;
@@ -27,20 +30,20 @@ const MusicPage = () => {
         <main className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm sm:p-6">
           <BandHeader linkToHome />
           <article className="mx-auto max-w-2xl px-2 pb-10">
-          <header className="border-b border-white/10 py-10 text-center">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-cat-orange">Original music · live videos</p>
-            <h1 className="mt-4 text-3xl font-bold tracking-wide sm:text-5xl">Hear the Cats in motion.</h1>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60">
-              Listen to Last Cats on Earth releases, watch live performances and discover the Munich rock band behind the show.
-            </p>
-          </header>
-          <AudioPlayer />
-          <VideoCarousel onVideoSelect={setActiveVideoUrl} />
-          <div className="border-t border-white/10 pt-8 text-center">
-            <Link to="/booking#contact" className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">
-              Book the live show <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
+            <header className="border-b border-white/10 py-10 text-center">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-cat-orange">Original music · live videos</p>
+              <h1 className="mt-4 text-3xl font-bold tracking-wide sm:text-5xl">Hear the Cats in motion.</h1>
+              <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60">
+                Listen to Last Cats on Earth releases, watch live performances and discover the Munich rock band behind the show.
+              </p>
+            </header>
+            <AudioPlayer />
+            <VideoCarousel onVideoSelect={setActiveVideoUrl} />
+            <div className="border-t border-white/10 pt-8 text-center">
+              <Link to={p("/booking#contact")} className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white">
+                Book the live show <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
           </article>
           <Footer />
           {activeVideoUrl && (
