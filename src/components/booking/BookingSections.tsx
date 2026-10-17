@@ -4,7 +4,7 @@ import PhotoGallery from "./PhotoGallery";
 import VideoCarousel from "./VideoCarousel";
 import VideoMarquee from "./VideoMarquee";
 import Footer from "@/components/Footer";
-import starsBg from "@/assets/stars_background.png";
+import starsBg from "@/assets/stars_background.webp";
 import { galleryShows } from "./bookingData";
 import BookingHeader from "./BookingHeader";
 

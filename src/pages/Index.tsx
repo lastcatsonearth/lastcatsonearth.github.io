@@ -9,7 +9,7 @@ import { ShortBioSection } from "@/components/home/sections/ShortBioSection";
 import { LiveSection } from "@/components/home/sections/LiveSection";
 import { MusicSection } from "@/components/home/sections/MusicSection";
 import { FinalCtaSection } from "@/components/home/sections/FinalCtaSection";
-import starsBg from "@/assets/stars_background.png";
+import starsBg from "@/assets/stars_background.webp";
 import { Seo } from "@/Seo";
 
 const Reveal = ({ children }: { children: React.ReactNode }) => {
@@ -91,24 +91,24 @@ const HomeContent = () => {
 
   const membersRow1: [string, string, string][] = lang === "de"
     ? [
-      ["Tony", "Gesang", "/images/members/tony.jpg"],
-      ["Alessandro", "Gitarre", "/images/members/alessandro.jpg"],
+      ["Tony", "Gesang", "/images/members/tony.webp"],
+      ["Alessandro", "Gitarre", "/images/members/alessandro.webp"],
     ]
     : [
-      ["Tony", "Vocals", "/images/members/tony.jpg"],
-      ["Alessandro", "Guitar", "/images/members/alessandro.jpg"],
+      ["Tony", "Vocals", "/images/members/tony.webp"],
+      ["Alessandro", "Guitar", "/images/members/alessandro.webp"],
     ];
 
   const membersRow2: [string, string, string][] = lang === "de"
     ? [
-      ["Chris", "Gitarre", "/images/members/chris.jpg"],
-      ["Tim", "Bass", "/images/members/tim.jpg"],
-      ["Tom", "Schlagzeug", "/images/members/tom.jpg"],
+      ["Chris", "Gitarre", "/images/members/chris.webp"],
+      ["Tim", "Bass", "/images/members/tim.webp"],
+      ["Tom", "Schlagzeug", "/images/members/tom.webp"],
     ]
     : [
-      ["Chris", "Guitar", "/images/members/chris.jpg"],
-      ["Tim", "Bass", "/images/members/tim.jpg"],
-      ["Tom", "Drums", "/images/members/tom.jpg"],
+      ["Chris", "Guitar", "/images/members/chris.webp"],
+      ["Tim", "Bass", "/images/members/tim.webp"],
+      ["Tom", "Drums", "/images/members/tom.webp"],
     ];
 
   const sectionsConfig = [

@@ -9,7 +9,7 @@ export interface LiveVideo {
     thumbnail: string;
 }
 
-const yt = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+const yt = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.webp`;
 
 const raw = [
     { id: "dWhzsrdGyko", title: "Full Show", venue: "Renazzo, Italy" },

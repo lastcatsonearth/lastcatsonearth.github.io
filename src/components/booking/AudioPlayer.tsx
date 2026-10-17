@@ -3,9 +3,9 @@ import { FaSpotify, FaPlay, FaPause, FaChevronLeft, FaChevronRight } from "react
 import { useLanguage } from "@/components/booking/LanguageContext";
 
 import flashbackAudio from "@/assets/booking/music/flashback/flashback.mp3";
-import flashbackCover from "@/assets/booking/music/flashback/flashback.jpg";
+import flashbackCover from "@/assets/booking/music/flashback/flashback.webp";
 import neverStopAudio from "@/assets/booking/music/never_stop/never_stop.mp3";
-import neverStopCover from "@/assets/booking/music/never_stop/never_stop.png";
+import neverStopCover from "@/assets/booking/music/never_stop/never_stop.webp";
 
 interface Track {
     src: string;

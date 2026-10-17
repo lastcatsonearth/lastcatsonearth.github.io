@@ -3,9 +3,9 @@ import { useState } from "react";
 import BandHeader from "@/components/BandHeader";
 import Footer from "@/components/Footer";
 
-import shirtImage1 from "@/assets/merch_images/black_tee/back.png";
-import shirtImage2 from "@/assets/merch_images/black_tee/front_full.png";
-import shirtImage3 from "@/assets/merch_images/black_tee/back_full.png";
+import shirtImage1 from "@/assets/merch_images/black_tee/back.webp";
+import shirtImage2 from "@/assets/merch_images/black_tee/front_full.webp";
+import shirtImage3 from "@/assets/merch_images/black_tee/back_full.webp";
 
 const images = [shirtImage1, shirtImage2, shirtImage3];
 const SIZES = ["S", "M", "L", "XL"] as const;

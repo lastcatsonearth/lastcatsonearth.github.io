@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import bandLogo from "@/assets/only_cat.png";
+import bandLogo from "@/assets/only_cat.webp";
 import { useLanguage, useLocalePath } from "@/components/booking/LanguageContext";
 
 

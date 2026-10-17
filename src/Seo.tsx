@@ -22,7 +22,7 @@ export const Seo = ({ title, description, path = "/" }: { title: string; descrip
             <meta property="og:url" content={url} />
             <meta property="og:type" content="website" />
             <meta property="og:locale" content={lang === "de" ? "de_DE" : "en_DE"} />
-            <meta property="og:image" content={`${BASE}/bang_logo.png`} />
+            <meta property="og:image" content={`${BASE}/bang_logo.webp`} />
         </Head>
     );
 };
