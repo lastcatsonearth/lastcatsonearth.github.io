@@ -61,7 +61,7 @@ export const MusicSection = ({ copy }: MusicSectionProps) => {
 
                         {/* Hidden on mobile portrait, shown on desktop & optionally landscape */}
                         <Link
-                            to={p("/booking#contact")}
+                            to={p("/contact")}
                             className={`items-center gap-2 rounded-full border border-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black ${isLandscapePhone ? "hidden" : "mt-6 hidden sm:inline-flex"
                                 }`}
                         >

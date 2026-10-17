@@ -1,0 +1,20 @@
+# Cloudflare Pages response headers. Docs: https://developers.cloudflare.com/pages/configuration/headers/
+
+# Security headers for every page
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+# Vite puts a content hash in every file name under /assets, so they can be cached "forever".
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Member photos, favicons, social image: cache for a week.
+/images/*
+  Cache-Control: public, max-age=604800
+/og-image.jpg
+  Cache-Control: public, max-age=604800
+/favicon.*
+  Cache-Control: public, max-age=604800

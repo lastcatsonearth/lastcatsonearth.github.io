@@ -50,7 +50,7 @@ export const FinalCtaSection = ({ copy }: FinalCtaSectionProps) => {
                     </h2>
                 </div>
                 <Link
-                    to={p("/booking#contact")}
+                    to={p("/booking")}
                     className={`inline-flex shrink-0 items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-black ${isLandscapePhone ? "w-auto" : "w-fit px-6 py-3"
                         }`}
                 >

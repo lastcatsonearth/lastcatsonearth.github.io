@@ -46,28 +46,6 @@
   }
 }
 
-/*
- * Soft scroll-snapping for pages that scroll the whole document.
- * Put .snap-page (page has the sticky SiteHeader) or .snap-page-plain (no sticky header)
- * on the page root, and `snap-start` on the blocks that should snap.
- * "proximity" = snaps only when you stop near a block, so long blocks stay freely scrollable.
- * (Home and EPK snap inside their own scroll container instead – see Index.tsx / BookingSections.tsx.)
- */
-html:has(.snap-page),
-html:has(.snap-page-plain) {
-  scroll-snap-type: y proximity;
-}
-
-html:has(.snap-page) {
-  scroll-padding-top: 4rem; /* height of SiteHeader */
-}
-
-@media (orientation: landscape) and (max-height: 550px) {
-  html:has(.snap-page) {
-    scroll-padding-top: 3rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .home-reveal {
     opacity: 1;

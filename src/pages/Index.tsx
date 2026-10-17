@@ -131,7 +131,7 @@ const HomeContent = () => {
 
       {/* Scrollable container taking the remaining height (100vh - h-16) */}
       <main ref={containerRef} id="top"
-        className="h-[calc(100dvh-4rem)] phone-landscape:h-[calc(100dvh-3rem)] phone-landscape:snap-proximity w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"      >
+        className="h-[calc(100dvh-4rem)] phone-landscape:h-[calc(100dvh-3rem)] phone-landscape:snap-none w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"      >
         {/* Top Section - No stars */}
         <HeroSection copy={copy} />
 

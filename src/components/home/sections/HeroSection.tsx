@@ -64,7 +64,7 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
             <div className="relative mx-auto mb-[15vh] w-full max-w-6xl sm:mb-0">
                 <div className={`${homeSpacing.heroButton} flex flex-col gap-4 sm:flex-row sm:items-center`}>
                     <Link
-                        to={p("/booking#contact")}
+                        to={p("/contact")}
                         className="inline-flex w-fit items-center gap-2 rounded-full bg-cat-orange px-6 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-black transition hover:scale-105 hover:bg-white"
                     >
                         {copy.booking} <ArrowUpRight className="h-4 w-4" />

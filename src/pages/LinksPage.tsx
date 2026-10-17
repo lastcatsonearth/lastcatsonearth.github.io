@@ -37,7 +37,7 @@ const copy = {
     description: "All links to Last Cats on Earth, the Munich rock band: next show, latest release, music, videos and booking.",
     kicker: "Alternative rock · Munich",
     book: "Book the band",
-    bookSub: "Press kit and booking inquiry",
+    bookSub: "Send a booking request in one minute",
     nextShow: "Next show",
     latestRelease: "Latest release",
     listenNow: "Listen on Spotify",
@@ -53,7 +53,7 @@ const copy = {
     description: "Alle Links zu Last Cats on Earth, der Münchner Rockband: nächste Show, neuester Release, Musik, Videos und Booking.",
     kicker: "Alternative Rock · München",
     book: "Die Band buchen",
-    bookSub: "Pressekit und Booking-Anfrage",
+    bookSub: "Booking-Anfrage in einer Minute",
     nextShow: "Nächste Show",
     latestRelease: "Neuester Release",
     listenNow: "Auf Spotify hören",
@@ -111,7 +111,7 @@ const LinksPage = () => {
   const t = copy[lang];
 
   return (
-    <div className="snap-page-plain snap-end relative min-h-screen bg-black text-white">
+    <div className="relative min-h-screen bg-black text-white">
       <Seo path="/links" title={t.title} description={t.description} noindex />
 
       <div
@@ -121,7 +121,7 @@ const LinksPage = () => {
       />
 
       <main className="relative mx-auto w-full max-w-md px-4 pb-8 pt-4">
-        <header className="snap-start scroll-mt-4 relative isolate flex min-h-[300px] items-end overflow-hidden rounded-3xl border border-white/10 p-6">
+        <header className="relative isolate flex min-h-[300px] items-end overflow-hidden rounded-3xl border border-white/10 p-6">
           <img
             src={heroPhoto}
             alt="Last Cats on Earth performing live in Munich"
@@ -142,7 +142,7 @@ const LinksPage = () => {
         </header>
 
         <Link
-          to={p("/booking#contact")}
+          to={p("/contact")}
           className="group mt-3 flex items-center justify-between rounded-2xl bg-cat-orange px-5 py-4 text-black transition hover:bg-white"
         >
           <span>

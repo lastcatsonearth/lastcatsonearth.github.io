@@ -28,7 +28,7 @@ export const TopBar = ({ scrollToSection }: { scrollToSection: (id: string) => v
 
             <div className="ml-auto flex items-center gap-3">
                 <Link
-                    to={p("/booking#contact")}
+                    to={p("/booking")}
                     className="inline-flex items-center gap-1 rounded-full bg-cat-orange px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider text-black transition hover:bg-white"
                 >
                     EPK <ArrowUpRight className="h-3.5 w-3.5" />

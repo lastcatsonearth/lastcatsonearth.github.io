@@ -12,6 +12,7 @@ import ShowsPage from "./pages/ShowsPage";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import ContactPage from "./pages/ContactPage";
 
 // Every page exists twice: German at "/…" and English at "/en/…".
 // The language is read from the URL in LanguageProvider.
@@ -26,6 +27,7 @@ const Shell = () => (
 const pages = (): RouteRecord[] => [
     { index: true, element: <Index /> },
     { path: "booking", element: <Booking /> },
+    { path: "contact", element: <ContactPage /> },
     { path: "links", element: <LinksPage /> },
     { path: "merch", element: <MerchPage /> },
     // SEO landing pages (/munich-rock-band, /cover-band-munich, …) – content in content/landingPages.ts

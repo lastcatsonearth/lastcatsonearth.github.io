@@ -29,7 +29,7 @@ const SiteHeader = () => {
                     <Link to={p("/booking#releases")} className="hidden text-[10px] font-black uppercase tracking-[0.2em] text-white/60 transition hover:text-white sm:inline">{t.music}</Link>
                     <LangToggle />
                     <Link
-                        to={p("/booking#contact")}
+                        to={p("/contact")}
                         className="inline-flex items-center gap-1 rounded-full bg-cat-orange px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider text-black transition hover:bg-white"
                     >
                         {t.book} <ArrowUpRight className="h-3.5 w-3.5" />

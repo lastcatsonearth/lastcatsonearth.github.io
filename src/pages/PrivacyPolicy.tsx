@@ -110,6 +110,24 @@ const PrivacyPolicy = () => {
                         </p>
                     </section>
 
+                    {/* 4b. Contact form */}
+                    <section className="space-y-2 border-b border-border/60 pb-6">
+                        <h2 className="text-base font-semibold text-foreground uppercase tracking-wider text-xs">
+                            4a. Kontakt- und Bestellformulare (Formspree)
+                        </h2>
+                        <p className="text-xs text-foreground/70">
+                            Für das Booking-/Kontaktformular und die Merch-Reservierung nutzen wir den Dienst Formspree
+                            (Formspree, Inc., USA). Die eingegebenen Daten (z. B. Name, E-Mail-Adresse, Angaben zum Event,
+                            Nachricht) werden an Formspree übermittelt und uns per E-Mail weitergeleitet, ausschließlich zur
+                            Bearbeitung deiner Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags)
+                            bzw. Art. 6 Abs. 1 lit. f DSGVO (Beantwortung von Anfragen). Die Übermittlung in die USA erfolgt auf
+                            Grundlage der Standardvertragsklauseln der EU-Kommission. Weitere Informationen:{" "}
+                            <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                formspree.io/legal/privacy-policy
+                            </a>.
+                        </p>
+                    </section>
+
                     {/* 5. Rights */}
                     <section className="space-y-2 pt-2">
                         <h2 className="text-base font-semibold text-foreground uppercase tracking-wider text-xs">

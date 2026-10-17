@@ -1,7 +1,9 @@
 import type { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { externalProps, socialsWithMail } from "@/config/site";
+import { EMAIL, externalProps, socialsWithMail } from "@/config/site";
 import { landingLabel, landingPath, type LandingKey } from "@/content/landingPages";
+
+const landingKeys = Object.keys(landingPath) as LandingKey[];
 import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 
 const labels = {
@@ -55,11 +57,32 @@ const Footer = ({ compact = false }: { compact?: boolean }) => {
                 ))}
             </div>
 
-            {/* Internal links to the landing pages – helps people and search engines find them */}
-            <nav className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground" aria-label="Booking">
-                {(Object.keys(landingPath) as LandingKey[]).map((key) => (
-                    <Link key={key} to={p(landingPath[key])} className="transition-colors hover:text-cat-orange">{landingLabel[key][lang]}</Link>
-                ))}
+            <p className="mt-1 text-center">
+                <a href={`mailto:${EMAIL}`} className="text-sm font-bold tracking-wide text-cat-orange underline-offset-4 hover:underline">{EMAIL}</a>
+            </p>
+
+            {/* Internal links to the landing pages, as a scrolling band (pauses on hover).
+                The list is repeated 4× so the loop is seamless; only the first copy is focusable. */}
+            <nav
+                aria-label="Booking"
+                className="group mt-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+            >
+                <ul className="flex w-max animate-marquee-slow group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+                    {[0, 1, 2, 3].flatMap((copyIndex) =>
+                        landingKeys.map((key) => (
+                            <li key={`${copyIndex}-${key}`} aria-hidden={copyIndex > 0} className="flex items-center whitespace-nowrap">
+                                <Link
+                                    to={p(landingPath[key])}
+                                    tabIndex={copyIndex > 0 ? -1 : undefined}
+                                    className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground transition-colors hover:text-cat-orange"
+                                >
+                                    {landingLabel[key][lang]}
+                                </Link>
+                                <span className="mx-4 text-[10px] text-cat-orange" aria-hidden="true">✶</span>
+                            </li>
+                        )),
+                    )}
+                </ul>
             </nav>
 
             <div className={`mt-3 space-y-1 border-t border-border pt-4 text-center text-xs text-muted-foreground ${compact ? "" : "pb-4"}`}>

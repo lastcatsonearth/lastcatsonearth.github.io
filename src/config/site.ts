@@ -7,6 +7,8 @@ import { FaApple, FaFacebook, FaSpotify, FaTiktok } from "react-icons/fa";
 export const SITE_URL = "https://lastcatsonearth.de";
 export const SITE_NAME = "Last Cats on Earth";
 export const EMAIL = "contact@lastcatsonearth.de";
+/** Formspree form for booking/contact requests (merch reservations use their own form in MerchPage.tsx). */
+export const BOOKING_FORM_ENDPOINT = "https://formspree.io/f/xvkzlyrd";
 /** Default social preview image (1200×630, lives in /public). */
 export const OG_IMAGE = "/og-image.jpg";
 

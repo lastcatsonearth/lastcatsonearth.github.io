@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import BookingLoadingOverlay from "@/components/booking/BookingLoadingOverlay";
 import BookingSections from "@/components/booking/BookingSections";
@@ -11,6 +12,13 @@ const Booking = () => {
     const { lang } = useLanguage();
     const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
     const [isReady, setIsReady] = useState(false);
+    const { hash } = useLocation();
+
+    // Jump to the section in the URL (/booking#videos) once the page is ready.
+    useEffect(() => {
+        if (!isReady || !hash) return;
+        document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ behavior: "instant" as ScrollBehavior });
+    }, [isReady, hash]);
 
     useEffect(() => {
         let isMounted = true;

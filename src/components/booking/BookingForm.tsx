@@ -1,40 +1,27 @@
-import { FormEvent, useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { bookingSpacing } from "@/config/layoutSpacing";
+import ContactForm from "@/components/ContactForm";
+import { EMAIL } from "@/config/site";
 
 const translations = {
     en: {
         category: "Get in touch",
         headline: "BOOK THE CATS",
-        subheading: "For bookings and inquiries, contact us directly.",
-        emailSubject: "Message from the website",
+        subheading: "Tell us about your event – the request goes straight to our inbox.",
     },
     de: {
         category: "Kontakt aufnehmen",
         headline: "DIE CATS BUCHEN",
-        subheading: "Für Buchungen und Anfragen wende dich direkt an uns.",
-        emailSubject: "Nachrichten von der Website",
+        subheading: "Erzählt uns von eurem Event – die Anfrage landet direkt bei uns.",
     }
 };
 
 const BookingForm = () => {
     const { lang } = useLanguage();
     const t = translations[lang];
-    const [sent, setSent] = useState(false);
 
     const handleInstagramClick = () => {
         window.open("https://instagram.com/lastcatsonearth", "_blank");
-    };
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const subjectText = String(data.get("subject") || "").trim();
-        const message = String(data.get("message") || "").trim();
-        const subject = encodeURIComponent(subjectText || t.emailSubject);
-        const body = encodeURIComponent(message);
-        setSent(true);
-        window.location.href = `mailto:contact@lastcatsonearth.de?subject=${subject}&body=${body}`;
     };
 
     return (
@@ -47,63 +34,24 @@ const BookingForm = () => {
                 {t.headline}
             </h3>
 
-            <p className={`text-xs sm:text-sm text-white/50 tracking-wide mb-3 sm:mb-5 ${bookingSpacing.formIntro}`}>
+            <p className={`text-xs sm:text-sm text-white/50 tracking-wide mb-4`}>
                 {t.subheading}
             </p>
 
-            <form onSubmit={handleSubmit} className={`mx-auto max-w-xl text-left space-y-2.5 sm:space-y-4 ${bookingSpacing.formFields}`}>
-                <label className="block space-y-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
-                    Email address
-                    <input
-                        name="email"
-                        type="email"
-                        required
-                        autoComplete="email"
-                        placeholder="you@example.com"
-                        className="mt-0.5 sm:mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange"
-                    />
-                </label>
-                <label className="block space-y-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
-                    Subject
-                    <input
-                        name="subject"
-                        required
-                        placeholder="Your subject"
-                        className="mt-0.5 sm:mt-1 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange"
-                    />
-                </label>
-                <label className="block space-y-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
-                    Message
-                    <textarea
-                        name="message"
-                        required
-                        rows={7}
-                        placeholder="Write your message here."
-                        className="mt-0.5 sm:mt-1 w-full resize-none rounded-lg border border-white/10 bg-black/30 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm font-normal normal-case tracking-normal text-white outline-none placeholder:text-white/35 focus:border-cat-orange sm:rows-5"
-                    />
-                </label>
-                <button type="submit" className="w-full rounded-lg bg-cat-orange px-5 py-2.5 sm:px-6 sm:py-3 text-xs font-bold uppercase tracking-wider text-black transition hover:bg-white">
-                    {sent ? "Opening your email app..." : "Send booking inquiry"}
-                </button>
-            </form>
+            <ContactForm />
 
-            <p className="mt-2.5 sm:mt-4 text-xs text-white/40">
-                Prefer Instagram? <button type="button" onClick={handleInstagramClick} className="text-cat-orange hover:text-white">Send us a DM.</button>
-            </p>
-
-            <div className="mt-3 sm:mt-6 flex justify-center">
-                <a
-                    href="https://www.gigheaven.com/members/lastcatsonearth.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+            {/* Direct channels in one compact row */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs">
+                <a href={`mailto:${EMAIL}`} className="font-bold text-white/80 underline underline-offset-4 hover:text-cat-orange">{EMAIL}</a>
+                <button type="button" onClick={handleInstagramClick} className="font-bold text-cat-orange hover:text-white">Instagram DM</button>
+                <a href="https://www.gigheaven.com/members/lastcatsonearth.html" target="_blank" rel="noopener noreferrer">
                     <img
                         src="https://www.gigheaven.com/badge/orange.svg?l=37462"
-                        height="64"
-                        width="64"
+                        height="40"
+                        width="40"
                         alt="Last Cats on Earth - Gig Heaven"
                         referrerPolicy="unsafe-url"
-                        className="h-16 w-16 sm:h-20 sm:w-20 transition-transform hover:scale-105"
+                        className="h-10 w-10 transition-transform hover:scale-105"
                     />
                 </a>
             </div>
