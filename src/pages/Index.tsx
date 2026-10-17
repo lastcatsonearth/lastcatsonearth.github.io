@@ -10,6 +10,7 @@ import { LiveSection } from "@/components/home/sections/LiveSection";
 import { MusicSection } from "@/components/home/sections/MusicSection";
 import { FinalCtaSection } from "@/components/home/sections/FinalCtaSection";
 import starsBg from "@/assets/stars_background.png";
+import { Seo } from "@/Seo";
 
 const Reveal = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -118,20 +119,13 @@ const HomeContent = () => {
     { id: "final-cta", label: "Contact & Footer" },
   ];
 
-  useEffect(() => {
-    const previousTitle = document.title;
-    const description = document.querySelector('meta[name="description"]');
-    const previousDescription = description?.getAttribute("content");
-    document.title = "Munich Funk Rock & Alternative Rock Band | Last Cats on Earth";
-    description?.setAttribute(
-      "content",
-      "Last Cats on Earth are a Munich funk rock and alternative rock band for live shows, festivals, venues, parties and events."
-    );
-    return () => {
-      document.title = previousTitle;
-      if (previousDescription) description?.setAttribute("content", previousDescription);
-    };
-  }, []);
+  <Seo
+    path="/"
+    title={lang === "de" ? "Rockband München | Last Cats on Earth – Funk & Alternative Rock" : "Munich Funk Rock & Alternative Rock Band | Last Cats on Earth"}
+    description={lang === "de"
+      ? "Last Cats on Earth sind eine Münchner Funk- und Alternative-Rockband für Konzerte, Festivals, Firmenfeiern und Events."
+      : "Last Cats on Earth are a Munich funk rock and alternative rock band for live shows, festivals, venues, parties and events."}
+  />
 
   useEffect(() => {
     const container = containerRef.current;
@@ -229,10 +223,5 @@ const HomeContent = () => {
   );
 };
 
-const Index = () => (
-  <LanguageProvider>
-    <HomeContent />
-  </LanguageProvider>
-);
-
+const Index = HomeContent;
 export default Index;

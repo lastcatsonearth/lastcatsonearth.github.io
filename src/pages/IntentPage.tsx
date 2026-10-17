@@ -417,10 +417,5 @@ const IntentPageContent = ({ intent }: { intent: IntentKey }) => {
   );
 };
 
-const IntentPage = ({ intent }: { intent: IntentKey }) => (
-  <LanguageProvider>
-    <IntentPageContent intent={intent} />
-  </LanguageProvider>
-);
-
+const IntentPage = ({ intent }: { intent: IntentKey }) => <IntentPageContent intent={intent} />;
 export default IntentPage;

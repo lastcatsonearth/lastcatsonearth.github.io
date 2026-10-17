@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-type Lang = "en" | "de";
+export type Lang = "en" | "de";
 
 interface LanguageContextType {
     lang: Lang;
@@ -10,13 +11,18 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-    const [lang, setLang] = useState<Lang>("en");
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const lang: Lang = pathname === "/en" || pathname.startsWith("/en/") ? "en" : "de";
 
-    return (
-        <LanguageContext.Provider value={{ lang, setLang }}>
-            {children}
-        </LanguageContext.Provider>
-    );
+    const setLang = useCallback((next: Lang) => {
+        if (next === lang) return;
+        const base = pathname.replace(/^\/en(?=\/|$)/, "") || "/";
+        navigate(next === "en" ? (base === "/" ? "/en" : `/en${base}`) : base);
+    }, [lang, pathname, navigate]);
+
+    const value = useMemo(() => ({ lang, setLang }), [lang, setLang]);
+    return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };
 
 export const useLanguage = () => {
