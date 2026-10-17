@@ -6,7 +6,8 @@ import Index from "./pages/Index";
 import Booking from "./pages/Booking";
 import LinksPage from "./pages/LinksPage";
 import MerchPage from "./pages/MerchPage";
-import IntentPage from "./pages/IntentPage";
+import LandingPage from "./pages/LandingPage";
+import { landingPath, type LandingKey } from "@/content/landingPages";
 import ShowsPage from "./pages/ShowsPage";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -27,9 +28,11 @@ const pages = (): RouteRecord[] => [
     { path: "booking", element: <Booking /> },
     { path: "links", element: <LinksPage /> },
     { path: "merch", element: <MerchPage /> },
-    { path: "munich-rock-band", element: <IntentPage intent="munich" /> },
-    { path: "live-band-munich", element: <IntentPage intent="live" /> },
-    { path: "party-band-munich", element: <IntentPage intent="party" /> },
+    // SEO landing pages (/munich-rock-band, /cover-band-munich, …) – content in content/landingPages.ts
+    ...(Object.keys(landingPath) as LandingKey[]).map((key) => ({
+        path: landingPath[key].slice(1),
+        element: <LandingPage page={key} />,
+    })),
     { path: "shows", element: <ShowsPage /> },
     {
         path: "shows/:slug",

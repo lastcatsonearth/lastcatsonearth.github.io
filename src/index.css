@@ -44,37 +44,10 @@
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* Intent pages: photos fly in from the side (see FlyingImage in pages/IntentPage.tsx) */
-  .intent-image {
-    @apply relative min-h-[230px] overflow-hidden rounded-2xl border border-white/10 bg-black/30;
-    opacity: 0;
-    transition: opacity 700ms ease, transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .intent-image::after {
-    content: "";
-    @apply absolute inset-0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 55%);
-  }
-
-  .intent-image-left {
-    transform: translateX(-42px) rotate(-2deg);
-  }
-
-  .intent-image-right {
-    transform: translateX(42px) rotate(2deg);
-  }
-
-  .intent-image-visible {
-    opacity: 1;
-    transform: translateX(0) rotate(0);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-reveal,
-  .intent-image {
+  .home-reveal {
     opacity: 1;
     transform: none;
     transition: none;

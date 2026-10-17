@@ -1,6 +1,7 @@
 import type { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { externalProps, socialsWithMail } from "@/config/site";
+import { landingLabel, landingPath, type LandingKey } from "@/content/landingPages";
 import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 
 const labels = {
@@ -54,7 +55,14 @@ const Footer = ({ compact = false }: { compact?: boolean }) => {
                 ))}
             </div>
 
-            <div className={`mt-1 space-y-1 border-t border-border pt-4 text-center text-xs text-muted-foreground ${compact ? "" : "pb-4"}`}>
+            {/* Internal links to the landing pages – helps people and search engines find them */}
+            <nav className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground" aria-label="Booking">
+                {(Object.keys(landingPath) as LandingKey[]).map((key) => (
+                    <Link key={key} to={p(landingPath[key])} className="transition-colors hover:text-cat-orange">{landingLabel[key][lang]}</Link>
+                ))}
+            </nav>
+
+            <div className={`mt-3 space-y-1 border-t border-border pt-4 text-center text-xs text-muted-foreground ${compact ? "" : "pb-4"}`}>
                 <p>© {new Date().getFullYear()} Last Cats on Earth. {t.rights}</p>
                 <p className="flex items-center justify-center gap-2">
                     <Link to={p("/impressum")} className="underline underline-offset-4 transition-colors hover:text-cat-orange">Impressum</Link>
