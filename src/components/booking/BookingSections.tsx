@@ -32,10 +32,9 @@ const BookingSections = ({ onVideoSelect }: { onVideoSelect: (url: string | null
                     </div>
                 </section>
 
-                <section id="photos" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-16 sm:pt-20 touch-pan-y">
-                    <div className="w-full max-w-6xl mx-auto py-4 sm:py-10">
-                        <PhotoGallery shows={galleryShows} />
-                    </div>
+                <section id="photos" className="h-dvh w-full snap-start snap-always flex flex-col [justify-content:safe_center] items-center px-4 sm:px-8 pt-16 sm:pt-20 touch-pan-y overflow-hidden">                    <div className="w-full max-w-6xl mx-auto py-4 sm:py-10">
+                    <PhotoGallery shows={galleryShows} />
+                </div>
                 </section>
 
                 <section id="contact" className="h-dvh w-full snap-start snap-always flex flex-col justify-center items-center px-4 sm:px-8 pt-20 touch-pan-y">
