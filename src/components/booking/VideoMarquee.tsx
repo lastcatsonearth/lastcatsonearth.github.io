@@ -1,5 +1,8 @@
 import { useLanguage } from "@/i18n/LanguageContext";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
+import { Star } from "lucide-react";
+import { CopyBioButton } from "./PressKit";
+import { GOOGLE_REVIEWS_URL, googleRating } from "@/content/reviews";
 
 const translations = {
     en: {
@@ -83,12 +86,12 @@ const VideoMarquee = () => {
                 </div>
 
                 {/* Colonna Destra (o tutto schermo su mobile): Press Kit & Bio */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="lg:col-span-7 space-y-4 sm:space-y-6">
                     <div className="border-l-4 border-cat-orange pl-5 sm:pl-6 space-y-2">
                         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-cat-orange">
                             {t.subHeading}
                         </p>
-                        <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight leading-none text-white">
+                        <h2 className="text-2xl sm:text-5xl font-black uppercase tracking-tight leading-none text-white">
                             {t.bioHeading}
                         </h2>
                         <p className="text-sm sm:text-base font-bold uppercase tracking-wider text-white/70">
@@ -96,11 +99,24 @@ const VideoMarquee = () => {
                         </p>
                     </div>
 
-                    <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-white/85 pt-2">
-                        <p className="border-t border-white/10 pt-3">{t.bio1}</p>
-                        <p className="border-t border-white/10 pt-3">{t.bio2}</p>
-                        <p className="border-t border-white/10 pt-3">{t.bio3}</p>
-                        <p className="border-t border-white/10 pt-3 text-cat-orange font-bold">{t.bio4}</p>
+                    <div className="space-y-2.5 sm:space-y-4 text-xs sm:text-sm leading-relaxed text-white/85 sm:pt-2">
+                        <p className="border-t border-white/10 pt-2.5 sm:pt-3">{t.bio1}</p>
+                        <p className="border-t border-white/10 pt-2.5 sm:pt-3">{t.bio2}</p>
+                        <p className="border-t border-white/10 pt-2.5 sm:pt-3">{t.bio3}</p>
+                        <p className="border-t border-white/10 pt-2.5 sm:pt-3 text-cat-orange font-bold">{t.bio4}</p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                        <CopyBioButton />
+                        <a
+                            href={GOOGLE_REVIEWS_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-bold text-white/70 hover:text-cat-orange"
+                        >
+                            <Star className="h-3.5 w-3.5 fill-current text-cat-orange" />
+                            {lang === "de" ? googleRating.rating : googleRating.ratingEn} · {googleRating.count} {lang === "de" ? "Google-Bewertungen" : "Google reviews"}
+                        </a>
                     </div>
                 </div>
 

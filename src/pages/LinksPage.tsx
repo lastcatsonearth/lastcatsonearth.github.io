@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
@@ -10,21 +10,15 @@ import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
 import starsBg from "@/assets/stars_background.webp";
 import releaseCover from "@/assets/booking/music/never_stop/never_stop.webp";
 import favicon from "@/assets/favicon.webp";
-// TODO: add this file yourself (portrait flyer, ~400px wide, webp). The build fails until it exists.
-import nextShowFlyer from "@/assets/flyers/maerchenbazar-2026-11-28.webp";
+import { formatGigDate, upcomingGigs } from "@/content/gigs";
+import { GOOGLE_REVIEW_URL } from "@/content/reviews";
 
 import type { Lang } from "@/i18n/LanguageContext";
 type Bilingual = Record<Lang, string>;
 
 // ---------------------------------------------------------------
-// EDIT HERE. Update these two when something new happens.
+// EDIT HERE when there's a new release. The next show comes from src/content/gigs.ts.
 // ---------------------------------------------------------------
-const nextShow: { title: Bilingual; href: string } = {
-  title: { en: "Märchenbazar · 28 Nov", de: "Märchenbazar · 28. Nov." },
-  // TODO: paste the Bandsintown event URL here (https://www.bandsintown.com/e/...)
-  href: "https://www.bandsintown.com/",
-};
-
 const latestRelease: { title: string; href: string } = {
   title: "NEVER STOP",
   href: "https://open.spotify.com/intl-it/track/7AJohGsgWQTzB32uLrYuYk",
@@ -41,6 +35,8 @@ const copy = {
     nextShow: "Next show",
     latestRelease: "Latest release",
     listenNow: "Listen on Spotify",
+    review: "Saw us live?",
+    reviewSub: "Leave us a Google review",
     website: "Our website",
     websiteSub: "Meet the band, watch us live",
     email: "Write us an email",
@@ -57,6 +53,8 @@ const copy = {
     nextShow: "Nächste Show",
     latestRelease: "Neuester Release",
     listenNow: "Auf Spotify hören",
+    review: "Uns live gesehen?",
+    reviewSub: "Bewerte uns auf Google",
     website: "Unsere Webseite",
     websiteSub: "Die Band kennenlernen, live erleben",
     email: "E-Mail schreiben",
@@ -109,6 +107,7 @@ const LinksPage = () => {
   const { lang } = useLanguage();
   const p = useLocalePath();
   const t = copy[lang];
+  const next = upcomingGigs()[0];
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -153,21 +152,32 @@ const LinksPage = () => {
         </Link>
 
         <ul className="mt-3 space-y-2.5">
-          <li>
-            <FeatureRow
-              tag={t.nextShow}
-              title={nextShow.title[lang]}
-              image={<img src={nextShowFlyer} alt="" className="h-full w-full object-cover object-top" />}
-              href={nextShow.href}
-              external
-            />
-          </li>
+          {next && (
+            <li>
+              <FeatureRow
+                tag={t.nextShow}
+                title={`${next.title} · ${formatGigDate(next.date, lang, { day: "numeric", month: "short" })}`}
+                image={next.flyer ? <img src={next.flyer} alt="" className="h-full w-full object-cover object-top" /> : <span className="h-full w-full bg-cat-orange" />}
+                href={next.url}
+                external
+              />
+            </li>
+          )}
           <li>
             <FeatureRow
               tag={t.latestRelease}
               title={`${latestRelease.title} · ${t.listenNow}`}
               image={<img src={releaseCover} alt="" className="h-full w-full object-cover" />}
               href={latestRelease.href}
+              external
+            />
+          </li>
+          <li>
+            <FeatureRow
+              tag={t.review}
+              title={t.reviewSub}
+              image={<span className="flex h-full w-full items-center justify-center bg-cat-orange text-black"><Star className="h-6 w-6 fill-current" /></span>}
+              href={GOOGLE_REVIEW_URL}
               external
             />
           </li>

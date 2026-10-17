@@ -21,6 +21,11 @@ const fullPhotos = groupAssets(
     import.meta.glob("/src/assets/booking/photos/**/*.webp", { import: "default", eager: true }) as Record<string, string>,
 );
 
+/** All photos of a show folder: 640px thumbs + full size (same order). */
+export const photosByShow: Record<string, { thumbs: string[]; full: string[] }> = Object.fromEntries(
+    Object.keys(fullPhotos).map((key) => [key, { thumbs: thumbnails[key] ?? [], full: fullPhotos[key] }]),
+);
+
 // Gallery rows are derived from content/shows.ts – edit shows there, not here.
 export const galleryShows: ShowGallery[] = shows.map((show) => ({
     showTitle: show.title,
@@ -37,9 +42,11 @@ const preloadImage = (src: string) =>
         image.src = src;
     });
 
-export const waitForBookingReady = async () => {
-    await Promise.all([
+export const waitForBookingReady = () =>
+    Promise.race([
+        new Promise<void>((resolve) => setTimeout(resolve, 1200)), // never block the page longer than this
+        Promise.all([
         document.fonts?.ready ?? Promise.resolve(),
-        Promise.all(galleryShows[0].photos.slice(0, 5).map(preloadImage)),
+            Promise.all(galleryShows[0].photos.slice(0, 5).map(preloadImage)),
+        ]).then(() => undefined),
     ]);
-};

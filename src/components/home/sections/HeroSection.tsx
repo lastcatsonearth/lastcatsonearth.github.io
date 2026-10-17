@@ -2,19 +2,23 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeSpacing } from "@/config/layoutSpacing";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
-import { useLocalePath } from "@/i18n/LanguageContext";
+import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
+import { formatGigDate, upcomingGigs } from "@/content/gigs";
 
 interface HeroSectionProps {
     copy: {
         kicker: React.ReactNode;
         hero: string;
         booking: string;
+        nextShow: string;
     };
 }
 
 export const HeroSection = ({ copy }: HeroSectionProps) => {
     // Handler per rendere lo snap ipersensibile al minimo movimento sulla Hero
     const p = useLocalePath();
+    const { lang } = useLanguage();
+    const next = upcomingGigs()[0];
 
     const handleTouchOrScrollEnd = (e: React.UIEvent<HTMLElement>) => {
         const target = e.currentTarget;
@@ -58,6 +62,17 @@ export const HeroSection = ({ copy }: HeroSectionProps) => {
                         copy.hero
                     )}
                 </h1>
+                {next && (
+                    <a
+                        href={next.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 block text-[11px] font-bold uppercase leading-5 tracking-[0.15em] sm:tracking-[0.22em] text-white/75 transition hover:text-cat-orange"
+                    >
+                        <span className="text-cat-orange">{copy.nextShow}</span> · {formatGigDate(next.date, lang, { day: "numeric", month: "short" })} · {next.title}
+                        <ArrowUpRight className="ml-1 inline h-3.5 w-3.5 -translate-y-px" />
+                    </a>
+                )}
             </div>
 
             {/* CTA Button raised up 15% on mobile */}

@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LangToggle from "@/components/LangToggle";
 import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 
@@ -13,6 +13,7 @@ const SiteHeader = () => {
     const p = useLocalePath();
     const { lang } = useLanguage();
     const t = labels[lang];
+    const onContact = useLocation().pathname.replace(/^\/en/, "") === "/contact";
 
     return (
         <header className="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-xl">
@@ -29,10 +30,10 @@ const SiteHeader = () => {
                     <Link to={p("/booking#releases")} className="hidden text-[10px] font-black uppercase tracking-[0.2em] text-white/60 transition hover:text-white sm:inline">{t.music}</Link>
                     <LangToggle />
                     <Link
-                        to={p("/contact")}
+                        to={p(onContact ? "/booking" : "/contact")}
                         className="inline-flex items-center gap-1 rounded-full bg-cat-orange px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider text-black transition hover:bg-white"
                     >
-                        {t.book} <ArrowUpRight className="h-3.5 w-3.5" />
+                        {onContact ? "EPK" : t.book} <ArrowUpRight className="h-3.5 w-3.5" />
                     </Link>
                 </nav>
             </div>

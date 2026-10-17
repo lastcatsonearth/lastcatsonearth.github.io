@@ -32,7 +32,7 @@ const Booking = () => {
 
     return (
         <div
-            className={`relative flex min-h-screen flex-col justify-between overflow-x-hidden bg-black text-white ${isReady ? "" : "max-h-screen overflow-hidden"}`}
+            className="fixed inset-0 flex flex-col overflow-hidden bg-black text-white"
             aria-busy={!isReady}
         >
             <Seo

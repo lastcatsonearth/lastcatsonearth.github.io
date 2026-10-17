@@ -11,6 +11,7 @@ interface LiveSectionProps {
         liveLabel: string;
         live: string;
         liveLink: string;
+        liveTeaser: string;
     };
     setActiveVideoUrl: (url: string) => void;
 }
@@ -38,7 +39,7 @@ export const LiveSection = ({ copy, setActiveVideoUrl }: LiveSectionProps) => {
                                 </h2>
                             </div>
                             <Link
-                                to={p("/booking#videos")}
+                                to={p("/shows")}
                                 className={`inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-white/60 hover:text-cat-orange ${isLandscapePhone ? "mt-1 text-[9px]" : "mt-1 text-[10px] sm:mt-0"
                                     }`}
                             >
@@ -72,7 +73,7 @@ export const LiveSection = ({ copy, setActiveVideoUrl }: LiveSectionProps) => {
                                 >
                                     <Play className={`fill-current ${isLandscapePhone ? "ml-0.5 h-3 w-3" : "ml-0.5 h-4 w-4"}`} />
                                 </span>
-                                Live energy, Munich and beyond
+                                {copy.liveTeaser}
                             </div>
                         </button>
                     </div>

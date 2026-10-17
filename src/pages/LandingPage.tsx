@@ -35,7 +35,7 @@ const ui = {
         steps: [
             ["Anfrage schicken", "Datum, Ort und Anlass – per Formular im Pressekit oder per E-Mail."],
             ["Abstimmen", "Wir klären Setlist, Spieldauer, Technik und Ablauf und schicken ein Angebot."],
-            ["Show", "Wir kommen, bauen auf, und eure Bühne wird laut."],
+            ["Show", "Wir kommen, bauen auf und spielen eure Show."],
         ],
         faqHeading: "Häufige Fragen",
         relatedHeading: "Mehr Last Cats",
@@ -58,7 +58,7 @@ const ui = {
         steps: [
             ["Send a request", "Date, place and occasion – via the form in our press kit or by email."],
             ["Fine-tune", "We sort out setlist, set length, tech and schedule and send you a quote."],
-            ["Showtime", "We show up, set up, and your stage gets loud."],
+            ["Showtime", "We show up, set up and play your show."],
         ],
         faqHeading: "FAQ",
         relatedHeading: "More Last Cats",
@@ -127,12 +127,15 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
             <main>
                 {/* ── Hero ── */}
                 <header className="relative isolate flex min-h-[calc(100svh-4rem)] phone-landscape:min-h-[calc(100svh-3rem)] items-end overflow-hidden">
-                    <img
-                        src={media.hero.src}
-                        alt={media.hero.alt}
-                        {...{ fetchpriority: "high" }}
-                        className={`absolute inset-0 -z-20 h-full w-full object-cover ${media.hero.position ?? "object-center"}`}
-                    />
+                    <picture>
+                        {media.hero.mobileSrc && <source media="(max-width: 640px) and (orientation: portrait)" srcSet={media.hero.mobileSrc} />}
+                        <img
+                            src={media.hero.src}
+                            alt={media.hero.alt}
+                            {...{ fetchpriority: "high" }}
+                            className={`absolute inset-0 -z-20 h-full w-full object-cover ${media.hero.mobileSrc ? "max-sm:object-center" : ""} ${media.hero.position ?? "object-center"}`}
+                        />
+                    </picture>
                     <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/70 to-black/20" />
                     <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
 
@@ -371,12 +374,13 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
                             </a>
                         </div>
                     </div>
-                </section>
+                    <div className="mx-auto w-full max-w-6xl px-5 pb-4 sm:px-8">
+                    <div className="border-t border-black/15 pt-8">
+                        <Footer onOrange />
+                    </div>
+                </div>
+            </section>
             </main>
-
-            <div className="mx-auto w-full max-w-6xl px-5 pt-12 sm:px-8">
-                <Footer />
-            </div>
 
             {video && <VideoOverlay url={video} onClose={() => setVideo(null)} />}
         </div>

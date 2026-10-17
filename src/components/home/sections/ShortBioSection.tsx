@@ -12,6 +12,7 @@ interface ShortBioSectionProps {
         shortLabel: string;
         short: string;
         shortBody: string;
+        meetCats: string;
     };
 }
 
@@ -146,7 +147,7 @@ export const ShortBioSection = ({
                         className={`inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-cat-orange hover:text-white ${isLandscapePhone ? "mt-1 text-[10px]" : "mt-2 sm:mt-4 text-[11px] sm:text-xs"
                             }`}
                     >
-                        Meet the Cats <ArrowUpRight className={isLandscapePhone ? "h-3 w-3" : "h-4 w-4"} />
+                        {copy.meetCats} <ArrowUpRight className={isLandscapePhone ? "h-3 w-3" : "h-4 w-4"} />
                     </Link>
                 </Reveal>
             </div>

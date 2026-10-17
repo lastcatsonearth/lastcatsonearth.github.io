@@ -44,7 +44,7 @@ export const landingLabel: Record<LandingKey, Record<Lang, string>> = {
 type Img = { src: string; alt: string };
 
 /** Hero image + optional Tailwind object-position class to choose the crop (photos are portrait). */
-type HeroImg = Img & { position?: string };
+type HeroImg = Img & { position?: string; /** Different photo for phones (portrait screens) */ mobileSrc?: string };
 
 /** Things that don't change with the language. */
 type LandingMedia = {
@@ -73,7 +73,7 @@ export type LandingCopy = {
 
 export const landingMedia: Record<LandingKey, LandingMedia> = {
     munich: {
-        hero: { src: zamanand18, alt: "Last Cats on Earth live auf der Bühne beim Zamanand Festival in München", position: "object-[center_85%]" },
+        hero: { src: zamanand18, mobileSrc: zamanand11, alt: "Last Cats on Earth live auf der Bühne beim Zamanand Festival in München", position: "object-[center_85%]" },
         gallery: [
             { src: zamanand5, alt: "Sänger Tony von Last Cats on Earth im blauen Bühnenlicht" },
             { src: zamanand13, alt: "Gitarrist Alessandro beim Solo auf dem Zamanand Festival" },
@@ -186,11 +186,11 @@ export const landingCopy: Record<LandingKey, Record<Lang, LandingCopy>> = {
                 heading: "Eine Münchner Rockband, die man nicht nebenbei hört.",
                 body: [
                     "Last Cats on Earth sind Tony, Alessandro, Chris, Tim und Tom. Fünf Musiker mit sehr unterschiedlichen Wurzeln – Rap und Punk, klassisches Rock-Gitarrenspiel, Hip-Hop-Attitüde, Groove und pure Drum-Energie – und eine gemeinsame Idee: Live soll man Musik spüren, nicht nur hören.",
-                    "Unsere eigenen Songs wie NEVER STOP und FLASHBACK! sind laut, tanzbar und direkt. Dazu kommen Cover, die wir uns zu eigen machen – von Red Hot Chili Peppers bis The Black Keys. Gespielt haben wir unter anderem auf dem Zamanand Festival, in der Alten Utting und im Shamrock in München.",
+                    "Unsere eigenen Songs wie NEVER STOP und FLASHBACK! sind energiegeladen, tanzbar und direkt. Dazu kommen Cover, die wir uns zu eigen machen – von Red Hot Chili Peppers bis The Black Keys. Gespielt haben wir unter anderem auf dem Zamanand Festival, in der Alten Utting und im Shamrock in München.",
                 ],
             },
             points: [
-                { title: "Eigene Songs", text: "NEVER STOP und FLASHBACK! sind auf Spotify und Apple Music – und live noch lauter." },
+                { title: "Eigene Songs", text: "NEVER STOP und FLASHBACK! sind auf Spotify und Apple Music – und live noch besser." },
                 { title: "Funk trifft Rock", text: "Riffs, Grooves, Rap-Parts und Hooks zum Mitsingen. Kein Song klingt wie der davor." },
                 { title: "Direkt am Publikum", text: "Wir spielen nicht vor den Leuten, sondern mit ihnen. Jede Show ist ein bisschen anders." },
             ],
@@ -221,11 +221,11 @@ export const landingCopy: Record<LandingKey, Record<Lang, LandingCopy>> = {
                 heading: "A Munich rock band you can't keep in the background.",
                 body: [
                     "Last Cats on Earth are Tony, Alessandro, Chris, Tim and Tom. Five musicians with very different roots – rap and punk, classic rock guitar, hip-hop attitude, groove and raw drum power – and one shared idea: live music should be felt, not just heard.",
-                    "Our own songs like NEVER STOP and FLASHBACK! are loud, danceable and direct. On top of that we play covers we make our own – from Red Hot Chili Peppers to The Black Keys. We've played Zamanand Festival, Alte Utting and Shamrock in Munich, among others.",
+                    "Our own songs like NEVER STOP and FLASHBACK! are energetic, danceable and direct. On top of that we play covers we make our own – from Red Hot Chili Peppers to The Black Keys. We've played Zamanand Festival, Alte Utting and Shamrock in Munich, among others.",
                 ],
             },
             points: [
-                { title: "Original songs", text: "NEVER STOP and FLASHBACK! are out on Spotify and Apple Music – and even louder live." },
+                { title: "Original songs", text: "NEVER STOP and FLASHBACK! are out on Spotify and Apple Music – and even better live." },
                 { title: "Funk meets rock", text: "Riffs, grooves, rap parts and sing-along hooks. No song sounds like the one before." },
                 { title: "Right in the crowd", text: "We don't play at people, we play with them. Every show is a little different." },
             ],
@@ -292,7 +292,7 @@ export const landingCopy: Record<LandingKey, Record<Lang, LandingCopy>> = {
             facts: ["Clubs & festivals", "Up to 2–3 hrs", "Originals + covers", "PA on request"],
             pitch: {
                 kicker: "The live band",
-                heading: "Not background noise. A show.",
+                heading: "Not background music. A show.",
                 body: [
                     "Looking for a live band in Munich, you'll find plenty that play it safe. We want more: tension, contrast, moments where the crowd sings along and moments where they just watch. Funk grooves, heavy riffs, rap parts and big choruses – in one set.",
                     "We've played the big open-air stage at Zamanand Festival, Alte Utting and Shamrock in Munich, and the Woodstock Party in Italy. A 45-minute slot in a line-up or a whole night: we tune the set to your stage.",
@@ -325,7 +325,7 @@ export const landingCopy: Record<LandingKey, Record<Lang, LandingCopy>> = {
             hero: {
                 kicker: "Partyband aus München",
                 title: "Eure Party.",
-                highlight: "Unser Lärm.",
+                highlight: "Unser Sound.",
                 intro: "Geburtstag, Sommerfest, Vereinsfeier oder einfach eine Nacht, die man nicht vergisst: Last Cats on Earth bringen Rock- und Funk-Hits, eigene Songs und eine Bühnenshow, die die Tanzfläche füllt.",
             },
             facts: ["Private Feiern", "Bis 2–3 Std.", "Hits + eigene Songs", "Ganz Bayern"],
@@ -361,7 +361,7 @@ export const landingCopy: Record<LandingKey, Record<Lang, LandingCopy>> = {
             hero: {
                 kicker: "Party band from Munich",
                 title: "Your party.",
-                highlight: "Our noise.",
+                highlight: "Our sound.",
                 intro: "Birthday, summer party, club celebration or just a night nobody forgets: Last Cats on Earth bring rock and funk hits, original songs and a stage show that fills the dance floor.",
             },
             facts: ["Private parties", "Up to 2–3 hrs", "Hits + originals", "All of Bavaria"],

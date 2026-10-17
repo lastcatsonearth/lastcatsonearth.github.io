@@ -8,7 +8,8 @@
     "build": "vite-react-ssg build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "thumbs": "node scripts/thumbs.mjs"
+    "thumbs": "node scripts/thumbs.mjs",
+    "press": "node scripts/press.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.462.0",

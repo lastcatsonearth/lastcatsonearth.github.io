@@ -131,13 +131,12 @@ const MerchPage = () => {
 
     return (
         <div className="min-h-screen bg-black text-white px-6 pt-10 pb-12 flex flex-col justify-between">
-            {/* Merch copy is English-only, so only the German URL is indexed. */}
             <Seo
                 path="/merch"
                 title="Merch – Black Cat Tee | Last Cats on Earth"
                 description="Official Last Cats on Earth merch: the Black Cat Tee, heavy black cotton, screen printed locally in a limited run. Reserve online, pick up at the show."
                 image={shirtImage2}
-                noindex={lang === "en"}
+                noindex // not ready yet – remove to let Google index it
             />
             <div className="w-full">
                 <BandHeader linkToHome />

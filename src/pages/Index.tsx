@@ -36,7 +36,10 @@ const HomeContent = () => {
       shortBody: "Last Cats on Earth verbinden Hard Rock, Funk, Alternative Rock, Rap und Pop-Rock-Energie zu einem Live-Set, das sich nicht in eine Schublade stecken lässt. Eigene Songs, neu gedachte Cover, große Hooks und direkter Kontakt zum Publikum.",
       live: "Der Raum macht den Rest.",
       liveLabel: "Live erleben",
-      liveLink: "Alle Songs & Videos",
+      liveLink: "Alle Shows",
+      liveTeaser: "Live-Energie, München und darüber hinaus",
+      meetCats: "Lerne die Cats kennen",
+      nextShow: "Nächste Show",
       release: "Songs, die im Kopf bleiben.",
       releaseLabel: "Hör genauer hin",
       releaseBody: "NEVER STOP und FLASHBACK! sind erst der Anfang. Drück Play und erlebe, was passiert, wenn die Songs die Lautsprecher verlassen.",
@@ -44,11 +47,6 @@ const HomeContent = () => {
       stageLabel: "Eine Bühne?",
       stageHeading: "Machen wir sie laut.",
       stageCta: "EPK ansehen",
-      menu: ["Start", "Musik", "EPK", "Links"],
-      exploreLabel: "Entdecken",
-      workLabel: "Mit uns arbeiten",
-      bookLabel: "Die Band buchen",
-      followLabel: "Hören · sehen · folgen",
     }
     : {
       kicker: <>Alternative rock band <span className="hidden sm:inline">· </span><span className="sm:hidden"><br /></span>Original music · live shows</>,
@@ -58,7 +56,10 @@ const HomeContent = () => {
       shortBody: "Last Cats on Earth mix hard rock, funk, alternative rock, rap and pop-rock energy into a live set that refuses to stay in one lane. Original songs, reworked covers, big hooks and direct crowd connection.",
       live: "The room does the rest.",
       liveLabel: "Watch us play",
-      liveLink: "All music & videos",
+      liveLink: "All shows",
+      liveTeaser: "Live energy, Munich and beyond",
+      meetCats: "Meet the Cats",
+      nextShow: "Next show",
       release: "Songs that stay with you.",
       releaseLabel: "Listen closer",
       releaseBody: "NEVER STOP and FLASHBACK! are only the beginning. Press play, then come see what happens when the songs leave the speakers.",
@@ -66,11 +67,6 @@ const HomeContent = () => {
       stageLabel: "Have a stage?",
       stageHeading: "Let’s make it loud.",
       stageCta: "Check out our EPK",
-      menu: ["Home", "Music", "EPK", "Links"],
-      exploreLabel: "Explore",
-      workLabel: "Work with us",
-      bookLabel: "Book the band",
-      followLabel: "Listen · watch · follow",
     };
 
   useEffect(() => {
@@ -104,14 +100,17 @@ const HomeContent = () => {
   }, []);
 
   const scrollToSection = (id: string) => {
+    const main = containerRef.current;
     const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    if (!main || !element) return;
+    // Scroll only the sections container (scrollIntoView would also move the page and hide the topbar)
+    const top = element.getBoundingClientRect().top - main.getBoundingClientRect().top + main.scrollTop;
+    main.scrollTo({ top, behavior: "smooth" });
   };
 
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden bg-black text-white">
+    // fixed inset-0: the page itself never scrolls (no lost topbar on phones), only <main> does
+    <div className="fixed inset-0 flex w-full flex-col overflow-hidden bg-black text-white">
       <Seo
         path="/"
         title={lang === "de"
@@ -131,7 +130,7 @@ const HomeContent = () => {
 
       {/* Scrollable container taking the remaining height (100vh - h-16) */}
       <main ref={containerRef} id="top"
-        className="h-[calc(100dvh-4rem)] phone-landscape:h-[calc(100dvh-3rem)] phone-landscape:snap-none w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"      >
+        className="min-h-0 flex-1 phone-landscape:snap-none w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth overscroll-y-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"      >
         {/* Top Section - No stars */}
         <HeroSection copy={copy} />
 

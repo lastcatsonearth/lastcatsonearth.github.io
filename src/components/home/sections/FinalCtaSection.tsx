@@ -60,10 +60,10 @@ export const FinalCtaSection = ({ copy }: FinalCtaSectionProps) => {
 
             {/* Bottom Footer Overlay */}
             <div
-                className={`mx-auto w-full max-w-6xl border-t border-black/15 text-black [&_svg]:text-black [&_a]:text-black hover:[&_a]:text-white [&_p]:text-black/80 ${isLandscapePhone ? "pt-1.5" : "pt-3 sm:pt-6"
+                className={`mx-auto w-full max-w-6xl border-t border-black/15 text-black ${isLandscapePhone ? "pt-1.5" : "pt-3 sm:pt-6"
                     }`}
             >
-                <Footer compact />
+                <Footer compact onOrange />
             </div>
         </section>
     );

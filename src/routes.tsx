@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import type { RouteRecord } from "vite-react-ssg";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { shows } from "@/content/shows";
@@ -9,6 +10,7 @@ import MerchPage from "./pages/MerchPage";
 import LandingPage from "./pages/LandingPage";
 import { landingPath, type LandingKey } from "@/content/landingPages";
 import ShowsPage from "./pages/ShowsPage";
+import ShowPage from "./pages/ShowPage";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
@@ -18,8 +20,18 @@ import ContactPage from "./pages/ContactPage";
 // The language is read from the URL in LanguageProvider.
 // Old URLs (/events, /festivals, …) are 301-redirected in public/_redirects.
 
+// Start each new page at the top (React Router keeps the old scroll position otherwise).
+const ScrollToTop = () => {
+    const { pathname, hash } = useLocation();
+    useEffect(() => {
+        if (!hash) window.scrollTo(0, 0);
+    }, [pathname, hash]);
+    return null;
+};
+
 const Shell = () => (
     <LanguageProvider>
+        <ScrollToTop />
         <Outlet />
     </LanguageProvider>
 );
@@ -38,7 +50,7 @@ const pages = (): RouteRecord[] => [
     { path: "shows", element: <ShowsPage /> },
     {
         path: "shows/:slug",
-        element: <ShowsPage />,
+        element: <ShowPage />,
         getStaticPaths: () => shows.map((show) => `shows/${show.slug}`),
     },
     { path: "impressum", element: <Impressum /> },

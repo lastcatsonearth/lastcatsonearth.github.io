@@ -20,7 +20,7 @@ const openInstagramApp = (e: MouseEvent<HTMLAnchorElement>) => {
     setTimeout(() => window.open("https://www.instagram.com/lastcatsonearth/", "_blank", "noopener,noreferrer"), 1500);
 };
 
-const SocialIcon = ({ href, label, children }: { href: string; label: string; children: ReactNode }) => (
+const SocialIcon = ({ href, label, children, accent }: { href: string; label: string; children: ReactNode; accent: string }) => (
     <a
         href={href}
         {...externalProps(href)}
@@ -33,39 +33,45 @@ const SocialIcon = ({ href, label, children }: { href: string; label: string; ch
             {label}
             <span className="absolute -bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-primary" />
         </span>
-        <span className="p-3 text-cat-orange transition-all duration-300 group-hover:scale-110 group-hover:brightness-110">
+        <span className={`p-3 ${accent} transition-all duration-300 group-hover:scale-110 group-hover:brightness-110`}>
             {children}
         </span>
     </a>
 );
 
-/** compact: no bottom padding (used where the footer sits at the very bottom of a full-screen section). */
-const Footer = ({ compact = false }: { compact?: boolean }) => {
+/**
+ * compact: no bottom padding (footer at the very bottom of a full-screen section).
+ * onOrange: footer sits on the orange CTA background → orange details turn black.
+ */
+const Footer = ({ compact = false, onOrange = false }: { compact?: boolean; onOrange?: boolean }) => {
+    const accent = onOrange ? "text-black" : "text-cat-orange";
+    const muted = onOrange ? "text-black/70" : "text-muted-foreground";
+    const hover = onOrange ? "hover:text-white" : "hover:text-cat-orange";
     const p = useLocalePath();
     const { lang } = useLanguage();
     const t = labels[lang];
 
     return (
         <footer>
-            <p className="mb-1 text-center text-sm font-bold uppercase tracking-[0.2em] text-cat-orange">{t.follow}</p>
+            <p className={`mb-1 text-center text-sm font-bold uppercase tracking-[0.2em] ${accent}`}>{t.follow}</p>
 
             <div className="-mt-1 flex flex-nowrap items-center justify-center">
                 {socialsWithMail.map(({ label, href, Icon }) => (
-                    <SocialIcon key={label} href={href} label={label}>
+                    <SocialIcon key={label} href={href} label={label} accent={accent}>
                         <Icon className="h-7 w-7" />
                     </SocialIcon>
                 ))}
             </div>
 
             <p className="mt-1 text-center">
-                <a href={`mailto:${EMAIL}`} className="text-sm font-bold tracking-wide text-cat-orange underline-offset-4 hover:underline">{EMAIL}</a>
+                <a href={`mailto:${EMAIL}`} className={`text-sm font-bold tracking-wide ${accent} underline-offset-4 hover:underline`}>{EMAIL}</a>
             </p>
 
             {/* Internal links to the landing pages, as a scrolling band (pauses on hover).
                 The list is repeated 4× so the loop is seamless; only the first copy is focusable. */}
             <nav
                 aria-label="Booking"
-                className="group mt-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+                className="group mt-3 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
             >
                 <ul className="flex w-max animate-marquee-slow group-hover:[animation-play-state:paused] motion-reduce:animate-none">
                     {[0, 1, 2, 3].flatMap((copyIndex) =>
@@ -74,23 +80,23 @@ const Footer = ({ compact = false }: { compact?: boolean }) => {
                                 <Link
                                     to={p(landingPath[key])}
                                     tabIndex={copyIndex > 0 ? -1 : undefined}
-                                    className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground transition-colors hover:text-cat-orange"
+                                    className={`text-[10px] font-bold uppercase tracking-[0.15em] ${muted} transition-colors ${hover}`}
                                 >
                                     {landingLabel[key][lang]}
                                 </Link>
-                                <span className="mx-4 text-[10px] text-cat-orange" aria-hidden="true">✶</span>
+                                <span className={`mx-4 text-[10px] ${accent}`} aria-hidden="true">✶</span>
                             </li>
                         )),
                     )}
                 </ul>
             </nav>
 
-            <div className={`mt-3 space-y-1 border-t border-border pt-4 text-center text-xs text-muted-foreground ${compact ? "" : "pb-4"}`}>
+            <div className={`mt-3 space-y-1 border-t ${onOrange ? "border-black/20" : "border-border"} pt-4 text-center text-xs ${muted} ${compact ? "" : "pb-4"}`}>
                 <p>© {new Date().getFullYear()} Last Cats on Earth. {t.rights}</p>
                 <p className="flex items-center justify-center gap-2">
-                    <Link to={p("/impressum")} className="underline underline-offset-4 transition-colors hover:text-cat-orange">Impressum</Link>
+                    <Link to={p("/impressum")} className={`underline underline-offset-4 transition-colors ${hover}`}>Impressum</Link>
                     <span aria-hidden="true">•</span>
-                    <Link to={p("/privacy")} className="underline underline-offset-4 transition-colors hover:text-cat-orange">{t.privacy}</Link>
+                    <Link to={p("/privacy")} className={`underline underline-offset-4 transition-colors ${hover}`}>{t.privacy}</Link>
                 </p>
             </div>
         </footer>

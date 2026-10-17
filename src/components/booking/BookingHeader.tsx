@@ -6,12 +6,12 @@ import { useLanguage, useLocalePath } from "@/i18n/LanguageContext";
 const sections = ["bio", "videos", "releases", "photos", "contact", "links"];
 
 const navLabels: Record<string, { en: string; de: string }> = {
-    bio: { en: "bio", de: "bio" },
-    videos: { en: "videos", de: "videos" },
-    releases: { en: "releases", de: "releases" },
-    photos: { en: "photos", de: "photos" },
-    contact: { en: "Get in Touch", de: "Kontakt" },
-    links: { en: "links", de: "links" },
+    bio: { en: "Bio", de: "Bio" },
+    videos: { en: "Videos", de: "Videos" },
+    releases: { en: "Music", de: "Musik" },
+    photos: { en: "Photos", de: "Fotos" },
+    contact: { en: "Contact", de: "Kontakt" },
+    links: { en: "Press", de: "Presse" },
 };
 
 const BookingHeader = () => {
@@ -68,7 +68,7 @@ const BookingHeader = () => {
                 {lang === "de" ? "Startseite" : "Home"}
             </Link>
 
-            <nav className="hidden items-center gap-6 text-[11px] font-black uppercase tracking-[0.25em] lg:flex">
+            <nav className="hidden items-center gap-4 xl:gap-6 text-[10px] xl:text-[11px] font-black uppercase tracking-[0.25em] xl:flex">
                 {sections.map((section, index) => (
                     <button
                         key={section}
@@ -83,6 +83,14 @@ const BookingHeader = () => {
                 ))}
             </nav>
 
+            <div className="flex items-center gap-2 sm:gap-3">
+            <button
+                type="button"
+                onClick={() => scrollToSection(sections.indexOf("contact"))}
+                className="rounded-full bg-cat-orange px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider text-black transition hover:bg-white"
+            >
+                {lang === "de" ? "Anfragen" : "Book us"}
+            </button>
             <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-black uppercase tracking-widest backdrop-blur-sm">
                 <button
                     onClick={() => setLang("en")}
@@ -99,6 +107,7 @@ const BookingHeader = () => {
                 >
                     DE
                 </button>
+            </div>
             </div>
         </header>
     );
