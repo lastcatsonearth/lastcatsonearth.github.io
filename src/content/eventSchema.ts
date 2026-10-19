@@ -69,6 +69,6 @@ export const musicEventJsonLd = (e: EventInput) => {
             ...(e.ticketsFrom && { validFrom: isoDateTime(e.ticketsFrom, "00:00") }),
         },
         ...(e.organizer && { organizer: { "@type": "Organization", name: e.organizer.name, url: e.organizer.url ?? e.url } }),
-        performer: { "@type": "MusicGroup", "@id": `${SITE_URL}/#musicgroup`, name: SITE_NAME, url: SITE_URL },
+        performer: { "@type": "MusicGroup", "@id": `${SITE_URL}/#musicgroup`, name: SITE_NAME, url: `${SITE_URL}/` },
     };
 };
