@@ -30,7 +30,8 @@ export const gigs: Gig[] = [
         flyer: maerchenbazarFlyer,
         price: 0,
         endTime: "21:30",
-        organizer: { name: "Märchenbazar München" },
+        organizer: { name: "Märchenbazar München", url: "https://www.munich.travel/pois/maerkte-feste/maerchenbazar-muenchen" },
+        ticketsFrom: "2026-10-19",
     },
 ];
 

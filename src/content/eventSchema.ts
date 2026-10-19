@@ -6,6 +6,8 @@ import { SITE_NAME, SITE_URL } from "@/config/site";
 export type EventDetails = {
     /** Ticket price in EUR. 0 = free entry. Leave out if unknown. */
     price?: number;
+    /** YYYY-MM-DD when tickets / RSVP opened (Google "validFrom") */
+    ticketsFrom?: string;
     /** Ticket status, defaults to "InStock" */
     availability?: "InStock" | "SoldOut" | "PreOrder";
     /** Who runs the event (festival, venue, club) */
@@ -64,8 +66,9 @@ export const musicEventJsonLd = (e: EventInput) => {
             url: e.ticketUrl ?? e.url,
             availability: `https://schema.org/${e.availability ?? "InStock"}`,
             ...(e.price !== undefined && { price: e.price, priceCurrency: "EUR" }),
+            ...(e.ticketsFrom && { validFrom: isoDateTime(e.ticketsFrom, "00:00") }),
         },
-        ...(e.organizer && { organizer: { "@type": "Organization", name: e.organizer.name, url: e.organizer.url } }),
+        ...(e.organizer && { organizer: { "@type": "Organization", name: e.organizer.name, url: e.organizer.url ?? e.url } }),
         performer: { "@type": "MusicGroup", "@id": `${SITE_URL}/#musicgroup`, name: SITE_NAME, url: SITE_URL },
     };
 };
