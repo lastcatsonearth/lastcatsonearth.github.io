@@ -1,6 +1,7 @@
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { formatGigDate, upcomingGigs } from "@/content/gigs";
-import { SITE_NAME, SITE_URL } from "@/config/site";
+import { SITE_NAME } from "@/config/site";
+import { musicEventJsonLd } from "@/content/eventSchema";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const copy = {
@@ -10,23 +11,15 @@ const copy = {
 
 /** schema.org MusicEvent for every upcoming gig (Google can show these as event results). */
 export const gigsJsonLd = () =>
-    upcomingGigs().map((g) => ({
-        "@context": "https://schema.org",
-        "@type": "MusicEvent",
-        name: `${SITE_NAME} – ${g.title}`,
-        startDate: g.time ? `${g.date}T${g.time}` : g.date,
-        eventStatus: "https://schema.org/EventScheduled",
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        location: {
-            "@type": "Place",
-            name: g.venue,
-            address: { "@type": "PostalAddress", addressLocality: g.city.de, addressCountry: g.countryCode },
-        },
-        image: g.flyer ? `${SITE_URL}${g.flyer}` : `${SITE_URL}/og-image.jpg`,
-        url: g.url,
-        offers: { "@type": "Offer", url: g.url },
-        performer: { "@id": `${SITE_URL}/#musicgroup` },
-    }));
+    upcomingGigs().map((g) =>
+        musicEventJsonLd({
+            ...g,
+            description: `${SITE_NAME} live bei ${g.title} in ${g.city.de}: Funk Rock, Alternative Rock, eigene Songs und Cover.`,
+            city: g.city.de,
+            image: g.flyer ?? "/og-image.jpg",
+            ticketUrl: g.url,
+        }),
+    );
 
 /** Big orange "next show" card. Renders nothing if no upcoming gig. */
 const NextShow = () => {

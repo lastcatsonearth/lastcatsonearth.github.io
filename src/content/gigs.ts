@@ -1,9 +1,10 @@
 // UPCOMING shows. Add the next gig here – it then appears on the homepage, /shows and /links.
 // Past dates hide themselves automatically (no need to delete them; move them to shows.ts with photos later).
 import type { Lang } from "@/i18n/LanguageContext";
+import type { EventDetails } from "@/content/eventSchema";
 import maerchenbazarFlyer from "@/assets/flyers/maerchenbazar-2026-11-28.webp";
 
-export type Gig = {
+export type Gig = EventDetails & {
     /** YYYY-MM-DD */
     date: string;
     /** Optional start time, HH:MM */
@@ -24,8 +25,12 @@ export const gigs: Gig[] = [
         venue: "Olympiapark Süd",
         city: { de: "München", en: "Munich" },
         countryCode: "DE",
+        time: "19:30",
         url: "https://www.bandsintown.com/e/108894107",
         flyer: maerchenbazarFlyer,
+        price: 0,
+        endTime: "21:30",
+        organizer: { name: "Märchenbazar München" },
     },
 ];
 

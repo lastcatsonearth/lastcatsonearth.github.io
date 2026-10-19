@@ -11,6 +11,7 @@ import { ReviewCta } from "@/components/GoogleReviews";
 import { Seo } from "@/components/Seo";
 import { photosByShow } from "@/components/booking/bookingData";
 import { SITE_NAME, SITE_URL } from "@/config/site";
+import { musicEventJsonLd } from "@/content/eventSchema";
 import { formatShowDate, shows, type Show } from "@/content/shows";
 import { useLanguage, useLocalePath, type Lang } from "@/i18n/LanguageContext";
 
@@ -51,23 +52,14 @@ const ytThumb = (id: string) => `https://i.ytimg.com/vi_webp/${id}/maxresdefault
 const ytFallback = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 const jsonLd = (show: Show, lang: Lang, url: string) => [
-    {
-        "@context": "https://schema.org",
-        "@type": "MusicEvent",
-        name: `${SITE_NAME} – ${show.title}`,
-        startDate: show.date,
-        eventStatus: "https://schema.org/EventScheduled",
-        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-        location: {
-            "@type": "Place",
-            name: show.venue[lang],
-            address: { "@type": "PostalAddress", addressLocality: show.city[lang], addressCountry: show.countryCode },
-        },
-        image: `${SITE_URL}${show.image}`,
+    musicEventJsonLd({
+        ...show,
+        date: show.day ?? show.date,
         description: show.text[lang],
-        performer: { "@id": `${SITE_URL}/#musicgroup` },
+        venue: show.venue[lang],
+        city: show.city[lang],
         url,
-    },
+    }),
     {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",

@@ -2,19 +2,24 @@
 // To add a show: put photos in src/assets/booking/photos/<folder>/ and run `npm run thumbs`,
 // add an entry here (newest first), then add /shows/<slug> + /en/shows/<slug> to public/sitemap.xml.
 import type { Lang } from "@/i18n/LanguageContext";
+import type { EventDetails } from "@/content/eventSchema";
 import zamanand18 from "@/assets/booking/photos/zamanand/18.webp";
 import renazzo7 from "@/assets/booking/photos/renazzo/7.webp";
 import utting2 from "@/assets/booking/photos/alte_utting/photo_2.webp";
 
 export type ShowVideo = { id: string; title: string };
 
-export type Show = {
+export type Show = EventDetails & {
     slug: string;
     title: string;
     /** Folder name under src/assets/booking/photos/ */
     gallery: string;
     /** YYYY-MM */
     date: string;
+    /** Exact day YYYY-MM-DD, if known (better for Google than just the month) */
+    day?: string;
+    /** Start time HH:MM, if known */
+    time?: string;
     venue: Record<Lang, string>;
     city: Record<Lang, string>;
     country: Record<Lang, string>;
@@ -37,6 +42,10 @@ export const shows: Show[] = [
         title: "Zamanand Festival",
         gallery: "zamanand",
         date: "2026-09",
+        day: "2026-09-12",
+        time: "21:00",
+        price: 0,
+        organizer: { name: "Zamanand Festival" },
         venue: { de: "Ludwigstraße, Open-Air-Bühne", en: "Ludwigstraße, open-air stage" },
         city: { en: "Munich", de: "München" },
         country: { en: "Germany", de: "Deutschland" },
@@ -64,6 +73,10 @@ export const shows: Show[] = [
         title: "Woodstock Party",
         gallery: "renazzo",
         date: "2026-07",
+        day: "2026-07-24",
+        time: "21:00",
+        price: 0,
+        organizer: { name: "Woodstock Party" },
         venue: { de: "Woodstock Party", en: "Woodstock Party" },
         city: { en: "Renazzo", de: "Renazzo" },
         country: { en: "Italy", de: "Italien" },
@@ -90,6 +103,10 @@ export const shows: Show[] = [
         title: "Alte Utting",
         gallery: "alte_utting",
         date: "2026-06",
+        day: "2026-06-02",
+        time: "21:00",
+        price: 0,
+        organizer: { name: "Alte Utting" },
         venue: { de: "Alte Utting, Sendling", en: "Alte Utting, Sendling" },
         city: { en: "Munich", de: "München" },
         country: { en: "Germany", de: "Deutschland" },
