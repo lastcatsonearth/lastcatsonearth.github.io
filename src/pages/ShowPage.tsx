@@ -155,6 +155,8 @@ const ShowPage = () => {
                                     >
                                         <img
                                             src={ytThumb(v.id)}
+                                            // YouTube answers a missing maxres thumbnail with a 120×90 grey placeholder (status 200), not an error.
+                                            onLoad={(e) => { const f = ytFallback(v.id); if (e.currentTarget.naturalWidth <= 120 && e.currentTarget.src !== f) e.currentTarget.src = f; }}
                                             onError={(e) => { const f = ytFallback(v.id); if (e.currentTarget.src !== f) e.currentTarget.src = f; }}
                                             alt={`${v.title} – ${SITE_NAME} live, ${show.title}`}
                                             loading="lazy"

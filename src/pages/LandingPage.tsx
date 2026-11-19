@@ -225,6 +225,8 @@ const LandingPage = ({ page }: { page: LandingKey }) => {
                             >
                                 <img
                                     src={ytThumb(media.videoId)}
+                                    // YouTube answers a missing maxres thumbnail with a 120×90 grey placeholder (status 200), not an error.
+                                    onLoad={(e) => { const f = ytThumbFallback(media.videoId); if (e.currentTarget.naturalWidth <= 120 && e.currentTarget.src !== f) e.currentTarget.src = f; }}
                                     onError={(e) => {
                                         const fallback = ytThumbFallback(media.videoId);
                                         if (e.currentTarget.src !== fallback) e.currentTarget.src = fallback;

@@ -123,6 +123,8 @@ const VideoCarousel = ({ onVideoSelect }: VideoCarouselProps) => {
 
                                 <img
                                     src={video.thumbnail}
+                                    // YouTube answers a missing maxres thumbnail with a 120×90 grey placeholder (status 200), not an error.
+                                    onLoad={(e) => { const f = ytFallback(video.id); if (e.currentTarget.naturalWidth <= 120 && e.currentTarget.src !== f) e.currentTarget.src = f; }}
                                     onError={(e) => {
                                         const fallback = ytFallback(video.id);
                                         if (e.currentTarget.src !== fallback) e.currentTarget.src = fallback;
