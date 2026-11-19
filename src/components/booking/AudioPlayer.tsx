@@ -1,6 +1,8 @@
 import { useState, useRef, TouchEvent } from "react";
 import { FaSpotify, FaPlay, FaPause, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useReleaseCountdown } from "@/hooks/useReleaseCountdown";
+import { formatReleaseDate, latestRelease } from "@/content/releases";
 
 import flashbackAudio from "@/assets/booking/music/flashback/flashback.mp3";
 import flashbackCover from "@/assets/booking/music/flashback/flashback.webp";
@@ -15,10 +17,19 @@ interface Track {
     spotifyUrl?: string;
     released?: boolean;
     releaseDate?: string;
+    /** ISO date-time: before it the track shows the release date, after it it plays (no redeploy needed). */
+    releaseAt?: string;
 }
 
-// Order updated: NEVER STOP first, then FLASHBACK!
+// Newest first. UNDERWATER comes from content/releases.ts and unlocks itself on its release date.
 const tracks: Track[] = [
+    {
+        src: latestRelease.audio,
+        coverSrc: latestRelease.cover,
+        title: latestRelease.title,
+        artist: "Last Cats on Earth",
+        releaseAt: latestRelease.releaseAt,
+    },
     {
         src: neverStopAudio,
         coverSrc: neverStopCover,
@@ -43,7 +54,7 @@ const tracks: Track[] = [
 const translations = {
     en: {
         category: "Our latest releases",
-        release: "Releases",
+        release: "Out on",
         altTemplate: "cover art",
         play: "Play",
         pause: "Pause",
@@ -51,7 +62,7 @@ const translations = {
     },
     de: {
         category: "Unsere neuesten Veröffentlichungen",
-        release: "Veröffentlicht am",
+        release: "Erscheint am",
         altTemplate: "Cover-Artwork",
         play: "Abspielen",
         pause: "Pausieren",
@@ -78,7 +89,9 @@ const SinglePlayer = ({
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    const released = track.released ?? true;
+    const countdown = useReleaseCountdown(track.releaseAt ?? "2000-01-01T00:00:00Z");
+    const released = track.releaseAt ? countdown.released : track.released ?? true;
+    const releaseDate = track.releaseAt ? formatReleaseDate(track.releaseAt, lang) : track.releaseDate;
 
     const togglePlay = () => {
         if (!audioRef.current || !released) return;
@@ -136,7 +149,7 @@ const SinglePlayer = ({
                     {!released && (
                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                             <span className="text-xs uppercase tracking-[0.2em] text-white/80 text-center px-4">
-                                {t.release} {track.releaseDate}
+                                {t.release} {releaseDate}
                             </span>
                         </div>
                     )}
@@ -237,7 +250,7 @@ const SinglePlayer = ({
                     ) : (
                         <div className="h-full rounded-full bg-black/30 border border-white/5 flex items-center justify-center">
                             <span className="text-[10px] uppercase tracking-[0.2em] text-white/35">
-                                {t.release} {track.releaseDate}
+                                {t.release} {releaseDate}
                             </span>
                         </div>
                     )}
@@ -363,4 +376,4 @@ const AudioPlayer = ({ compact = false }: { compact?: boolean }) => {
     );
 };
 
-export default AudioPlayer;
+export default AudioPlayer;

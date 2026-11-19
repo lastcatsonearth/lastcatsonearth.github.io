@@ -8,22 +8,17 @@ import LangToggle from "@/components/LangToggle";
 import { EMAIL, socials } from "@/config/site";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
 import starsBg from "@/assets/stars_background.webp";
-import releaseCover from "@/assets/booking/music/never_stop/never_stop.webp";
 import favicon from "@/assets/favicon.webp";
 import { formatGigDate, upcomingGigs } from "@/content/gigs";
 import { GOOGLE_REVIEW_URL } from "@/content/reviews";
+import { latestRelease } from "@/content/releases";
+import { useReleaseCountdown } from "@/hooks/useReleaseCountdown";
 
 import type { Lang } from "@/i18n/LanguageContext";
 type Bilingual = Record<Lang, string>;
 
-// ---------------------------------------------------------------
-// EDIT HERE when there's a new release. The next show comes from src/content/gigs.ts.
-// ---------------------------------------------------------------
-const latestRelease: { title: string; href: string } = {
-  title: "NEVER STOP",
-  href: "https://open.spotify.com/intl-it/track/7AJohGsgWQTzB32uLrYuYk",
-};
-// ---------------------------------------------------------------
+// The latest release (title, cover, release date) comes from src/content/releases.ts.
+// The next show comes from src/content/gigs.ts.
 
 const copy = {
   en: {
@@ -34,7 +29,9 @@ const copy = {
     bookSub: "Send a booking request in one minute",
     nextShow: "Next show",
     latestRelease: "Latest release",
-    listenNow: "Listen on Spotify",
+    listenNow: "Listen now",
+    newSingle: "New single",
+    outOn: "Out",
     review: "Saw us live?",
     reviewSub: "Leave us a Google review",
     website: "Our website",
@@ -52,7 +49,9 @@ const copy = {
     bookSub: "Booking-Anfrage in einer Minute",
     nextShow: "Nächste Show",
     latestRelease: "Neuester Release",
-    listenNow: "Auf Spotify hören",
+    listenNow: "Jetzt anhören",
+    newSingle: "Neue Single",
+    outOn: "Ab",
     review: "Uns live gesehen?",
     reviewSub: "Bewerte uns auf Google",
     website: "Unsere Webseite",
@@ -108,6 +107,8 @@ const LinksPage = () => {
   const p = useLocalePath();
   const t = copy[lang];
   const next = upcomingGigs()[0];
+  const releaseCountdown = useReleaseCountdown(latestRelease.releaseAt);
+  const releaseDay = new Date(latestRelease.releaseAt).toLocaleDateString(lang === "de" ? "de-DE" : "en-GB", { day: "numeric", month: "short", timeZone: "Europe/Berlin" });
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -165,11 +166,10 @@ const LinksPage = () => {
           )}
           <li>
             <FeatureRow
-              tag={t.latestRelease}
-              title={`${latestRelease.title} · ${t.listenNow}`}
-              image={<img src={releaseCover} alt="" className="h-full w-full object-cover" />}
-              href={latestRelease.href}
-              external
+              tag={releaseCountdown.released ? t.latestRelease : t.newSingle}
+              title={`${latestRelease.title} · ${releaseCountdown.released ? t.listenNow : `${t.outOn} ${releaseDay}`}`}
+              image={<img src={latestRelease.cover} alt="" className="h-full w-full object-cover" />}
+              href={p(`/music/${latestRelease.slug}`)}
             />
           </li>
           <li>

@@ -11,6 +11,8 @@ import LandingPage from "./pages/LandingPage";
 import { landingPath, type LandingKey } from "@/content/landingPages";
 import ShowsPage from "./pages/ShowsPage";
 import ShowPage from "./pages/ShowPage";
+import ReleasePage from "./pages/ReleasePage";
+import { releases } from "@/content/releases";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
@@ -52,6 +54,11 @@ const pages = (): RouteRecord[] => [
         path: "shows/:slug",
         element: <ShowPage />,
         getStaticPaths: () => shows.map((show) => `shows/${show.slug}`),
+    },
+    {
+        path: "music/:slug",
+        element: <ReleasePage />,
+        getStaticPaths: () => releases.map((release) => `music/${release.slug}`),
     },
     { path: "impressum", element: <Impressum /> },
     { path: "privacy", element: <PrivacyPolicy /> },
