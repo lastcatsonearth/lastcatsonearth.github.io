@@ -2,12 +2,9 @@ import { useState, useRef, TouchEvent } from "react";
 import { FaSpotify, FaPlay, FaPause, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useReleaseCountdown } from "@/hooks/useReleaseCountdown";
-import { formatReleaseDate, latestRelease } from "@/content/releases";
-
-import flashbackAudio from "@/assets/booking/music/flashback/flashback.mp3";
-import flashbackCover from "@/assets/booking/music/flashback/flashback.webp";
-import neverStopAudio from "@/assets/booking/music/never_stop/never_stop.mp3";
-import neverStopCover from "@/assets/booking/music/never_stop/never_stop.webp";
+import { Link } from "react-router-dom";
+import { useLocalePath } from "@/i18n/LanguageContext";
+import { formatReleaseDate, releases } from "@/content/releases";
 
 interface Track {
     src: string;
@@ -19,37 +16,20 @@ interface Track {
     releaseDate?: string;
     /** ISO date-time: before it the track shows the release date, after it it plays (no redeploy needed). */
     releaseAt?: string;
+    /** Song page at /music/<slug>. */
+    slug?: string;
 }
 
-// Newest first. UNDERWATER comes from content/releases.ts and unlocks itself on its release date.
-const tracks: Track[] = [
-    {
-        src: latestRelease.audio,
-        coverSrc: latestRelease.cover,
-        title: latestRelease.title,
-        artist: "Last Cats on Earth",
-        releaseAt: latestRelease.releaseAt,
-    },
-    {
-        src: neverStopAudio,
-        coverSrc: neverStopCover,
-        title: "NEVER STOP",
-        artist: "Last Cats on Earth",
-        released: true,
-        spotifyUrl:
-            "https://open.spotify.com/intl-it/track/7AJohGsgWQTzB32uLrYuYk?si=9a7f1cfdf97940da",
-        releaseDate: "11 September",
-    },
-    {
-        src: flashbackAudio,
-        coverSrc: flashbackCover,
-        title: "FLASHBACK!",
-        artist: "Last Cats on Earth",
-        spotifyUrl:
-            "https://open.spotify.com/track/71CmWXdlgbG0qiwAzn459K?si=bb888fa0d45b4e7e",
-        released: true,
-    },
-];
+// Newest first, straight from content/releases.ts. Unreleased songs unlock themselves on their release date.
+const tracks: Track[] = releases.map((r) => ({
+    src: r.audio,
+    coverSrc: r.cover,
+    title: r.title,
+    artist: "Last Cats on Earth",
+    releaseAt: r.releaseAt,
+    slug: r.slug,
+    spotifyUrl: r.links.find((l) => l.label === "Spotify" && l.href.includes("/track/"))?.href,
+}));
 
 const translations = {
     en: {
@@ -82,6 +62,7 @@ const SinglePlayer = ({
     showControls?: boolean;
 }) => {
     const { lang } = useLanguage();
+    const p = useLocalePath();
     const t = translations[lang];
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -178,7 +159,13 @@ const SinglePlayer = ({
                 <div className="relative z-10 mt-6 mb-5 min-w-0">
                     <div className="flex items-center justify-center gap-2 min-w-0">
                         <h3 className="text-lg sm:text-xl font-bold tracking-widest uppercase truncate">
-                            {track.title}
+                            {track.slug ? (
+                                <Link to={p(`/music/${track.slug}`)} className="hover:text-cat-orange transition-colors">
+                                    {track.title}
+                                </Link>
+                            ) : (
+                                track.title
+                            )}
                         </h3>
 
                         {track.spotifyUrl && (

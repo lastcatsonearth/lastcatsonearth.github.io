@@ -12,6 +12,7 @@ import { landingPath, type LandingKey } from "@/content/landingPages";
 import ShowsPage from "./pages/ShowsPage";
 import ShowPage from "./pages/ShowPage";
 import ReleasePage from "./pages/ReleasePage";
+import MusicPage from "./pages/MusicPage";
 import { releases } from "@/content/releases";
 import Impressum from "./pages/Impressum";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -55,6 +56,7 @@ const pages = (): RouteRecord[] => [
         element: <ShowPage />,
         getStaticPaths: () => shows.map((show) => `shows/${show.slug}`),
     },
+    { path: "music", element: <MusicPage /> },
     {
         path: "music/:slug",
         element: <ReleasePage />,

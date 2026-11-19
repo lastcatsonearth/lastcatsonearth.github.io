@@ -14,7 +14,7 @@ const compute = (target: number, now: number): Countdown => {
 };
 
 /**
- * Live countdown to a release. The static HTML is rendered as "not released yet";
+ * Live countdown to a release. The static HTML uses the build time;
  * in the browser it ticks every second and flips to released at the exact moment,
  * so the page unlocks by itself without a new deploy.
  */
@@ -33,6 +33,7 @@ export const useReleaseCountdown = (releaseAt: string): Countdown & { ready: boo
         return () => window.clearInterval(id);
     }, [target]);
 
-    if (now === null) return { ...compute(target, target - 1), released: false, ready: false };
+    // Before hydration: decide with the build time, so the static HTML of past releases shows the player.
+    if (now === null) return { ...compute(target, __BUILD_TIME__), ready: false };
     return { ...compute(target, now), ready: true };
 };

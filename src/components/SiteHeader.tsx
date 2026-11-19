@@ -27,7 +27,7 @@ const SiteHeader = () => {
 
                 <nav className="flex items-center gap-2 sm:gap-5">
                     <Link to={p("/shows")} className="hidden text-[10px] font-black uppercase tracking-[0.2em] text-white/60 transition hover:text-white sm:inline">{t.shows}</Link>
-                    <Link to={p("/booking#releases")} className="hidden text-[10px] font-black uppercase tracking-[0.2em] text-white/60 transition hover:text-white sm:inline">{t.music}</Link>
+                    <Link to={p("/music")} className="hidden text-[10px] font-black uppercase tracking-[0.2em] text-white/60 transition hover:text-white sm:inline">{t.music}</Link>
                     <LangToggle />
                     <Link
                         to={p(onContact ? "/booking" : "/contact")}

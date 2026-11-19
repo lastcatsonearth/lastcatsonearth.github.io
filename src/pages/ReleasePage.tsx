@@ -1,4 +1,4 @@
-import { ArrowUpRight, Instagram } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Instagram } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
 import Footer from "@/components/Footer";
@@ -6,21 +6,26 @@ import SiteHeader from "@/components/SiteHeader";
 import { Seo } from "@/components/Seo";
 import NotFound from "@/pages/NotFound";
 import { SITE_NAME, SITE_URL, externalProps, socials } from "@/config/site";
-import { findRelease, formatReleaseDate, type Release } from "@/content/releases";
+import { findRelease, formatReleaseDate, latestRelease, releases, type Release } from "@/content/releases";
 import { useReleaseCountdown } from "@/hooks/useReleaseCountdown";
 import { useLanguage, useLocalePath, type Lang } from "@/i18n/LanguageContext";
 
 const copy = {
     de: {
         label: "Neue Single",
+        single: "Single",
+        allMusic: "Alle Songs",
+        more: "Mehr Musik",
         outOn: "Überall erhältlich ab",
         out: "Jetzt überall erhältlich",
         days: "Tage",
         hours: "Std",
         minutes: "Min",
         seconds: "Sek",
+        presave: "Pre-Save",
+        allPlatforms: "Alle Plattformen",
         followTitle: "Nichts verpassen",
-        follow: "Folge uns, dann hörst du den Song als Erste:r.",
+        follow: "Jetzt pre-saven, dann landet der Song am 27. direkt in deiner Bibliothek.",
         listen: "Jetzt anhören",
         listenOn: "Hören auf",
         about: "Der Song",
@@ -31,14 +36,19 @@ const copy = {
     },
     en: {
         label: "New single",
+        single: "Single",
+        allMusic: "All songs",
+        more: "More music",
         outOn: "Out everywhere on",
         out: "Out now everywhere",
         days: "Days",
         hours: "Hrs",
         minutes: "Min",
         seconds: "Sec",
+        presave: "Pre-save",
+        allPlatforms: "All platforms",
         followTitle: "Don't miss it",
-        follow: "Follow us and be the first to hear it.",
+        follow: "Pre-save it now and it lands in your library on release day.",
         listen: "Listen now",
         listenOn: "Listen on",
         about: "The song",
@@ -56,11 +66,18 @@ const jsonLd = (r: Release, lang: Lang, url: string) => ({
     url,
     datePublished: r.releaseAt.slice(0, 10),
     image: `${SITE_URL}${r.ogImage}`,
-    description: r.text[lang],
+    description: r.text[lang].split("\n\n")[0],
+    inLanguage: "en",
     byArtist: { "@type": "MusicGroup", name: SITE_NAME, url: SITE_URL },
 });
 
 const pad = (n: number) => String(n).padStart(2, "0");
+
+/** First paragraph, cut at a word boundary to fit a meta description (~155 chars). */
+const metaDescription = (text: string) => {
+    const first = text.split("\n\n")[0];
+    return first.length <= 155 ? first : `${first.slice(0, 152).replace(/\s+\S*$/, "")}…`;
+};
 
 const ReleasePage = () => {
     const { slug } = useParams();
@@ -88,7 +105,7 @@ const ReleasePage = () => {
             <Seo
                 path={`/music/${release.slug}`}
                 title={`${release.title} – ${t.label} | ${SITE_NAME}`}
-                description={release.text[lang]}
+                description={metaDescription(release.text[lang])}
                 image={release.ogImage}
                 jsonLd={jsonLd(release, lang, url)}
             />
@@ -109,7 +126,10 @@ const ReleasePage = () => {
                         />
 
                         <div>
-                            <p className="text-xs font-black uppercase tracking-[0.3em] text-cat-orange">{t.label}</p>
+                            <Link to={p("/music")} className="mb-6 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.25em] text-white/70 hover:text-cat-orange">
+                                <ArrowLeft className="h-3.5 w-3.5" /> {t.allMusic}
+                            </Link>
+                            <p className="text-xs font-black uppercase tracking-[0.3em] text-cat-orange">{release.slug === latestRelease.slug ? t.label : `${t.single} · ${date}`}</p>
                             <h1 className="mt-3 text-5xl font-black uppercase leading-[0.85] tracking-tighter sm:text-7xl lg:text-8xl">
                                 {release.title}
                             </h1>
@@ -133,8 +153,13 @@ const ReleasePage = () => {
                                     <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-white">{t.followTitle}</p>
                                     <p className="mt-1 text-sm text-white/60">{t.follow}</p>
                                     <div className="mt-4 flex flex-wrap gap-2">
+                                        {release.smartLink && (
+                                            <a href={release.smartLink} {...externalProps(release.smartLink)} className="inline-flex items-center gap-2 rounded-full bg-cat-orange px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-white">
+                                                {t.presave} <ArrowUpRight className="h-4 w-4" />
+                                            </a>
+                                        )}
                                         {instagram && (
-                                            <a href={instagram.href} {...externalProps(instagram.href)} className="inline-flex items-center gap-2 rounded-full bg-cat-orange px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-white">
+                                            <a href={instagram.href} {...externalProps(instagram.href)} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-[11px] font-bold uppercase tracking-[0.2em] transition hover:border-cat-orange hover:text-cat-orange">
                                                 <Instagram className="h-4 w-4" /> Instagram
                                             </a>
                                         )}
@@ -151,10 +176,15 @@ const ReleasePage = () => {
                                     <audio controls preload="none" src={release.audio} className="mt-3 w-full max-w-md accent-[#D34303]">
                                         {release.title}
                                     </audio>
-                                    {links.length > 0 && (
+                                    {(links.length > 0 || release.smartLink) && (
                                         <>
                                             <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.25em] text-white/50">{t.listenOn}</p>
                                             <div className="mt-3 flex flex-wrap gap-2">
+                                                {release.smartLink && (
+                                                    <a href={release.smartLink} {...externalProps(release.smartLink)} className="inline-flex items-center gap-2 rounded-full bg-cat-orange px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-white">
+                                                        {t.allPlatforms} <ArrowUpRight className="h-4 w-4" />
+                                                    </a>
+                                                )}
                                                 {links.map((l) => (
                                                     <a key={l.label} href={l.href} {...externalProps(l.href)} className="inline-flex items-center gap-2 rounded-full bg-cat-orange px-5 py-3 text-[11px] font-black uppercase tracking-[0.2em] text-black transition hover:bg-white">
                                                         {l.label} <ArrowUpRight className="h-4 w-4" />
@@ -173,11 +203,11 @@ const ReleasePage = () => {
                 <div className="mx-auto grid w-full max-w-6xl gap-12 px-5 pb-20 sm:px-8 md:grid-cols-2">
                     <section>
                         <h2 className="text-xs font-black uppercase tracking-[0.3em] text-cat-orange">{t.about}</h2>
-                        <p className="mt-4 text-lg leading-8 text-white/80">{release.text[lang]}</p>
+                        <div className="mt-4 space-y-4 text-lg leading-8 text-white/80">{release.text[lang].split("\n\n").map((para) => <p key={para.slice(0, 24)}>{para}</p>)}</div>
                         {release.credits && (
                             <>
                                 <h2 className="mt-10 text-xs font-black uppercase tracking-[0.3em] text-cat-orange">{t.credits}</h2>
-                                <p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/60">{release.credits[lang]}</p>
+                                <p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/60">{release.credits}</p>
                             </>
                         )}
                     </section>
@@ -185,6 +215,23 @@ const ReleasePage = () => {
                         <h2 className="text-xs font-black uppercase tracking-[0.3em] text-cat-orange">{t.lyrics}</h2>
                         <p className="mt-4 whitespace-pre-line text-sm leading-7 text-white/70">{release.lyrics}</p>
                     </section>
+                </div>
+
+                {/* ── Other songs ── */}
+                <div className="mx-auto w-full max-w-6xl px-5 pb-20 sm:px-8">
+                    <h2 className="text-xs font-black uppercase tracking-[0.3em] text-cat-orange">{t.more}</h2>
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {releases.filter((r) => r.slug !== release.slug).map((r) => (
+                            <Link key={r.slug} to={p(`/music/${r.slug}`)} className="group flex items-center gap-4 rounded-2xl border border-white/10 p-3 transition hover:border-cat-orange">
+                                <img src={r.cover} alt="" loading="lazy" className="h-16 w-16 rounded-xl object-cover" />
+                                <span className="min-w-0 flex-1">
+                                    <span className="block truncate text-lg font-black uppercase">{r.title}</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">{formatReleaseDate(r.releaseAt, lang)}</span>
+                                </span>
+                                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-cat-orange" />
+                            </Link>
+                        ))}
+                    </div>
                 </div>
 
                 <section className="bg-cat-orange text-black">
