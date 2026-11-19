@@ -12,6 +12,7 @@ interface MusicSectionProps {
         release: string;
         releaseBody: string;
         booking: string;
+        allMusic: string;
     };
 }
 
@@ -59,14 +60,21 @@ export const MusicSection = ({ copy }: MusicSectionProps) => {
                             {copy.releaseBody}
                         </p>
 
-                        {/* Hidden on mobile portrait, shown on desktop & optionally landscape */}
-                        <Link
-                            to={p("/contact")}
-                            className={`items-center gap-2 rounded-full border border-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black ${isLandscapePhone ? "hidden" : "mt-6 hidden sm:inline-flex"
-                                }`}
-                        >
-                            {copy.booking} <ArrowUpRight className="h-4 w-4" />
-                        </Link>
+                        <div className={`flex flex-wrap items-center gap-x-6 gap-y-3 ${isLandscapePhone ? "mt-2" : "mt-3 sm:mt-6"}`}>
+                            {/* Booking button: hidden on mobile portrait, shown on desktop */}
+                            <Link
+                                to={p("/contact")}
+                                className={`items-center gap-2 rounded-full border border-cat-orange px-5 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-cat-orange transition hover:bg-cat-orange hover:text-black ${isLandscapePhone ? "hidden" : "hidden sm:inline-flex"}`}
+                            >
+                                {copy.booking} <ArrowUpRight className="h-4 w-4" />
+                            </Link>
+                            <Link
+                                to={p("/music")}
+                                className="inline-flex items-center gap-1.5 border-b border-white/30 pb-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 transition hover:border-cat-orange hover:text-cat-orange"
+                            >
+                                {copy.allMusic} <ArrowUpRight className="h-3.5 w-3.5" />
+                            </Link>
+                        </div>
                     </div>
                 </Reveal>
 

@@ -34,6 +34,7 @@ const tracks: Track[] = releases.map((r) => ({
 const translations = {
     en: {
         category: "Our latest releases",
+        allMusic: "All our music",
         release: "Out on",
         altTemplate: "cover art",
         play: "Play",
@@ -42,6 +43,7 @@ const translations = {
     },
     de: {
         category: "Unsere neuesten Veröffentlichungen",
+        allMusic: "Alle unsere Songs",
         release: "Erscheint am",
         altTemplate: "Cover-Artwork",
         play: "Abspielen",
@@ -249,6 +251,7 @@ const SinglePlayer = ({
 
 const AudioPlayer = ({ compact = false }: { compact?: boolean }) => {
     const { lang } = useLanguage();
+    const p = useLocalePath();
     const t = translations[lang];
 
     const [mobileTrackIndex, setMobileTrackIndex] = useState(0);
@@ -353,11 +356,20 @@ const AudioPlayer = ({ compact = false }: { compact?: boolean }) => {
                 </div>
             </div>}
 
-            {/* Desktop / Tablet View: Grid side-by-side */}
-            {!compact && <div className="hidden md:grid grid-cols-2 gap-6 md:gap-10 max-w-5xl mx-auto px-4">
-                {tracks.map((track) => (
-                    <SinglePlayer key={track.title} track={track} />
-                ))}
+            {/* Desktop / Tablet: one row, newest first, max 3 visible; older releases scroll in from the right. */}
+            {!compact && <div className="hidden md:block max-w-6xl mx-auto px-4">
+                <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-color:#D34303_transparent] [scrollbar-width:thin]">
+                    {tracks.map((track) => (
+                        <div key={track.title} className="shrink-0 snap-start basis-[calc((100%-1.5rem)/2)] lg:basis-[calc((100%-3rem)/3)]">
+                            <SinglePlayer track={track} />
+                        </div>
+                    ))}
+                </div>
+                <div className="mt-6 text-center">
+                    <Link to={p("/music")} className="inline-flex items-center gap-1.5 border-b border-white/30 pb-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 transition hover:border-cat-orange hover:text-cat-orange">
+                        {t.allMusic} →
+                    </Link>
+                </div>
             </div>}
         </section>
     );
