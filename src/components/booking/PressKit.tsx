@@ -9,16 +9,14 @@ const copy = {
         kicker: "Für Presse & Veranstalter",
         heading: "Pressematerial",
         photos: "Pressefotos",
-        photosSub: "6 Fotos · ZIP",
-        logo: "Logo",
-        logoSub: "PNG, transparent",
-        logoRound: "Logo rund",
-        logoRoundSub: "PNG",
+        photosSub: "30 Fotos · ZIP",
+        logos: "Logos",
+        logosSub: "Standard + rund · PNG · ZIP",
         rider: "Tech-Rider",
         riderSub: "Auf Anfrage",
         riderPdf: "PDF · DE/EN",
         bandinfo: "Bandinfo",
-        bandinfoSub: "PDF · 1 Seite",
+        bandinfoSub: "PDF · DE/EN",
         copyBio: "Bio kopieren",
         copied: "Kopiert!",
     },
@@ -26,16 +24,14 @@ const copy = {
         kicker: "For press & promoters",
         heading: "Press material",
         photos: "Press photos",
-        photosSub: "6 photos · ZIP",
-        logo: "Logo",
-        logoSub: "PNG, transparent",
-        logoRound: "Round logo",
-        logoRoundSub: "PNG",
+        photosSub: "30 photos · ZIP",
+        logos: "Logos",
+        logosSub: "Standard + round · PNG · ZIP",
         rider: "Tech rider",
         riderSub: "On request",
         riderPdf: "PDF · DE/EN",
         bandinfo: "Band info",
-        bandinfoSub: "PDF · 1 page (DE)",
+        bandinfoSub: "PDF · EN/DE",
         copyBio: "Copy bio",
         copied: "Copied!",
     },
@@ -77,8 +73,7 @@ export const PressDownloads = () => {
     const items: { label: string; sub: string; href: string; download?: boolean; Icon: typeof Download; primary?: boolean }[] = [
         { label: t.photos, sub: t.photosSub, href: pressFiles.zip, download: true, Icon: Download, primary: true },
         { label: t.bandinfo, sub: t.bandinfoSub, href: pressFiles.bandinfo, download: true, Icon: FileText },
-        { label: t.logo, sub: t.logoSub, href: pressFiles.logo, download: true, Icon: Download },
-        { label: t.logoRound, sub: t.logoRoundSub, href: pressFiles.logoRound, download: true, Icon: Download },
+        { label: t.logos, sub: t.logosSub, href: pressFiles.logos, download: true, Icon: Download },
         riderFile
             ? { label: t.rider, sub: t.riderPdf, href: riderFile, download: true, Icon: FileText }
             : { label: t.rider, sub: t.riderSub, href: `mailto:${EMAIL}?subject=${encodeURIComponent("Tech-Rider")}`, Icon: Mail },
@@ -88,7 +83,7 @@ export const PressDownloads = () => {
         <div className="w-full">
             <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cat-orange">{t.kicker}</p>
             <h2 className="mt-2 text-3xl font-black uppercase tracking-tight sm:text-4xl">{t.heading}</h2>
-            <ul className="mt-5 grid grid-cols-2 gap-2.5 text-left sm:grid-cols-3 sm:gap-3 lg:grid-cols-5">
+            <ul className="mt-5 grid grid-cols-2 gap-2.5 text-left sm:grid-cols-4 sm:gap-3 lg:grid-cols-4">
                 {items.map(({ label, sub, href, download, Icon, primary }) => (
                     <li key={label}>
                         <a

@@ -1,50 +1,56 @@
 // scripts/press.mjs  –  run with: npm run press
 // Builds the downloadable press kit in public/press/:
-//   - 6 press photos as JPG (from src/assets/booking/photos, max 2400px)
-//   - logo PNGs (transparent)
-//   - one ZIP with all of the above
-// To change the photos, edit PHOTOS below AND the thumbs in src/content/press.ts (same order).
+//   - all live photos of the SHOWS below as JPG (max 2400px) + last-cats-on-earth-presskit.zip
+//   - logo PNGs (transparent) + last-cats-on-earth-logos.zip
+// To change the photos, edit SHOWS below.
 import sharp from "sharp";
-import { mkdirSync, readFileSync, writeFileSync, statSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync, statSync, readdirSync, rmSync } from "fs";
 import { crc32 } from "zlib";
 import path from "path";
 
 const OUT = "public/press";
-const PHOTOS = [
-    "zamanand/18.webp",
-    "zamanand/5.webp",
-    "zamanand/11.webp",
-    "zamanand/16.webp",
-    "alte_utting/photo_2.webp",
-    "renazzo/7.webp",
+// Every photo of these show folders goes into the press ZIP (promoters pick what they need).
+const SHOWS = [
+    { folder: "renazzo", name: "renazzo" },
+    { folder: "zamanand", name: "zamanand-festival" },
 ];
+const natural = (a, b) => a.localeCompare(b, undefined, { numeric: true });
+const PHOTOS = SHOWS.flatMap(({ folder, name }) =>
+    readdirSync(path.join("src/assets/booking/photos", folder))
+        .filter((f) => f.endsWith(".webp"))
+        .sort(natural)
+        .map((f, i) => ({ src: `${folder}/${f}`, out: `last-cats-on-earth-live-${name}-${String(i + 1).padStart(2, "0")}.jpg` })),
+);
 
 mkdirSync(OUT, { recursive: true });
 const files = [];
 
-for (const [i, photo] of PHOTOS.entries()) {
-    const name = `last-cats-on-earth-live-0${i + 1}.jpg`;
-    await sharp(path.join("src/assets/booking/photos", photo))
+// Remove photos from older press-kit builds so only the current set is shipped.
+for (const f of readdirSync(OUT)) if (/^last-cats-on-earth-live-.*\.jpg$/.test(f)) rmSync(path.join(OUT, f));
+
+for (const { src, out } of PHOTOS) {
+    await sharp(path.join("src/assets/booking/photos", src))
         .rotate()
         .resize({ width: 2400, height: 2400, fit: "inside", withoutEnlargement: true })
-        .jpeg({ quality: 88, mozjpeg: true })
-        .toFile(path.join(OUT, name));
-    files.push(name);
+        .jpeg({ quality: 86, mozjpeg: true })
+        .toFile(path.join(OUT, out));
+    files.push(out);
 }
 
 await sharp("src/assets/only_cat.webp").png().toFile(path.join(OUT, "last-cats-on-earth-logo.png"));
 await sharp("public/favicon.png").png().toFile(path.join(OUT, "last-cats-on-earth-logo-round.png"));
-files.push("last-cats-on-earth-logo.png", "last-cats-on-earth-logo-round.png");
+const logos = ["last-cats-on-earth-logo.png", "last-cats-on-earth-logo-round.png"];
 
 // Minimal "stored" ZIP writer (photos/PNGs are already compressed, so no deflate needed).
 const now = new Date();
 const dosDate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+const writeZip = (zipName, folder, names) => {
 const parts = [];
 const central = [];
 let offset = 0;
-for (const name of files) {
+for (const name of names) {
     const data = readFileSync(path.join(OUT, name));
-    const nameBuf = Buffer.from(`last-cats-on-earth-presskit/${name}`);
+    const nameBuf = Buffer.from(`${folder}/${name}`);
     const crc = crc32(data);
     const local = Buffer.alloc(30);
     local.writeUInt32LE(0x04034b50, 0); local.writeUInt16LE(20, 4); local.writeUInt16LE(0, 6); local.writeUInt16LE(0, 8);
@@ -60,9 +66,13 @@ for (const name of files) {
 }
 const centralBuf = Buffer.concat(central);
 const end = Buffer.alloc(22);
-end.writeUInt32LE(0x06054b50, 0); end.writeUInt16LE(files.length, 8); end.writeUInt16LE(files.length, 10);
+end.writeUInt32LE(0x06054b50, 0); end.writeUInt16LE(names.length, 8); end.writeUInt16LE(names.length, 10);
 end.writeUInt32LE(centralBuf.length, 12); end.writeUInt32LE(offset, 16);
-const zipPath = path.join(OUT, "last-cats-on-earth-presskit.zip");
+const zipPath = path.join(OUT, zipName);
 writeFileSync(zipPath, Buffer.concat([...parts, centralBuf, end]));
 
-console.log(`press kit: ${files.length} files, zip ${(statSync(zipPath).size / 1048576).toFixed(1)} MB`);
+console.log(`${zipName}: ${names.length} files, ${(statSync(zipPath).size / 1048576).toFixed(1)} MB`);
+};
+
+writeZip("last-cats-on-earth-presskit.zip", "last-cats-on-earth-photos", files);
+writeZip("last-cats-on-earth-logos.zip", "last-cats-on-earth-logos", logos);
