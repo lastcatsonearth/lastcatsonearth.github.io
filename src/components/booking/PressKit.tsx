@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Check, Copy, Download, FileText, Mail } from "lucide-react";
 import { EMAIL } from "@/config/site";
-import { bios, pressFiles } from "@/content/press";
+import { bioText, pressFiles } from "@/content/press";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const copy = {
@@ -16,7 +16,9 @@ const copy = {
         logoRoundSub: "PNG",
         rider: "Tech-Rider",
         riderSub: "Auf Anfrage",
-        riderPdf: "PDF",
+        riderPdf: "PDF · DE/EN",
+        bandinfo: "Bandinfo",
+        bandinfoSub: "PDF · 1 Seite",
         copyBio: "Bio kopieren",
         copied: "Kopiert!",
     },
@@ -31,7 +33,9 @@ const copy = {
         logoRoundSub: "PNG",
         rider: "Tech rider",
         riderSub: "On request",
-        riderPdf: "PDF",
+        riderPdf: "PDF · DE/EN",
+        bandinfo: "Band info",
+        bandinfoSub: "PDF · 1 page (DE)",
         copyBio: "Copy bio",
         copied: "Copied!",
     },
@@ -39,14 +43,14 @@ const copy = {
 
 const fileName = (path: string) => path.split("/").pop();
 
-/** Small "copy bio" button – copies the long press bio (content/press.ts) to the clipboard. */
+/** Small "copy bio" button – copies exactly the bio shown on the page (content/press.ts). */
 export const CopyBioButton = () => {
     const { lang } = useLanguage();
     const t = copy[lang];
     const [copied, setCopied] = useState(false);
     const onClick = async () => {
         try {
-            await navigator.clipboard.writeText(bios[lang].long);
+            await navigator.clipboard.writeText(bioText(lang));
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         } catch {
@@ -64,7 +68,7 @@ export const CopyBioButton = () => {
     );
 };
 
-/** Compact 2×2 grid: press photos (zip), logos, tech rider. */
+/** Compact grid: press photos (zip), band info, logos, tech rider. */
 export const PressDownloads = () => {
     const { lang } = useLanguage();
     const t = copy[lang];
@@ -72,6 +76,7 @@ export const PressDownloads = () => {
 
     const items: { label: string; sub: string; href: string; download?: boolean; Icon: typeof Download; primary?: boolean }[] = [
         { label: t.photos, sub: t.photosSub, href: pressFiles.zip, download: true, Icon: Download, primary: true },
+        { label: t.bandinfo, sub: t.bandinfoSub, href: pressFiles.bandinfo, download: true, Icon: FileText },
         { label: t.logo, sub: t.logoSub, href: pressFiles.logo, download: true, Icon: Download },
         { label: t.logoRound, sub: t.logoRoundSub, href: pressFiles.logoRound, download: true, Icon: Download },
         riderFile
@@ -83,7 +88,7 @@ export const PressDownloads = () => {
         <div className="w-full">
             <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cat-orange">{t.kicker}</p>
             <h2 className="mt-2 text-3xl font-black uppercase tracking-tight sm:text-4xl">{t.heading}</h2>
-            <ul className="mt-5 grid grid-cols-2 gap-2.5 text-left sm:grid-cols-4 sm:gap-3">
+            <ul className="mt-5 grid grid-cols-2 gap-2.5 text-left sm:grid-cols-3 sm:gap-3 lg:grid-cols-5">
                 {items.map(({ label, sub, href, download, Icon, primary }) => (
                     <li key={label}>
                         <a

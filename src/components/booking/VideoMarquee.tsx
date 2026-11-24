@@ -2,63 +2,25 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import heroPhoto from "@/assets/booking/photos/zamanand/1.webp";
 import { Star } from "lucide-react";
 import { CopyBioButton } from "./PressKit";
+import { bios } from "@/content/press";
+import type { ReactNode } from "react";
 import { GOOGLE_REVIEWS_URL, googleRating } from "@/content/reviews";
+
+// Bold the band name and song titles inside the plain-text bio (same text the copy button copies).
+const HIGHLIGHT = /(Last Cats on Earth|FLASHBACK!|NEVER STOP|UNDERWATER)/;
+const highlight = (text: string): ReactNode[] =>
+    text.split(HIGHLIGHT).map((part, i) => (i % 2 === 1 ? <strong key={i}>{part}</strong> : part));
 
 const translations = {
     en: {
         tagline: "Born in Munich. Made for the stage.",
         bioHeading: "LAST CATS ON EARTH",
         subHeading: "ELECTRONIC PRESS KIT",
-        bio1: (
-            <>
-                Based in Munich, <strong>Last Cats on Earth</strong> deliver a high-octane mix of hard rock, funk, and alternative rock sounds.
-                Our main rule is originality: whether it's our original tracks or reinterpreting famous covers, we always do it our own way.
-            </>
-        ),
-        bio2: (
-            <>
-                Our DNA is heavily influenced by the Californian pop-rock of the early 2000s, reworking those sounds with influences
-                from funk, rap, punk, and electronic music. Our latest single, <strong>NEVER STOP</strong>, is out now, following
-                our debut <strong>FLASHBACK!</strong>.
-            </>
-        ),
-        bio3: (
-            <>
-                From intimate venues to bigger festival stages, our live shows keep everyone on their toes by constantly shifting gears:
-                from hard-hitting instrumentals and melodic hooks to rap verses, choreography, and direct crowd interaction.
-            </>
-        ),
-        bio4: (
-            <>
-                We don't just play music: <strong>the stage is our home.</strong>
-            </>
-        ),
     },
     de: {
         tagline: "Aus München. Für die Bühne gemacht.",
         bioHeading: "LAST CATS ON EARTH",
         subHeading: "ELECTRONIC PRESS KIT",
-        bio1: (
-            <>
-                Ansässig in München liefern <strong>Last Cats on Earth</strong> einen energiereichen Mix aus Hard Rock, Funk und Alternative Rock.
-                Unsere wichtigste Regel ist Originalität: Egal ob eigene Tracks oder Neuinterpretationen bekannter Cover, wir machen es immer auf unsere Art.
-            </>
-        ),
-        bio2: (
-            <>
-                Unsere DNA ist stark vom kalifornischen Pop-Rock der frühen 2000er geprägt, mit Einflüssen aus Funk, Rap, Punk und elektronischer Musik. Unsere Single <strong>NEVER STOP</strong> ist jetzt draußen!
-            </>
-        ),
-        bio3: (
-            <>
-                Von Club-Gigs bis zu Festival-Bühnen: Unsere Shows wechseln ständig den Gang – mit harten Instrumentals, Rap-Versen, Choreografien und direkter Interaktion mit dem Publikum.
-            </>
-        ),
-        bio4: (
-            <>
-                Wir machen nicht einfach nur Musik: <strong>Die Bühne ist unser Zuhause.</strong>
-            </>
-        ),
     }
 };
 
@@ -100,10 +62,14 @@ const VideoMarquee = () => {
                     </div>
 
                     <div className="space-y-2.5 sm:space-y-4 text-xs sm:text-sm leading-relaxed text-white/85 sm:pt-2">
-                        <p className="border-t border-white/10 pt-2.5 sm:pt-3">{t.bio1}</p>
-                        <p className="border-t border-white/10 pt-2.5 sm:pt-3">{t.bio2}</p>
-                        <p className="border-t border-white/10 pt-2.5 sm:pt-3">{t.bio3}</p>
-                        <p className="border-t border-white/10 pt-2.5 sm:pt-3 text-cat-orange font-bold">{t.bio4}</p>
+                        {bios[lang].map((paragraph, i, all) => (
+                            <p
+                                key={i}
+                                className={`border-t border-white/10 pt-2.5 sm:pt-3${i === all.length - 1 ? " text-cat-orange font-bold" : ""}`}
+                            >
+                                {highlight(paragraph)}
+                            </p>
+                        ))}
                     </div>
 
                     <div className="flex flex-wrap items-center gap-3">
