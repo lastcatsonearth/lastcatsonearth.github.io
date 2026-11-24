@@ -26,9 +26,9 @@ export const bioText = (lang: Lang) => bios[lang].join("\n\n");
 
 export const pressFiles = {
     zip: "/press/last-cats-on-earth-presskit.zip",
-    logo: "/press/last-cats-on-earth-logo.png",
-    logoRound: "/press/last-cats-on-earth-logo-round.png",
-    /** One-page band info (DE). */
+    /** Both logos (standard + round PNG) in one ZIP. */
+    logos: "/press/last-cats-on-earth-logos.zip",
+    /** Band info: page 1 DE, page 2 EN. */
     bandinfo: "/press/last-cats-on-earth-bandinfo.pdf",
     /** Generic tech rider incl. stage plot (page 1 DE, page 2 EN) – adapted per show. */
     rider: { de: "/press/last-cats-on-earth-tech-rider.pdf", en: "/press/last-cats-on-earth-tech-rider.pdf" } as Record<"de" | "en", string | null>,
